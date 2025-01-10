@@ -1,0 +1,586 @@
+Glossary
+Resource
+•	Definition: A technical element within a CPPS (Cyber-Physical Production System) that is utilized for production, energy storage, energy conversion, or supporting infrastructural operations.
+Infrastructural Resources
+•	Definition: Resources that provide essential services or utilities to support the primary production processes within a CPPS.
+o	Waste: By-products of production processes that require disposal, recycling, or repurposing, often subject to environmental and regulatory constraints.
+o	Production Media: Inputs like compressed air, water, or lubricants necessary for the operation of production machinery.
+Inherent Storage
+•	Definition: Storage capabilities intrinsic to processes or resources, such as the thermal mass of a furnace or the buffering capacity of a pipeline, deliberately utilized to manage energy or material flows flexibly.
+Grid Services
+•	Definition: Ancillary services provided by a CPPS to the power grid, such as frequency regulation, load balancing, or power quality control, to support grid stability and efficiency.
+Component
+•	Definition: A functional unit within a CPPS that contributes to energy-flexible operations, such as sensors, actuators, or IT systems like forecast components, analytics or operational planning modules.
+Operational Planning
+•	Definition: The process of defining and scheduling the operation of CPPS resources to achieve production and energy management goals, considering constraints like energy costs, market participation, and process quality. Operational planning is very similar to production planning, except that operational planning is not only focused on production of goods but also the operation of energy resources.
+Execution
+•	Definition: The implementation and realization of operating plans through resource control, monitoring, and adjustments, ensuring alignment with the planned objectives. Can be performed automatically by a dedicated execution component or manually by operators who set suitable control commands to execute an operating plan. 
+Use Case
+•	Definition: A specific application or scenario in which energy-flexible operations are deployed, defined by the goals (e.g., cost savings, self-generation maximization), the constraints of the system, the preferences of responsible parties, and the existing infrastructure.
+Flexibility Call
+•	Definition: A signal indicating the need to adjust energy consumption, production, or storage to meet operational, market, or grid-related requirements. Generally, a spontaneous signal to reduce or increase energy consumption or generation. A common example of a flexibility call is a signal from a grid operator to provide balancing power to stabilize the grid. Can also be created by aggregators or other actors. 
+o	Internal Flexibility Call: A flexibility signal generated within the CPPS, often as a result of deviations from the operating plan or changing production needs.
+High-Precision Use Case
+•	Definition: A use case where temporary deviations from the operating plan can entail high financial losses. Any use case participating in wholesale energy markets is a high-precision use case. Likewise, use cases with strict, short-term production goals or strong logistic dependencies can be high-precision use cases.
+Logistic Dependencies
+•	Definition: Interdependencies between resources in terms of material flow or energy supply, where the operation of one resource is contingent on the availability or state of another. Examples of logistic dependencies are production machines depending on material supply by another machine, the provision of production media such as pressurized air, or energy supply. Similarly the processing of waste materials can cause logistic dependencies. 
+External Physical Quantities
+•	Definition: Environmental or external factors that impact resource operation, such as ambient temperature, weather conditions, or variable raw material properties. 
+Planning Models
+•	Definition: Computational representations of resource behavior, constraints, and interdependencies used in operational planning to predict and optimize energy consumption, production rates, and process quality. Often formulated as optimization models.
+Proactive Approach
+•	Definition: An energy management strategy that anticipates future conditions and optimizes resource operation in advance, often using planning models and forecasts.
+Reactive Approach
+•	Definition: An energy management strategy that responds dynamically to real-time signals or events, such as flexibility calls from grid operators or unplanned process deviations.
+Process Quality Indicator
+•	Definition: Metrics or state variables that determine the quality or performance of a process, such as temperature, pressure, or product purity, which must be maintained within acceptable limits to ensure operational integrity. Examples are the indoor temperature, the pressure in the pressurized air supply system, or the level of impurities in a product. 
+Responsible Party
+•	Definition: Individuals or teams accountable for the planning, execution, and evaluation of energy-flexible operations, including operators, engineers, or decision-makers within the CPPS framework.
+Operating Strategy
+•	Definition: A comprehensive plan encompassing the technologies, actions, and interactions required to enable energy-flexible operations within a Cyber-Physical Production System (CPPS). It integrates resource management, operational planning, execution, and evaluation processes to align energy consumption, generation, or storage with external and internal objectives, such as cost reduction, renewable energy integration, or grid stability. Operating strategies must account for technical, economic, and regulatory considerations to ensure uninterrupted, efficient, and profitable operation.
+
+Functionalities within Energy Flexible CPPS
+Sensors
+Sensors measure external physical quantities influencing the process. These external physical quantities are, for example, environmental influences like ambient temperature that affect the process. Material properties of input materials can also be interpreted as external physical quantities. Sensors for measuring external physical quantities are necessary when the control/regulation or planning algorithm needs this information, whereby physical quantities whose influence on resources is minor do not necessarily have to be measured.
+Examples:
+•	When operating a compression chiller, the ambient temperature is measured to calculate the required compressor power (Cirera et al. 2020).
+•	Measurement of the grid frequency to determine a setpoint when providing primary control power (Perroy et al. 2020).
+•	Measurement of weather conditions to take their influence on thermal energy resources (adsorption chiller, compression chiller) into account during modeling and operational planning (Sandro Magnani et al. 2018).
+•	Measurement of the ambient temperature of a distillation column to parameterize optimization and simulation models in order to capture the influence of temperature on production volume (Reinpold et al. 2023).
+•	Measurement of solar irradiation to capture potential for PV generation (Tian et al. 2016).
+•	Measurement of the solid content of wastewater before treatment by a wastewater treatment plant to estimate the energy demand for treatment (Wagner et al. 2024).
+
+Alternatives:
+•	Instead of measuring an external physical quantity, its influence can, if necessary, be compensated for by suitable control technology. For example, a controller with an integral component can be used to automatically regulate the influence of the ambient temperature on the compressor power, but this leads to a variance in energy consumption.
+
+Sensors measure the state of storage systems. This can be a dedicated energy storage (battery), an inherent energy storage (cold room) or a material storage (cement silo). The state of storage should then be measured if the storage size is a limiting quantity over the planning horizon under consideration, and if compliance with storage capacities is important for the uninterrupted operation of the production processes. The state of storage of resources should be known at least at the beginning of a planning horizon, but preferably throughout the entire operation.
+Examples:
+•	Measurement of the temperature in a cold storage, which acts as an inherent energy storage, to regulate/control a chiller (Cirera et al. 2020).
+•	Measurement of the fill level in an ice storage to infer the ice content via the density, and thus determine the 'state of charge' of the ice storage (Sokolovsky und Klimash 2019).
+•	Measurement of the voltage on a capacitor to determine its state of charge (Abdel-Baqi et al.).
+•	Multiple measurements of the temperature along the height of a hot water storage to record the state of charge of the storage (Fuhrmann et al. 2022).
+•	Measurement of the pressure in hydrogen pressure vessels to record the fill level to plan the operation of an electrolyzer (Ziogou et al. 2013).
+•	Measurement of the state of storage in a packed-bed thermal energy storage using several thermometers to continuously adjust and evaluate planning models (Kasper et al. 2024).
+•	Measurement of the fill level of the product container of a distillation column to parameterize optimization and simulation models, and to evaluate the energy-flexible operation of the column (Reinpold et al. 2023).
+Alternatives:
+•	A measurement of the state of storage can be replaced or supplemented by measuring the inflows and outflows from the storage (Abdel-Baqi et al.).
+
+Sensors measure the current state of resources and processes. This includes the state of the power grid if the grid frequency or voltage quality is relevant for the application under consideration. The quantities that determine the quality of the process and that are required for the execution of control and regulation programs are recorded (Ziogou et al. 2013). In the energy-flexible operation of systems, new sensors for recording process quantities are mainly needed when new challenges arise due to the energy-flexible operation that can be ruled out during conventional operation. For example, when operating electrolyzers in the low-load range, hydrogen can accumulate in the oxygen stream, which can lead to explosive mixtures (Qiu et al.). However, operating in low-load ranges can help to save electricity during times of high electricity prices. In conventional operation, such low-load ranges can be prohibited by the control system, so that additional sensors can be avoided. Similar examples can be found in the energy-flexible production of aluminum by electrolysis, where low-load ranges can lead to a sharp drop in process temperature (Liu et al. 2016), so that additional sensors are needed here to record the temperature.
+
+Examples:
+•	Measurement of the pressure in coolant lines to control the compressor of a chiller (Cirera et al. 2020).
+•	Determination of the valve position in coolant lines to record the current operating state of a chiller (Cirera et al. 2020).
+•	Measurement of the temperature in cooling water flows (Rahnama et al. 2017).
+•	Measurement of the rotational speed of an internal combustion engine to determine its current operating point (Abdel-Baqi et al. 2015). The operating point is determined in order to be able to control supporting electrical components (e-motor, capacitor).
+•	Measurement of the power consumption of an electrolyzer to determine the operating point (Qiu et al.).
+•	Measurement of the temperature of an electrolyzer to control cooling (Qiu et al.).
+•	Measurement of the hydrogen concentration in the oxygen stream of an electrolyzer to avoid the formation of explosive gas mixtures (Qiu et al.).
+•	Measurement of the grid state (frequency, voltage, current) to record the effects of energy-flexible operating strategies on the power grid (Laayati et al. 2022).
+•	Recording valve positions in hot water pipe networks to plan and execute control interventions (Fuhrländer-Völker et al. 2023).
+•	Measurement of conductivity in the demineralized water supply of an electrolyzer to prevent damage to the electrolyzer (Ziogou et al. 2013).
+•	Measurement of the operating temperature of an electrolyzer to determine the influence of temperature on hydrogen production (Ziogou et al. 2013).
+•	Measurement of the voltage and current in a hydrogen electrolysis stack to determine the operating point and to parameterize models (Ziogou et al. 2013).
+•	Measurement of the power grid frequency to function as a setpoint for the provision of primary control power (Perroy et al. 2020).
+•	Measurement of the fill level in small product containers by means of ultrasonic sensors to verify correct filling (Mechs et al. 2013).
+•	Measurement of the position of product containers in order to position conveyor belts correctly for filling and measuring the fill level (Mechs et al. 2013).
+•	Measurement of server utilization in order to develop and evaluate operating strategies for the distribution of computing resources for peak load management (Hsu et al. 2018)
+•	Measurement of temperatures in an electrolysis plant: demineralized water tank, demineralized water flow into the stack, in the O2-H2O separator, after the hydrogen cooler, in order to parameterize simulation models that can evaluate control concepts (Crespi et al. 2023).
+•	Measurement of coolant flows in an electrolysis plant to parameterize simulation models that can evaluate control concepts (Crespi et al. 2023).
+•	Measurement of the temperature along a distillation column to parameterize optimization and simulation models, and to evaluate the energy-flexible operation of the column (Reinpold et al. 2023)
+•	Measurement of the power of a drive motor of an oil production pump in order to develop and evaluate concepts for peak load management (Zhao et al. 2021).
+•	Measurement of the rotation angle, the rotational speed and the torque of a drive motor of an oil production pump, in order to determine high resolution load profiles in order to develop and evaluate concepts for peak load management (Zhao et al. 2021)
+
+Sensors measure material flows such as production flows and flows of incoming resources to be processed. In order to ensure compliance with production goals, it must be recorded how large the production volume is over the optimization period. Here, sensors are used to record product flows (Vigants et al. 2014). The measurement of product flows is also required to reliably quantify the added value resulting from an energy-flexible mode of operation. For example, the energy costs in relation to the production quantity can only be determined if both quantities are measured. Furthermore, measurements of product flows are necessary to parameterize numerical models of resources.
+Examples:
+•	Measurement of the amount of wood chips produced during the production of wood pellets (Vigants et al. 2014).
+•	Measurement of hydrogen flows in an electrolyzer to parameterize simulation models that can evaluate control concepts (Crespi et al. 2023).
+•	Measurement of the production volume of a zinc electrolysis plant in order to parameterize ML operating planning models and to evaluate the energy-flexible operation (Yang et al. 2002).
+•	Measurement of the flow of oxygen and nitrogen as production media for steel production to create demand forecasts and to parameterize operating planning models of air separation plants (Han et al. 2016).
+•	Measurement of the flow of wastewater into a wastewater treatment plant to create forecast models for the amount of wastewater generated (Wagner et al. 2024).
+Alternatives:
+Sensors measure energy flows. Energy flows can refer to generated energy, transmitted energy, or consumed energy. In the energy-flexible operation of energy and production resources, the energy consumption of the resources under consideration is practically always measured. However, measurements are made with different levels of detail. In some cases, measurements are made with high resolution at several sub-components of a resource (Tian et al. 2016; Gong et al. 2019). In other cases, only the consumption of entire resources or resource networks is measured. From an economic point of view, the electricity consumption only needs to be measured in terms of the balance, i.e. for an entire plant network. However, energy management according to ISO 50001 requires the power to be measured individually for all major energy consumers so that so-called power key figures can be formed. For the development of models for simulation, planning or forecasting, a higher measurement resolution at component level is usually used (Gong et al. 2019). In applications where precise adjustment of energy consumption is necessary, energy flows measured at one point can act as setpoints for another point. For example, the measured total load of a factory can act as a setpoint for the factory's energy supply plants if the purchase or export of electricity from or to the power grid is to be avoided (Tian et al. 2016).
+The measurement of energy flows is also required to reliably quantify the added value resulting from an energy-flexible mode of operation. For example, the energy costs in relation to the production quantity can only be determined if both quantities are measured.
+The measurement of energy flows can be useful in recording the operating point of resources.
+The measurement of energy flows can be necessary if the state of charge of an energy storage must be determined, but the direct measurement of the state of charge is impractical.
+Examples:
+•	Power purchase or feed-in is measured at the grid connection point in order to balance electricity consumption/generation.
+•	Power purchase is measured at the grid connection point in order to function as a setpoint for energy generation plants if power purchase from the grid is to be avoided (Tian et al. 2016).
+•	Measurement of the power consumption of a lime and lime stone crushing plant (Sokolovsky und Klimash 2019).
+•	Measurement of the power consumption of a compressor in a chiller (Rahnama et al. 2017).
+•	Measurement of the power consumption of an electrical heating element in a refinery (Silletti et al. 2022).
+•	Measurement of the power consumption in an Electric Arc Furnace of a steel mill (Silletti et al. 2022).
+•	Measurement of a factory's power consumption acts as a setpoint for the power generation of local generation plants such as PV, wind and CHP (Tian et al. 2016).
+•	Measurement of the current and voltage on a capacitor to determine its charging and discharging (Abdel-Baqi et al. 2015).
+•	Measurement of the power of an internal combustion engine to determine its current operating point (Abdel-Baqi et al. 2015). The operating point is determined in order to be able to control supporting electrical components (e-motor, capacitor).
+•	Measurement of the power consumption of an electrolyzer for balancing (Qiu et al.).
+•	Measurement of the power consumption of a CNC milling machine to determine the influence of speed and feed on power consumption (Suwa und Samukawa 2016).
+•	Measurement of the power consumption of an Extrusion Blow Mould machine. Measurement of the power consumption of the extruder, the hydraulics and the main system to record the consumption of each of these components per operating state so that ML models can be determined based on the data (Gong et al. 2019).
+•	Measurement of the power generation of PV and wind power plants to create forecast models (Wicaksono et al. 2024).
+•	Measurement of the power consumption of a 5-axis milling machine to create load forecast models (Wicaksono et al. 2024).
+•	Measurement of the power consumption of an Injection Molding and Annealing machine in order to create load forecasting models (Wicaksono et al. 2024).
+•	Measurement of the power consumption of a factory in order to create forecast models for peak load behavior (Sawczuk et al. 2024)
+•	Measurement of the power consumption of a wood pellet production plant to evaluate the added value of energy-saving operating strategies.
+•	Measurement of the energy consumption of various resources in a lime and lime-stone crusher in order to identify defects and to create load forecasts.
+•	Measurement of the temperature and volume flow rate in hot water pipelines in order to determine energy flows, parameterize optimization models and evaluate energy-flexible energy strategies (Fuhrmann et al. 2022; Sandro Magnani et al. 2018)
+•	Measurement of the power consumption of hot water pumps and heat pumps in order to determine energy flows, parameterize optimization models and evaluate energy-flexible energy strategies (Fuhrmann et al. 2022)
+•	Measurement of voltage and current in a hydrogen electrolysis stack to determine power consumption in order to parameterize models and carry out evaluations of operating strategies (Ziogou et al. 2013)
+•	Measurement of the power consumption of a combination of electrolysis and Electric Arc Furnaces for the provision of balancing power in order to parameterize planning model and to evaluate dynamic combined behavior (Perroy et al. 2020). Measurement is carried out individually at each sub-site of the combination and is then aggregated.
+•	Measurement of the natural gas flow to determine the consumption of a CHP and a gas boiler in order to parameterize models and to evaluate operating strategies (Sandro Magnani et al. 2018).
+•	Measurement of the power consumption of a compression chiller in order to parameterize models and to evaluate operating strategies (Sandro Magnani et al. 2018).
+•	Measurement of the power generation of a CHP, a PV system and a wind turbine in order to parameterize models and to evaluate operating strategies (Sandro Magnani et al. 2018).
+•	Measurement of electricity exchange with the power grid in order to evaluate operating planning strategies (Sandro Magnani et al. 2018).
+•	Measurement of the power consumption of an electric drive motor of a conveyor belt, an electrical control unit and an IPC in order to parameterize operating planning models and to evaluate operating strategies (Mechs et al. 2013).
+•	Measurement of the power consumption of servers in order to implement and evaluate strategies for peak load management (Hsu et al. 2018).
+•	Measurement of the power consumption in electrolysis plants in the stack and in the entire plant in order to parameterize simulation models that can evaluate control concepts (Crespi et al. 2023).
+•	Measurement of the power consumption of a distillation column in order to parameterize optimization and simulation models, and to evaluate the energy-flexible operation of the column (Reinpold et al. 2023).
+•	Measurement of the voltage and current in a zinc electrolysis bath to record the power consumption in order to parameterize ML operating planning models and to evaluate energy-flexible operation (Yang et al. 2002).
+•	Measurement of the power of a drive motor of an oil production pump in order to develop and evaluate concepts for peak load management (Zhao et al. 2021).
+•	Measurement of the cooling flow at a cooling storage and at a cooling consumer (office building) in order to determine energy flexibility potential and to be able to communicate it to an aggregator (Rahnama et al. 2017).
+•	Measurement of the power consumption of individual components of an industrial cleaning machine, in order to identify promising components for energy-flexible operation and to develop, apply and evaluate energy-flexible operating strategies (Fuhrländer-Völker et al. 2023).
+Alternatives:
+•	Energy flows can be estimated by physical or statistical models (Cirera et al. 2020).
+Control
+The control program reads sensor values and receives user inputs to be translated into control signals for actuators. Control programs simultaneously realize production goals and the benefits of energy flexibility. Depending on the use case, it is difficult to precisely adjust the energy consumption of resources to varying degrees. Use cases where energy consumption can be directly set as a target or manipulated variable are generally easier to operate in an energy-flexible way than use cases where energy consumption results implicitly from setting other variables as target or manipulated values (Silletti et al. 2022). Control programs can be feed-forward controls, feedback controls, or a combination of these. The mode of operation of control programs is thus largely analogous to conventional operation, whereby control programs that offer a high degree of flexibility in the setting of control signals also usually favor energy-flexible operation. Part of control programs can be to limit signals to an allowed range in order not to generate unauthorized control commands. A control program can be designed for the independent control of the charging and discharging of storage systems without higher-level planning functions. In cases when load profiles are predictable and short load cycles are present, often no separate planning algorithms are used, but the calculation of charging and discharging of storage systems is done by the control program alone (Abdel-Baqi et al. 2015; Zhao et al. 2021).
+Examples
+•	Using a PID controller to adjust the cooling capacity of a compression chiller to the required setpoint (Cirera et al. 2020).
+•	Operating machine tools (drilling, milling, grinding) at partial load and/or shifted in time compared to conventional operating plans (Emec et al. 2013).
+•	Using a controller to adjust the speed of a compression chiller to the required target speed, where the speed can be between 50% and 100% of the rated speed. Below 50% an on/off control is used (Rahnama et al. 2017).
+•	Adjusting the temperature of the cooling medium of a production line for drive trains, where energy consumption is indirectly adjusted by controlling the temperature, making precise prediction of energy consumption more difficult (Silletti et al. 2022).
+•	Using a state machine for the control of hydrogen electrolyzers and batteries, where the state machine enables the simultaneous consideration of discrete state changes (start/stop of a hydrogen compressor) and continuous system dynamics (charging of the battery) (Ziogou et al. 2013). State changes are initiated here by reaching limit values (electrolyzer pauses when the hydrogen storage is full).
+•	Using multiple hysteresis loops to discretely vary the power consumption of an electric arc furnace by switching relays. The limits of the individual hysteresis loops can be hard-coded or dynamically adjustable (Perroy et al. 2020). Individual relays are mapped in the control code by binary variables that can be switched on and off separately.
+•	Charging and discharging a capacitor to support the combustion engine for driving an excavator bucket, allowing the combustion engine to primarily operate at its rated load range (Abdel-Baqi et al. 2015).
+•	Checking whether the change in power demand and the requested power of a motor of a mining excavator are within the allowed range (Abdel-Baqi et al. 2015).
+•	Dividing required load modulation for providing ancillary services across multiple discretely controllable (Electric Arc Furnace) or continuously controllable (Zinc Electrolysis Plant) loads (Perroy et al. 2020). Here, discretely controllable resources are used to achieve larger load modulations, while continuously controllable resources are used to react to smaller deviations from the required load modulation.
+•	Using a hysteresis circuit in a hydrogen electrolysis plant to control water levels in separators and in the demineralized water tank (Crespi et al. 2023).
+•	Operating pressure swing adsorption columns at partial load to enable partial load operation of a hydrogen electrolyzer. Hydrogen flow through the columns is reduced in partial load. Two columns alternate, with one always in regeneration mode and the other in drying mode. The duration of the operating modes is also variable in partial load operation, in that the operating mode is changed in partial load after a defined hydrogen volume, while in full load the operating mode can always be changed after a fixed defined time (Crespi et al. 2023).
+•	Controlling the operation of hydrogen electrolyzers: Controlling the cathode and anode back pressure using PI controllers by adjusting the hydrogen and oxygen flow from the separators using adjustable valves (Crespi et al. 2023).
+•	Controlling the temperature in a hydrogen electrolysis stack using a PI controller by adjusting the coolant flow (Crespi et al. 2023).
+•	Adjusting the control signal of the demineralized water flow into a hydrogen electrolysis stack to reduce the power consumption of the demineralized water pump in partial load operation (Crespi et al. 2023).
+•	Using a PID controller to adjust the heat flow from a thermal energy storage in a packed bed to a required setpoint (Kasper et al. 2024).
+•	Controlling a compression chiller to adjust the temperature of the cooling medium 'brine' to the required setpoint. Setting the temperature to a fixed limit of -10 °C is the signal to provide maximum cooling capacity (Rahnama et al. 2017). The cooling medium first cools an office building. Excess cooling is stored in an ice storage.
+•	Cascade control of a compressor for the cooling of refrigerated shelves in a supermarket: A sufficient temperature difference of the refrigerant across the evaporators must be maintained, which is achieved by controlling the speed of the compressor to adjust the required suction pressure (Rahnama et al. 2017).
+•	Using a hysteresis to adjust the temperature of a hot water buffer of an industrial cleaning machine (Fuhrländer-Völker et al. 2023).
+•	On/off control of a drying fan of an industrial cleaning machine (Fuhrländer-Völker et al. 2023).
+•	Implementation of a state machine for the implementation of energy-flexible operating plans of an industrial cleaning machine (Fuhrländer-Völker et al. 2023).
+Challenges
+•	It is difficult to externally specify a power reduction by a fixed amount if power is not a target or manipulated value in the control program. This is the case, for example, when the temperature of a cooling medium is to be adjusted using cooling capacity, where the temperature is the target value and not the cooling capacity. In such cases, solutions are needed that reliably translate an adjustment of the target value into an associated change in power.
+
+The control reads data from sensors. In order to develop, implement, evaluate and balance energy-flexible operating strategies, more data may need to be processed than in conventional operation. Received data that is needed for the development, evaluation and balancing is provided to IT components such as databases or operational planning algorithms.
+Examples
+•	Reading operating data of an air conditioning system for bacterial cultures and implementing load reduction commands (Lu 2022).
+•	Capturing the flexibility potential of chillers by comparing measurements of the operating point or the state of charge of cold storage with the associated operating limits. In this way, existing flexibility potential can be transmitted to an operational planning algorithm (Rahnama et al. 2017).
+•	Capturing the electrical power consumption of a factory in order to generate setpoints for power generation components (wind, PV) and power storage (battery) (Tian et al. 2016).
+•	Receiving measurements of the power consumption of a blow-mold machine to determine the energy demand for each operating state (Gong et al. 2019).
+•	Receiving measurements of a cold room and a chiller and providing the measurements for processing by a higher-level planning function (Hayn et al. 2023).
+•	Receiving measurements of the energy consumption of machines in a mine (shovel excavators, jaw crushers, conveyors, bucket-wheel reclaimers, and stackers) and providing the data to a database to perform load forecasts for the mine without negatively impacting established control concepts running on the PLCs (Laayati et al. 2022).
+•	Receiving measurements of heat supply resources of a factory including heat storage (valve positions, temperatures, volume flows of the cooling medium, power consumption of pumps and heat pumps), and providing the measurements to a higher-level MILP planning algorithm (Fuhrmann et al. 2022).
+•	Receiving measurements of the grid frequency and power consumption at the grid connection point in order to calculate the required load modulation for the provision of primary control power. Here, the load modulation is distributed across multiple discretely controllable (Electric Arc Furnace) or continuously controllable (Zinc Electrolysis Plant) loads (Perroy et al. 2020).
+•	Receiving measurements of heat, cold and power supply systems, including heat and cold storage of a factory and providing the measurements to a higher-level EMS in order to plan the operation of the supply resources.
+•	Receiving measurement data for the operation of an experimental conveyor belt and providing the measurement data of energy consumption to higher-level energy control systems (Mechs et al. 2013).
+•	Receiving sensor values from a heat storage and providing the data for a digital twin to improve the waste heat utilization of electric arc furnaces (Kasper et al. 2024).
+•	Receiving sensor values of an experimental distillation column and providing these for a higher-level MILP planning algorithm (Reinpold et al. 2023).
+•	Receiving sensor values and providing them for an online optimization of operating parameters to control a counterweight on an oil production pump as a function of the angle of rotation in order to perform peak load management of the pump's drive motor (Zhao et al. 2021).
+•	Receiving temperature measurements of a hot water buffer of an industrial cleaning machine (Fuhrländer-Völker et al. 2023).
+•	Receiving operating states of modules of an industrial cleaning machine (Fuhrländer-Völker et al. 2023).
+Challenges
+•	Collecting measurement data using a PLC without negatively influencing established control algorithms can be a challenge. Data is captured and read directly from a database (Laayati et al. 2022).
+
+The control receives signals from higher-level functions such as planning functions or HMI. The signals can be control commands or other signals such as dynamic operating limits.
+Examples
+•	An electrolyzer receives a setpoint from a TSO for the electrical power to be drawn in order to provide balancing power (Qiu et al.).
+•	Reading operating data of an air conditioning system for bacterial cultures and implementing load reduction commands (Lu 2022).
+•	Receiving control signals from a planning algorithm for the operation of a cold room and a compression chiller and sending the control signals to the actuators of the compression chiller (Hayn et al. 2023).
+•	Receiving optimized control commands for the operation of a heat supply system of a factory including heat storage. Control commands are received from a higher-level MILP operational planning algorithm (Fuhrmann et al. 2022).
+•	Receiving signals for load reduction for the provision of primary ancillary services by zinc electrolysis plants, whereby the required load reduction is distributed across multiple electrolysis cells to take into account the availability of plants (Perroy et al. 2020).
+•	Receiving signals to move an experimental conveyor belt to different standby states, where the most pronounced standby state switches off the most resources and thus saves the most energy, but is also the most complex to set (Mechs et al. 2013).
+•	Receiving signals from a digital twin to control a heat storage for improving waste heat utilization of electric arc furnaces (Kasper et al. 2024).
+•	Receiving optimized control commands from a MILP planning algorithm for the energy-flexible operation of an experimental distillation column (Reinpold et al. 2023).
+•	Receiving optimized control signals to control a counterweight on an oil production pump as a function of the angle of rotation in order to perform peak load management of the pump's drive motor (Zhao et al. 2021).
+•	Receiving control commands from a higher-level aggregator for the provision of balancing power by an air conditioning system of an office building and a chiller of a supermarket (Rahnama et al. 2017).
+•	Receiving on/off control commands for three compressors of a chiller of a supermarket from a higher-level aggregator (Rahnama et al. 2017).
+•	Receiving dynamic limits for a hysteresis control of the temperature in refrigerated shelves of a supermarket: the limits of the hysteresis are dynamically adjusted to open and close valves that control the flow of refrigerant into the refrigerated shelves (Rahnama et al. 2017).
+•	Receiving control commands from a higher-level SCADA system to control energy supply systems of a factory (Ferrari et al. 2017).
+•	Receiving commands for the implementation of load reduction measures (Fuhrländer-Völker et al. 2023).
+The control sends control commands to the actuators of resources, thereby setting operating points of resources. Compared to conventional operation, changes of the operating point might happen more frequently, and operating points in the partial load range might be set more frequently. Also pausing production resources can, if technically sensible, occur more often in the implementation of energy-flexible operating strategies than is the case in conventional operation.
+Examples
+
+•	Adjusting the rotational speed and feed rate of a CNC milling machine to vary the energy demand (Suwa and Samukawa 2016).
+•	Adjusting the rotational speed of a compression chiller to meet variable cooling demand (Hayn et al. 2023).
+•	Receiving control signals from a planning algorithm for the operation of a cold room and a compression chiller and sending the control signals to the actuators of the compression chiller (Hayn et al. 2023).
+•	Sending control commands for the operation of a heat supply system of a factory including heat storage. Control commands are received from a higher-level MILP operational planning algorithm (Fuhrmann et al. 2022).
+•	Sending control signals to rectifiers for continuous load modulation of zinc electrolysis plants for the provision of primary ancillary services (Perroy et al. 2020).
+•	Sending control signals to load tap changers for discrete load modulation of electric arc furnaces for the provision of primary ancillary services (Perroy et al. 2020).
+•	Sending signals to switch off a distributed IO module and connected sensors via PROFIEnergy in order to save energy (Mechs et al. 2013).
+•	Sending signals to move an electric drive of an experimental conveyor belt into standby mode in order to save energy (Mechs et al. 2013).
+•	Sending signals to switch off an electric drive of an experimental conveyor belt using a relay in order to save energy (Mechs et al. 2013).
+•	Sending control commands for the partial opening of pressure control valves for the operation of pressure swing adsorption columns (Crespi et al. 2023).
+•	Controlling a heat storage for improving waste heat utilization of electric arc furnaces (Kasper et al. 2024).
+•	On/off control of the heating current of an experimental distillation column in order to implement energy-flexible operating plans (Reinpold et al. 2023).
+•	Sending control signals to control a counterweight on an oil production pump as a function of the angle of rotation in order to perform peak load management of the pump's drive motor (Zhao et al. 2021).
+Control provides data for higher-level functions. When using energy flexibility, multiple distributed resources often have to be optimized and operated jointly. This requires the existence of higher-level planning and/or execution functions to which the data of the controls required for the overall operating plan must be provided.
+Examples
+•	Providing operating data to a database in order to use data of the operation of a chiller of a cold storage for the development of data-driven operating strategies (Cirera et al. 2020).
+
+Communication
+Communication with relevant external stakeholders must be ensured. This is particularly relevant when current market prices from the intraday electricity exchange are needed for operational planning, when measured values and control signals are exchanged with an aggregator, or when external forecasting services are used. Likewise, control signals from grid operators must be received if ancillary services (grid services) are to be provided automatically. If operating plans are optimized by external stakeholders, model parameters of planning models may also need to be communicated regularly.
+Examples
+•	Sending the current operating state of an air conditioning system and receiving commands for load reduction from an aggregator via OpenADR (Lu 2022).
+•	Costs for providing flexibility (grid services) are made available to a grid operator so that the latter can coordinate the activation of flexibility (Rahnama et al. 2017).
+•	Exchange of setpoints and measured values of electrical power consumption between distributed energy resources and an aggregator (Rahnama et al. 2017). Setpoint values should, if possible, be communicated with sufficient lead time so that operational planning can be aligned accordingly.
+•	Communication of model parameters of optimization models to aggregators (Rahnama et al. 2017).
+•	Communication of flexibility limits and current storage states to aggregators (Rahnama et al. 2017).
+•	Receiving dynamic energy prices from an energy supplier in order to operate manufacturing machines energy-flexibly (Sun et al. 2014).
+•	Industrial companies send flexibility offers (grid services) to a grid operator. Flexibility offers include: period of availability, maximum and minimum activation duration, required lead time, baseline energy consumption forecast, available ancillary service (grid services) capacity (Silletti et al. 2022).
+•	Industrial companies receive load change commands (grid services) from a grid operator. Load change commands include the flexibility offer to be provided, start time, end time and ancillary service (grid services) capacity to be provided (Silletti et al. 2022).
+Communication between all internal components involved in the energy-flexible operational planning and control must be ensured. Data can be semantically processed to enable structured querying of data.
+
+Aktorik
+Actuators implement control commands, thereby influencing processes such that energy consumption, energy generation, energy storage, and production rates are adjusted according to the energy-flexible operational planning.
+Examples:
+•	Adjustment of the cooling capacity of refrigeration machines for cooling supermarket refrigerator shelves and for air conditioning of office buildings through partly continuous, partly discrete adjustment of the operating point of compressors. (Rahnama et al. 2017)
+•	Individual cooling of individual compartments of supermarket refrigerator shelves by varying the refrigerant flow in different compartments. Individual adjustment of refrigerant flows is realized by individual valves for each compartment. (Rahnama et al. 2017)
+•	Adjustment of the heating power of an electrical heating element during the operation of a refinery. (Silletti et al. 2022)
+•	Adjustment of the output of PV systems and batteries through control commands to inverters. (Tian et al. 2016)
+•	Adjustment of the cooling capacity of an air conditioner for industrial production environments by varying the speed of a compressor (Hayn et al. 2023).
+•	Local variation of refrigerant flows of an air conditioner for industrial production environments by controlling pumps and valves (Hayn et al. 2023).
+•	Switching an experimental conveyor belt on and off by controlling an inverter (Hayn et al. 2023).
+•	Operating a pressure swing adsorption column in partial load by a continuously controllable valve at the column outlet (Crespi et al. 2023).
+•	Operating an electrolysis stack in partial load by adjusting the electrical power using a rectifier (Crespi et al. 2023).
+•	Operating an experimental distillation column in on/off mode by switching an electrical heating element on and off (Reinpold et al. 2023).
+•	Discrete control of a compressor of a refrigeration machine for cooling office buildings (Rahnama et al. 2017).
+Alternatives:
+•	Discretely controllable actuators can be combined with continuously controllable actuators to increase the overall flexibility range to be realized (Perroy et al. 2020).
+Challenges:
+•	Power consumption of an Electric Arc Furnace cannot be precisely adjusted if the power electronics are insufficient (Silletti et al. 2022). Oscillations of power were observed.
+•	Precise adjustment of the heating power of electrical heating elements should be critically reviewed. Slow responses and excesses in heating power were observed. (Silletti et al. 2022)
+•	Manual execution of flexibility calls in a steel plant is a major challenge (Silletti et al. 2022).
+•	Actuators must be suitable for a given use case. Use cases where a precise adjustment of the energy demand is necessary may not be implementable with discretely controllable actuators (Perroy et al. 2020).
+Forecast
+Note: Forecasts refer to influencing variables that cannot be influenced within the scope of the application. Variables that can be influenced are not referred to as forecasted but as planned.*
+
+The energy demand of the resources to be controlled is forecasted. Forecasts of energy demand are needed to provide load profiles for energy suppliers, grid operators, or balancing responsible parties. Energy demand forecasts are also important for peak load management, for example by predicting the period of peak and minimum load, so that operational planning can take this into account. The more precise forecasts are, the greater the added value they tend to enable. However, forecasts do not necessarily have to be highly precise. Even simple forecast models or intuitive estimations can provide significant added value.
+Examples:
+•	Forecasting the period of peak load and minimum load of a mine to operate peak load management through the operational planning of crushers. (Sokolovsky and Klimash 2019)
+•	Forecasting the course of energy consumption in order to transmit it to a grid operator. The grid operator can plan the use of grid services based on the forecasts. (Silletti et al. 2022)
+•	Forecasting the energy consumption profile for the production of parts in CNC milling machines and rubber injection molding machines in order to be able to carry out energy-optimized operational planning based on energy consumption forecasts of individual parts. (Wicaksono et al. 2024)
+•	Forecasting the peak load of a mine. (Laayati et al. 2022)
+•	The heat demand of a factory is forecasted in order to plan the operation of heat pumps and heat storage. Online measurements of the real heat demand are used to supplement forecasts and thus be more robust to unexpected behavior of plant operators. (Fuhrmann et al. 2022)
+•	Forecasting the demand of a production plant for cooling, heat, and electricity in order to plan the operation of energy supply resources. (Sandro Magnani et al. 2018)
+•	Forecasting the electricity consumption of servers in a data center to distribute electricity load evenly across server clusters. (Hsu et al. 2018)
+•	Forecasting peak load times in order to plan load reductions for peak load management of cooling machines in supermarkets. (Rahnama et al. 2017)
+•	Forecasting the energy demand of a production plant in order to be able to plan the operation of cooling, heat and electricity supply resources of a production plant at minimum cost. (Ferrari et al. 2017)
+•	Forecasting the energy demand of a factory both in conventional and optimized operating plans (Sawczuk et al. 2024).
+Alternatives:
+•	Instead of forecasting the energy demand of the resources to be controlled, reactive, deterministic control algorithms can be used. (Abdel-Baqi et al. 2015)
+The energy generation of fluctuating, local energy generation resources is forecasted. Forecasts of local energy generation are needed to forecast the energy balance of a site and thus the energy exchange across site boundaries. This is beneficial for load management.
+Examples:
+•	Forecasting the local electricity generation by wind turbines to ensure that the local generation does not exceed the own electricity demand. (Tian et al. 2016)
+•	Forecasting the local electricity generation by PV systems in order to plan the operation of electrolyzers at minimum cost. (Qiu et al.)
+•	Electricity generation by local resources such as PV and diesel generators in a mine is predicted to forecast electricity exchange with the electricity grid. (Laayati et al. 2022)
+Alternatives:
+•	Instead of forecasting the generation by local generation resources, reactive, deterministic control algorithms can be used. (Ziogou et al. 2013)
+Energy prices are forecasted in order to plan operations at minimum cost. In many cases, energy prices are known in advance for a certain period at the time of operational planning. In such cases, forecasts of energy prices are only needed to extend the planning horizon. If variable energy prices are used, these may be forecasted by the energy supplier.
+Examples:
+•	Electricity price forecast beyond a 24-hour period in order to extend the planning horizon for the energy-flexible operation of an extrusion blow molding machine. (Gong et al. 2019)
+•	Forecast of electricity prices by energy suppliers for planning the operation of CNC milling machines and rubber injection molding machines. (Wicaksono et al. 2024)
+•	Forecasting of electricity and gas prices in order to plan the operation of energy supply resources of a production plant. (Sandro Magnani et al. 2018)
+•	Access to energy price forecasts to plan the operation of cooling, heat and electricity supply resources of a production plant at minimum cost. (Ferrari et al. 2017)
+•	Forecasting of grid connection costs of a factory based on optimized and conventional operating plans (Sawczuk et al. 2024).
+Alternatives:
+•	Energy prices do not need to be forecasted if energy prices are permanently specified by energy suppliers. This is the case, for example, with Time-Of-Use schemes. (Yang et al. 2002)
+The demand for production media of downstream process steps is forecasted to ensure that downstream process steps are always sufficiently supplied with production media.
+
+Examples:
+•	Forecasting the oxygen and nitrogen demand of steel production in an upstream air separation unit in order to plan the operation of the air separation unit. (Han et al. 2016)
+The production of upstream intermediate products or waste products is forecasted in order to ensure that upstream process steps can run smoothly during operational planning. This is relevant, for example, if the further processing of upstream intermediate products or waste products has to be ensured.
+Examples:
+•	Forecasting the wastewater flow that occurs in a wastewater treatment plant and is stored temporarily in a large basin. The forecast is needed for the operational planning of the wastewater treatment plant. (Wagner et al. 2024)
+External, physical influences on energy resources are forecasted in order to be able to consider these influences in operational planning. Influencing factors include, for example, the ambient temperature, solar radiation or wind speed.
+Examples:
+•	Forecasting the ambient temperature of a cold storage to forecast cooling demand. (Hayn et al. 2023)
+•	Access to forecasts of weather conditions to be able to predict the electricity generation of local resources and to improve the forecast of energy prices. (Sandro Magnani et al. 2018)
+•	Access to forecasts of weather conditions to be able to predict the electricity generation of local resources. (Ferrari et al. 2017)
+•	Access to forecasts of weather conditions in order to be able to consider their influence on heat and cooling supply resources of a production plant during operational planning. (Ferrari et al. 2017)
+•	Forecasting the condition of wastewater (e.g. solids content of the wastewater) in order to take energy demand for wastewater treatment into account during operational planning. (Wagner et al. 2024)
+
+Simulation
+Simulations are used to evaluate different courses of action. If a plant operator has various options for how to operate a resource, for example, simulations can help to compare these options with respect to different operational goals. This requires the existence of a simulation model of the resource.
+Examples
+•	Simulation of the operation of factories to simulate the impact of operating plans on grid charges (Sawczuk et al. 2024).
+Challenges:
+•	Simulation models should be updated regularly to reflect changes to real resources (Kasper et al. 2024).
+Simulations support the development of energy-flexible operating strategies. When developing operating strategies, it may be necessary to accurately model the physical behavior of resources in order to evaluate whether operating plans are realistic and can be executed reliably (Hayn et al. 2023). Simulations can be used to support the development of operating strategies.
+Examples:
+•	Physical modeling of a cold storage room in a factory to develop and test operating strategies (Hayn et al. 2023).
+•	Use of simulation models to develop operating strategies for hydrogen electrolyzers and their supply resources (Ziogou et al. 2013).
+•	Use of physical simulation models of hydrogen electrolyzers including various subsystems such as hydrogen drying, to develop dynamic operating and control strategies (Crespi et al. 2023).
+•	Use of physical simulation models to improve optimization models for the energy-flexible operation of a distillation column by reconciling optimization and simulation models (Reinpold et al. 2023).
+Challenges:
+•	Simulation models should be updated regularly to reflect changes to real resources (Kasper et al. 2024).
+Simulations promote plant and process understanding and can therefore help to identify optimization potentials or challenges.
+Examples:
+•	Creation and parameterization of a simulation model of a high-temperature heat storage for waste heat utilization in the steel industry to understand dynamic behavior and degradation of the system (Kasper et al. 2024).
+•	Use of a simulation model to determine energy losses in an experimental distillation column and to understand the thermal behavior of the column (Reinpold et al. 2023).
+Challenges:
+•	Simulation models should be updated regularly to reflect changes to real resources (Kasper et al. 2024).
+Analytics
+Analytics function evaluates production volume in energy-flexible operation, ensuring that energy-flexible operation does not cause losses in production volume. For evaluating energy-flexible operating strategies, the actual measured production volume is often compared with the planned production volume. This allows for an assessment of how precisely an operating plan can be executed.
+Examples:
+•	Recording the production volume of an electric arc furnace and an electrolysis plant to analyze whether the production volume decreases due to energy-flexible production. (Perroy et al. 2020)
+•	Recording the production volume of a distillation column to analyze whether the production volume planned by a MILP optimization model matches the realized production volume. (Reinpold et al. 2023)
+•	Recording the realized production volume of a zinc electrolysis plant and comparing it with the planned production volume, where energy-flexible planning was used to minimize energy costs. (Yang et al. 2002)
+•	Comparison of the planned and the realized production volume of an air separation unit of a steel factory. (Han et al. 2016)
+•	Analysis of the energy consumption and production volumes of various machines in a mine to make maintenance decisions, analyze machine defects, and improve operating strategies. (Laayati et al. 2022)
+Analytics function evaluates consumed and generated energy, and calculates KPIs for assessing the benefits of energy-flexible operation. For the evaluation of energy-flexible operating strategies, the actual measured energy consumption is often compared with the planned energy consumption. This allows for an assessment of how precisely an operating plan can be executed.
+Examples:
+•	Recording the electricity and heat generated by PV, wind, and CHP to supply an industrial site, to assess the energy efficiency of the resources. (Sandro Magnani et al. 2018)
+•	Recording the consumed electricity of an experimental conveyor belt and comparing the consumed electricity with the planned electricity consumption to investigate the reliability of the operating strategy. (Mechs et al. 2013)
+•	Recording the consumed electricity of an experimental conveyor belt to determine energy savings of the energy-flexible operation compared to conventional operation. (Mechs et al. 2013)
+•	Recording the consumed electricity in data centers at the level of individual servers to record the peak load of clusters of servers in order to evaluate operating strategies for peak load reduction. (Hsu et al. 2018)
+•	Recording the electricity consumption of a pressure swing adsorption column to quantify the electricity savings through energy-flexible operating strategies. (Crespi et al. 2023)
+•	Recording the electricity consumption of a distillation column to analyze whether the electricity consumption planned by a MILP optimization model matches the realized electricity consumption. (Reinpold et al. 2023)
+•	Time-resolved recording of the power of a drive motor of an oil production pump, to analyze the effectiveness of peak load reduction strategies. (Zhao et al. 2021)
+•	Analysis of the energy consumption and production volumes of various machines in a mine to make maintenance decisions, analyze machine defects, and improve operating strategies. (Laayati et al. 2022)
+Analytics function records deviations between the operating plan and actual measured operating data to draw conclusions about the quality of the operating planning strategy.
+Examples:
+•	Recording the deviation between an operating plan of a heat storage for waste heat recovery in steel production and real measured values, to determine whether the deviation increases over time, which may indicate a degradation of the storage (Kasper et al. 2024).
+Challenges:
+•	If models need to be adjusted because the behavior of resources has changed (e.g., due to degradation), sufficient data is needed to reliably parameterize new models. This is often difficult immediately after detecting a change. Such ongoing model adaptation often proves difficult overall (Kasper et al. 2024).
+The importance of analytics functions for evaluating energy-flexible operating strategies is emphasized, without listing specific implementations, by other authors: (Ferrari et al. 2017)
+Analytics function determines the costs of an operating plan and the added values arising from energy-flexible production. Added values should be determined for the current planning horizon to be able to compare alternative operating plans. Added values should also be determined cumulatively over longer periods of time to put the added values and additional expenses in an appropriate context.
+Example:
+•	Comparison of the costs of alternative operating plans for minimizing grid connection costs when operating a factory (Sawczuk et al. 2024).
+Analytics function determines the ecological effects of an operating plan and the ecological added values arising from energy-flexible production. Effects should be determined for the current planning horizon to be able to compare alternative operating plans. Effects should also be determined cumulatively over longer periods of time to put the effects and additional expenses in an appropriate context.
+Execution
+In contrast to operational planning, execution often takes place within significantly shorter time frames and often as a reaction to events. Operational planning, on the other hand, usually takes place proactively with considerably more time in advance. Operating plans need a dedicated functionality to be executed correctly. This is done by the execution component. 
+During execution, flexibility calls are distributed across different resources so that the requested performance is achieved. Flexibility calls can come from a grid operator, for example, when a consumer needs to reduce their currently drawn power to resolve a grid bottleneck. Another case in which flexibility calls occur is the provision of grid services such as frequency regulation. It is also conceivable that an aggregator calls for flexibility. Often, a flexibility call is fulfilled by several resources, meaning that the required performance change must be distributed across multiple resources. Case-specific decision logics or optimization algorithms can be used to distribute the performance change across several resources. In this case, quick implementation in near real-time is often crucial.
+Example:
+•	When providing grid services from a network of steel factories and electrolysis plants, grid service flexibility calls are distributed across multiple plants, with steel factories (which in this case use electric arc furnaces) only able to adjust their power in discrete steps. To provide grid services precisely, a specific execution logic is used that sends discrete power adjustments to the steel factories and continuous requests to the electrolysis plants. (Perroy et al. 2020)
+•	In grid bottleneck management, power reduction commands are distributed to cooling machines in supermarkets and cooling machines for air conditioning in office buildings. For this purpose, an execution logic based on an optimization algorithm is used. (Rahnama et al. 2017)
+Execution translates operating plans into control commands. Operating plans cannot always be directly translated into control commands. For example, an operating plan may define energy consumption in kW, but the control system may require set points in percentages. In some cases, control commands can be integrated directly into planning models, eliminating the need for translation. In other cases with low complexity, a linear conversion is sufficient to translate operating plans into control commands. If there is no simple relationship between the values specified in the operating plan and control commands (for instance, if a process is controlled to a specific temperature, but the operating plan only provides a value for energy consumption), methods from the field of "Advanced Process Control" can be applied. If such methods cannot or should not be used, operating plans must be translated into control commands by plant operators. An important aspect of translating operating plans into control commands is the precise timing of sending control commands according to the operating plan.
+Examples:
+•	Translating operating plans for the operation of a factory's heat supply resources into control signals for individual actuators such as pumps, valves, or boilers. Roughly resolved operating plans (15-minute intervals) are converted into more highly resolved (1-minute intervals) control signals using an MPC approach. (Fuhrmann et al. 2022)
+•	Translating operating plans for heat storage for steel production into control signals for charging and discharging the heat storage, whereby the planned charging and discharging power in the operating plan is converted into the required volume flows in the storage. (Kasper et al. 2024)
+•	Translating set points for the power consumption of an experimental distillation column into control signals and transmitting the control signals to a PLC at the times specified by the operational planning. (Reinpold et al. 2023).
+Alternatives:
+•	There is also often the possibility of having operators of resources manually implement operating plans by entering the corresponding control commands in a process control system. (Han et al. 2016; Wagner et al. 2024)
+Execution sends control commands to distributed resources, where distributed resources can be individual actuators, subordinate controllers, or process control systems.  Important here is the accordance of the timings of sending control commands with the operating plan.
+Examples:
+•	Sending control commands to distributed heat supply resources of a factory (pumps, valves, or boilers). (Fuhrmann et al. 2022)
+•	Sending control commands to distributed energy resources for hydrogen production. (Ziogou et al. 2013)
+•	Coordinating control of locally distributed energy resources (steel production, electrolysis) to provide grid services: sending control signals: target current of the electrolysis units, steps of tap changers in steel production (electric arc furnace). (Perroy et al. 2020)
+•	Sending commands to activate standby states in computing resources and field devices for the control of an experimental conveyor belt, where standby states are used as a means of load regulation. (Mechs et al. 2013)
+•	Sending control commands to the actuators of a heat storage system for steel production. (Kasper et al. 2024)
+Data and Information Management
+The Data and Information Management ensures the semantic and syntactic interoperability of data. 
+Examples:
+•	Using a semantic middleware to ensure the interoperability of data from different sources (Wicaksono et al. 2024). 
+Provides data and information for other components. 
+Examples:
+•	Providing operating data of a mine for an energy flexibility management HMI. (Laayati et al. 2022)
+•	Providing operating data of a mine for a database. (Laayati et al. 2022)
+•	Providing operating data of a factory’s heat supply resources to an energy management system (Fuhrmann et al. 2022).
+•	Providing operating data of an air separation unit, supplying a steel plant, for a database. (Han et al. 2016)
+•	Providing data (operating data, energy prices, load profiles, forecasts, etc.) for an operational planning component to optimize the operation of a factory's energy supply resources. (Ferrari et al. 2017)
+•	Transmitting operating plans of a factory’s energy supply resources, which describe the predicted energy exchange with the grid, to grid operators (Ferrari et al. 2017).
+•	Providing data from the operation of a factory for forecasting components and HMI (Wicaksono et al. 2024).
+•	Providing semantically annotated data in response to user requests in natural language (Wicaksono et al. 2024).
+•	Providing data from a database for the HMI, simulation environments and planning functions via SQL query (Sawczuk et al. 2024).
+•	Providing operating plans of a steam turbine for waste heat recovery in steel production (Kasper et al. 2024).
+•	Communicating existing energy flexibility and current power in refrigeration machines. Flexibility and power are communicated to aggregators in the form of appropriate key performance indicators (Rahnama et al. 2017).
+•	Providing mathematical planning models of refrigeration machines for an aggregator (Rahnama et al. 2017).
+Challenges:
+•	A disruption of established processes, such as the control of resources, must be avoided. When retrofitting energy flexibility functionalities, parallel programs and databases can be established for this purpose so that existing, functioning control programs are not affected. (Laayati et al. 2022)
+Merges data and information from distributed resources and IT components, where IT components can be forecasts, databases, or interfaces to external stakeholders such as market operators, aggregators or weather services. The Data and Information Management is therefore the central component to ensure that data and information are available at the right time and place. 
+Examples:
+•	Merging data from various machines in a mine to provide operators with necessary information and to enable holistic planning (Sawczuk et al. 2024).
+•	Receiving measurements from a factory's heat supply resources (Fuhrmann et al. 2022).
+•	Merging measurements and information on operating states from distributed energy resources (PV, battery, electrolyzer) for hydrogen production. (Ziogou et al. 2013)
+•	Merging measurements of the current power consumption of distributed energy resources for steel production, the power grid frequency, and the operating states of distributed energy resources, including the recording of errors and the non-availability of resources. (Perroy et al. 2020)
+•	Merging weather report data, load profiles and energy prices that are required for the energy flexible operational planning of a factory's energy supply resources (Ferrari et al. 2017).
+•	Obtaining weather forecasts, data on energy generation, energy consumption, energy prices, and production resources via REST API (Wicaksono et al. 2024).
+•	Reading process data from programmable logic controllers of a factory's heat supply resources via OPC-UA (Fuhrmann et al. 2022).
+•	Receiving load reduction commands in the form of a maximum permissible load for flexible refrigeration machines from an aggregator (Rahnama et al. 2017).
+Challenges:
+•	A disruption of established processes, such as the control of resources, must be avoided. When retrofitting energy flexibility functionalities, parallel programs and databases can be established for this purpose so that existing, functioning control programs are not affected. (Laayati et al. 2022)
+Operational Planning
+In operational planning, energy throughput, production volumes, and relevant process parameters are determined for the planning horizon. The result of operational planning is the time-resolved profile of power outputs, production throughputs, and, if applicable, storage levels and operating states of all resources involved in the planning.
+Examples:
+•	Planning the charging and discharging power of a thermal storage unit to utilize waste heat from steel production. The waste heat is used to generate electricity in a steam circuit. The steam circuit is additionally heated with natural gas, with the heating power of natural gas also being determined during planning. The planned electricity generation is communicated to a grid operator. (Kasper et al. 2024)
+•	Planning the production volumes of oxygen and nitrogen in an air separation unit for the supply of a steel factory (Han et al. 2016).
+•	Planning the heat, cold, and electricity to be generated by energy supply resources of a factory. (Ferrari et al. 2017)
+•	Planning switching actions for the operation of an experimental conveyor belt, where standby states are used to reduce energy consumption during downtime (Mechs et al. 2013).
+•	Planning the production volume and energy consumption of an experimental distillation column (Reinpold et al. 2023).
+•	Planning the operation of an electrolyzer with the goal of consuming self-generated solar power, where the planning model considers and avoids the accumulation of hydrogen in the oxygen stream of the electrolyzer (Qiu et al.).
+•	Planning the production volume and energy consumption of an extrusion blow molding machine (Gong et al. 2019).
+•	Planning the operation of cooling machines for industrial production environments, such that cooling power is primarily generated when electricity prices are low (Hayn et al. 2023).
+•	Planning the electrical power to be purchased by an electrolyzer and the charging and discharging of a battery to utilize self-generated solar power (Ziogou et al. 2013).
+•	Planning the operation of a factory to minimize grid connection costs (Sawczuk et al. 2024).
+
+In operational planning, production goals are taken into account in the form of production volumes to ensure that energy-flexible operation does not have an unexpected negative impact on revenues from the sale of products. This is relevant when physical products are to be produced and there is a well-defined production target that should neither be over- nor under-fulfilled.
+Examples:
+•	Specifying production goals that must be met despite providing frequency containment reserves during the operation of an electric arc furnace and electrolyzers (Perroy et al. 2020).
+•	Specifying the quantities of oxygen and nitrogen required for steel production during the operational planning of an air separation unit (Han et al. 2016).
+In operational planning, the boundary conditions of the resources to be operated are taken into account, where boundary conditions are to be understood as physical process quantities. This ensures that resources are not operated outside the permissible operating points and that energy-flexible operation does not have a negative impact on product quality.
+Examples:
+•	Specifying a permissible temperature range in refrigerated display cases of a supermarket. (Crespi et al. 2023)
+In operational planning, the amounts of energy to be consumed and generated are taken into account. Consumption and generation can be specified either in a time-resolved manner or summed over the optimization period. This ensures that the consumption or generation that has been communicated to external stakeholders such as grid operators, aggregators, or markets is adhered to, which is necessary to avoid penalties.
+Examples:
+•	Specifying a load profile for supermarkets and chillers for air conditioning of office buildings, where the load profile must not be exceeded but must not fall short in order to avoid overloading the power grid. (Rahnama et al. 2017)
+•	Specifying a maximum power of a maximum amount of energy to be consumed to fulfill a production order of a CNC milling machine. (Suwa and Samukawa 2016)
+•	Specifying the amount of electricity to be generated by a generator per 15-minute interval (Sandro Magnani et al. 2018).
+•	Specifying production goals of an experimental distillation column for a certain optimization horizon (Reinpold et al. 2023).
+•	Specifying the power drawn at the grid connection point of energy supply resources of a factory (Ferrari et al. 2017).
+In operational planning, one or more objectives are pursued, which should be achieved as optimally as possible through operational planning. Objectives can include, for example, the minimization of costs or the maximization of production volume. If several objectives are pursued at the same time, they must be weighted against each other in operational planning, since it is usually not possible to achieve an optimum for several objectives simultaneously.
+Examples:
+•	Minimizing the deviation of electricity consumption of supermarkets and chillers for air conditioning office buildings from a baseline, in order to disturb the regular processes of the mentioned resources as little as possible. While the deviation from the baseline should be as small as possible, a maximum load profile of the resources must not be exceeded. (Rahnama et al. 2017)
+•	Minimizing electricity costs while maximizing an empirically defined utility resulting from the operation of production machines (CNC milling machines). (Sun et al. 2014)
+•	Maximizing the profit from the sale of hydrogen while minimizing the electricity costs for the operation of electrolyzers and the costs arising from frequent start and stop operations (Qiu et al.).
+•	Minimizing the production time for a production order of a CNC milling machine while adhering to a maximum permissible electrical power (Suwa and Samukawa 2016).
+•	Minimizing the energy costs and labor costs for the fulfillment of a production order of an extrusion blow molding machine while adhering to a maximum permissible production time (Gong et al. 2019).
+•	Avoiding price peaks by planning the operation of cooling machines and the charging of cold storages during times of low electricity prices (Hayn et al. 2023).
+•	Minimizing the energy costs and carbon dioxide emissions in the operational planning of heat supply resources of a factory, where energy costs and carbon dioxide emissions can be weighted variably against each other (Fuhrmann et al. 2022).
+•	Minimizing the unused generation of PV power and minimizing the degradation of an electrolyzer while maximizing hydrogen production (Ziogou et al. 2013).
+•	Minimizing the load fluctuations of a network of production robots (Wan et al. 2018).
+•	Minimizing energy costs in the operation of energy supply resources of a factory (Sandro Magnani et al. 2018).
+•	Maximizing the profitability of the operation of a steam turbine for the utilization of waste heat from steel production. The profitability is calculated here by the revenues from electricity and district heating sales minus the costs for gas for the operation of the steam turbine (Kasper et al. 2024).
+•	Minimizing the electricity costs for the operation of an experimental distillation column (Reinpold et al. 2023).
+•	Minimizing the electricity costs for the zinc electrolysis (Yang et al. 2002).
+•	Maximizing the profitability of the operation of energy supply resources of a factory, where the curtailment of renewable self-generation is penalized by the operational planning algorithm (Ferrari et al. 2017).
+If energy flexibility is to be marketed directly on markets, the planning must take into account the placement of bids on markets. For example, on the day-ahead electricity exchange, bids must be placed that specify the price and the quantity as well as the time interval of the traded electricity. Likewise, on frequency regulation markets, the offered frequency regulation power must be provided for a certain period of time with a price.
+It should be possible to flexibly adapt the operating plan in the event of unforeseen events. In production, it often happens that an existing plan has to be adapted due to unforeseen events, such as the failure of machines or personnel. The personnel carrying out the operational planning should therefore be able to initiate a new plan at any time, taking disruptive events into account (Sawczuk et al. 2024). It may also be necessary that a new operating plan must be automatically initiated if a trend is discernible that targets for production goals or energy consumption are not met.
+Examples:
+
+•	Initiating a new operating plan if it is determined that the energy consumption of a network of electric arc furnaces and electrolysis plants deviates significantly from the planned values when providing frequency containment reserve, or if resources are unexpectedly unavailable (Perroy et al. 2020).
+•	Regularly updating an operating plan of energy supply resources of a factory in order to react to updated generation forecasts for wind turbines and PV systems and updated load forecasts of a factory (Ferrari et al. 2017).
+In operational planning, relevant factors such as machine maintenance or break times can be taken into account.
+Examples:
+•	Taking maintenance decisions into account in the operational planning of a mine (Laayati et al. 2022).
+There should be the possibility to automatically implement operational plans by automatically transmitting control commands or setpoint specifications to the resources at the intended times.
+Examples:
+•	Transmitting activation signals for standby modes at times planned by operational planning to an experimental conveyor belt to realize energy savings (Mechs et al. 2013).
+•	Transmitting operating plans in the form of setpoints for power outputs when utilizing waste heat from steel production. Setpoints are transmitted to a model predictive controller, which converts the setpoints into control commands (Kasper et al. 2024).
+•	Translating setpoints for the electricity consumption of an experimental distillation column into control signals and transmitting the control signals to a PLC at times specified by the operating plan (Reinpold et al. 2023).
+Alternatives:
+•	There is often also the possibility to have operating plans implemented manually by the operators of resources by having the operators enter the corresponding control commands in a process control system (Han et al. 2016) (Wagner et al. 2024).
+Planning Model
+The planning model represents the relevant properties of energy-flexible operated resources mathematically to calculate the energy consumption and production volume of the considered resources depending on the operating plan. All relevant properties of the resources must be considered during operational planning, whereby one challenge is to identify the relevant properties of the resources. A relevant property of a resource can be, for example, the mathematical relationship between the operating point of a plant and its energy consumption. Similarly, planning models represent the dynamic behavior of resources if the dynamic behavior is a limiting factor in operational planning. A slow start-up of an air separation unit is more relevant for operational planning than a fast start-up and shutdown of a PEM electrolyzer. Another relevant property is the dependencies between different resources, for example, if the product of one resource is directly further processed by another resource. A systematic analysis of the relevant properties of planning models is undertaken by (Wagner et al. 2023), which is why only examples of relevant properties are listed here. Some of the examples listed here have already been listed in a comparable way under 'Operational Planning'. The difference in this section is that all examples focus on the mathematical representation of resource properties, while the 'Operational Planning' section focuses on general aspects to be considered in operational planning.
+Examples:
+•	Representation of the duration and sequence of processing steps in an automotive production line as a MILP model (Emec et al. 2013).
+•	Maximum production rate of production machines in an automotive production line as a MILP model (Emec et al. 2013).
+•	Representation of the target production volume for the operational planning horizon of an automotive production line as a MILP model (Emec et al. 2013).
+•	Calculation of greenhouse gas emissions and electricity consumption of an automotive production line as a MILP model (Emec et al. 2013).
+•	Calculation of electricity consumption of production machines of an automotive production line in different operating states: idle, pause, operation (Emec et al. 2013).
+•	Calculation of the production volume and electricity consumption of production resources of a mine (Sokolovsky and Klimash 2019).
+•	Considering dependencies of the production throughput of production resources of a mine: for example, the entire production of one resource must be immediately processed by the subsequent resource (Sokolovsky and Klimash 2019).
+•	Calculation of the temperature in a refrigerated shelf of a supermarket and the air conditioning of an office building, considering cold losses and compressor efficiency (Rahnama et al. 2017).
+•	Representation of the permissible sequence and permissible duration of operating states of a refrigeration machine (Rahnama et al. 2017).
+•	Consideration of the maximum cooling capacity of refrigeration machines for refrigerated shelves in supermarkets and for the air conditioning of office buildings (Rahnama et al. 2017).
+•	Modeling the cooling and heating behavior of refrigerated shelves of a supermarket through a first-order lag element (Rahnama et al. 2017).
+•	Use of non-linear fluid mechanical and thermodynamic equations to determine the required cooling capacity of refrigerated shelves of a supermarket (Rahnama et al. 2017).
+•	Consideration of operating states of an electrolyzer (Qiu et al.).
+•	Piecewise linearized modeling of the relationship between electrical power, hydrogen production rate and operating temperature of an electrolyzer as a MILP model (Qiu et al.).
+•	Formulation of the hydrogen crossover dynamics to consider the hydrogen content in the oxygen stream of an electrolyzer during operational planning (Qiu et al.).
+•	Specification of the maximum power of an electrolyzer depending on the availability of renewable energy (Qiu et al.).
+•	Consideration of the temperature dynamics of an electrolyzer during operational planning (Qiu et al.).
+•	Consideration of personnel costs, energy costs, energy consumption, production time of orders, changeover times and operating states during the operational planning of a machine for extrusion blow molding (Gong et al. 2019).
+•	Use of two planning models for the operational planning of heat supply resources of a factory. A coarse-grained model optimizes the operation from an economic and energetic point of view. A finer-grained model optimizes the adherence to the coarse-grained operating plan. (Fuhrländer-Völker et al. 2023)
+•	Modeling the non-linear relationship between voltage and current in a PV system (Ziogou et al. 2013).
+•	Calculation of the state of charge of a battery depending on the charging current (Ziogou et al. 2013).
+•	Modeling the non-linear relationship between voltage, current and operating temperature of an electrolyzer (Ziogou et al. 2013).
+•	Modeling the relationship between operating point and energy consumption of production resources of an experimental production system (Wan et al. 2018).
+•	Calculating the total power consumption of an experimental production system as the sum of the power consumption of all resources (Wan et al. 2018).
+•	Modeling the behavior of energy supply resources of a factory as characteristic curves (Sandro Magnani et al. 2018).
+•	Modeling the operating states, state durations, state sequences and state costs of an experimental conveyor belt as a price-timed-automaton (Mechs et al. 2013).
+•	Consideration of the maximum power and the ramp rates of a thermal storage for the waste heat recovery of steel production (Kasper et al. 2024).
+•	Consideration of the maximum and minimum load as well as the energy balance of a thermal storage for the waste heat recovery of steel production (Kasper et al. 2024).
+•	Consideration of the operating states and state durations 'charging' and 'discharging' of a thermal storage for the waste heat recovery of steel production (Kasper et al. 2024).
+•	Modeling the maximum charging and discharging power of a thermal storage for the waste heat recovery of steel production as a piecewise linearized function (Kasper et al. 2024).
+•	Using a mixed-integer linear thermal mass model of an experimental distillation column that maps heat losses along the column and material flows within the column as well as heat capacities of the column (Reinpold et al. 2023).
+•	Differentiation between two states in the modeling of an experimental distillation column: 'In operation' and 'Heating/Cooling/Pause'
+•	Modeling the relationship between electrical heating power, temperature and production rate of an experimental distillation column as a MILP model (Reinpold et al. 2023).
+•	Modeling a zinc electrolysis plant as a Neural Network (Backpropagating Neural Network), whereby the voltage and the efficiency of the electrolysis cell are mapped as a function of the zinc concentration, the sulfuric acid concentration and the current density (Yang et al. 2002). The parameters of the neural network are automatically updated at predefined time intervals using current data.
+•	Calculation of electricity costs and modeling the production goals of a zinc electrolysis plant (Yang et al. 2002).
+•	Consideration of the maximum and minimum current density in a zinc electrolysis plant (Yang et al. 2002).
+•	Defining the maximum and minimum production rate of an air separation unit as well as the downstream liquefaction plant and the storage capacities of liquid oxygen and liquid nitrogen storage (Han et al. 2016).
+•	Modeling the relationship between electricity generation and heat generation of a combined heat and power plant as a statistically determined third-order polynomial (Ferrari et al. 2017).
+•	Modeling the relationship between cooling capacity and heating capacity of an adsorption chiller as a statistically determined third-order polynomial (Ferrari et al. 2017).
+•	Consideration of the maintenance, operating, and energy costs of energy supply resources of a factory (Ferrari et al. 2017).
+•	Consideration of the maximum and minimum temperatures of thermal storages used in the energy supply of a factory (Ferrari et al. 2017).
+•	Modeling the operating states including state transitions and transition conditions of a hydrogen electrolyzer (Ziogou et al. 2013).
+•	Modeling the hysteresis that controls the pressure in a hydrogen buffer downstream of the electrolysis. The hysteresis is mapped in order to optimize its limits in such a way that a planning of the energy demand is met (Ziogou et al. 2013).
+•	Calculation of the required cooling capacity of individual compartments of refrigerated shelves of a supermarket (Cirera et al. 2020).
+Challenges:
+•	Mixed-integer linear models are often used in the modeling of resources. Since many resources exhibit non-linear behavior in reality, non-linearities must be linearized. In case of strong non-linearity, piecewise linearizations can be used. Piecewise linearization is often challenging (Kasper et al. 2024).
+•	Modeling resources that have a variable dead time is often particularly difficult (Rahnama et al. 2017).
+Alternatives:
+•	In cases where a particularly fast reaction of resources is required, no planning models are often used. Instead, resources are controlled exclusively via a suitable control program, which may contain some aspects of planning models (Abdel-Baqi et al. 2015 - 2015).
+A planning model considers all relevant cost factors that arise from energy-flexible operation. Examples of cost factors include costs for energy, raw materials, personnel, maintenance, capital, emissions, or other operating media such as compressed air. Since cost factors often cannot be quantified precisely, it may also be sufficient to have cost factors estimated by plant operators, or to adjust cost factors iteratively so that the resulting operating plans are plausible. It is important to consider that not all cost factors have to be listed in planning models, for example if they are fixed costs that do not depend on the production plan. This is often the case with personnel costs and capital costs. Likewise, no costs need to be listed whose amount is negligible according to the assessment of the responsible parties.
+HMI (Human Machine Interface) Functionalities**
+An HMI displays the measured values and key performance indicators (KPIs) relevant to energy-flexible operation. Relevant measured values include measurements of energy consumption, production volume, storage states, or other physical quantities that influence energy consumption or generation. In this context, key performance indicators are, for example, energy prices or KPIs of energy-flexible operation. For example, the benefits, e.g., financial benefits, resulting from energy-flexible operation should be displayed to the responsible parties in an HMI. The ability to display the described relevant values in a central interface is essential for plant operators to make correct decisions based on the current situation (Laayati et al. 2022).
+Examples:
+•	Displaying the time course of the electricity consumption of an air conditioning system in a room for bacteria cultivation, with time intervals during which flexibility is called up highlighted in color (Lu 2022).
+•	Displaying time-variable grid charges to support operational planning and the evaluation of alternative actions (Sawczuk et al. 2024).
+•	Displaying remaining potential for increasing the power consumption of a factory before a new peak load is reached (Sawczuk et al. 2024).
+•	Displaying energy prices, energy consumption forecasts, and real energy consumption curves during the operational planning of a mine (Laayati et al. 2022).
+•	Individual display of voltage, current, power, and grid frequency of all machines for the operation of a mine (Laayati et al. 2022).
+•	Displaying price and weather forecasts as well as the energy consumption of energy supply resources of a factory (Sandro Magnani et al. 2018).
+•	Displaying operating data for monitoring an energy-flexibly operated plant for zinc electrolysis (Yang et al. 2002).
+•	Displaying the load curve of a drive motor of an oil extraction pump on-site or remotely (Zhao et al. 2021).
+•	Displaying warnings about abnormal operating states and component malfunctions during the operation of an oil extraction pump (Zhao et al. 2021).
+An HMI displays the energy flexibility, i.e., the potential for adjusting energy consumption or energy generation. This is particularly necessary when reactions to unplanned events are required during ongoing operation. In this case, the plant operator needs to know the available options at all times.
+Examples:
+•	Displaying flexibility offers for resolving grid bottlenecks and for voltage regulation to a grid operator, so that the grid operator can select the best offers (Silletti et al. 2022).
+•	Displaying alternative actions to reduce grid charges during the operation of production facilities, where the decision as to which alternative actions are implemented is up to the plant operator. Simulations of the alternative actions show how large the influence of the various alternative actions on the grid charges are (Sawczuk et al. 2024).
+•	Displaying alternative actions and their profitability during the operational planning of a mine (Laayati et al. 2022).
+The HMI enables user inputs. The HMI receives user commands for controlling resources, for example. Furthermore, the HMI offers the possibility to set user preferences. This is important, for example, when several goals, such as production volume and energy costs, are to be optimized simultaneously, as a weighting of the goals must be performed in this case.
+Examples:
+•	Receiving user inputs for activating standby modes in an experimental conveyor belt (Mechs et al. 2013).
+•	Providing micro-services for utilizing functionalities of a digital twin of a thermal storage for waste heat utilization of steel production (Kasper et al. 2024).
+•	Entering properties of raw materials that influence the energy efficiency of zinc electrolysis, so that the properties of the raw materials can be considered during operational planning (Yang et al. 2002).
+•	Receiving user inputs for the operation of oil extraction pumps on-site or remotely (Zhao et al. 2021).
+•	Manual implementation of optimized operating plans for air separation units for steel production (Han et al. 2016).
+•	Weighting the optimization goals "electricity cost minimization" and "production time" when operating CNC milling machines (Wicaksono et al. 2024).
+The HMI displays operating plans. If several alternative operating plans are available, several operating plans can be displayed.
+Examples:
+•	Display of optimized operating plans for zinc electrolysis (Yang et al. 2002).
+•	Displaying optimized operating plans for the energy-flexible operation of an air separation unit for the supply of a steel factory. Operating plans are displayed as changes in power and operating point at specific times. The cost of an operating plan is also displayed. The implementation of operating plans is then carried out manually by operators (Han et al. 2016).
+•	Displaying optimized operating plans for the operation of a plant for zinc electrolysis, where operating plans can be executed automatically or after confirmation by an operator (Yang et al. 2002).
+
+**Data Storage**
+The data storage component primarily stores data required for energy-flexible operational planning and execution as time series. This includes data needed for the development of planning models (optimization models, ML models), as well as boundary conditions for operational planning (market prices, load forecasts, weather conditions), and data for the execution of control programs (e.g., disturbances).
+Examples:
+•	Storage of operational data, such as electrical power, operating temperature, and hydrogen content in the oxygen stream of an electrolyzer. (Qiu et al.)
+•	Storage of operational data, such as the charging current and voltage of a capacitor, which serves as an energy storage for a wheel loader. Furthermore, the rotational speed of the digging shovel drive motor, the bus voltage, and the motor power are stored as time series. (Qiu et al.)
+•	Separate storage of power consumption data from three components of an extrusion blow molding machine. (Gong et al. 2019)
+Literaturverzeichnis
+Abdel-Baqi, O.; Miller, P.; Nasiri, A.: Energy management for an 8000HP hybrid hydraulic mining shovel. In: 2015 IEEE Transportation Electrification Conference 2015, S. 1–8.
+Cirera, Josep; Carino, Jesus A.; Zurita, Daniel; Ortega, Juan A. (2020): Improving the Energy Efficiency of Industrial Refrigeration Systems by Means of Data-Driven Load Management. In: Processes 8 (9), S. 1106. DOI: 10.3390/pr8091106.
+Crespi, Elena; Guandalini, Giulio; Mastropasqua, Luca; Campanari, Stefano; Brouwer, Jacob (2023): Experimental and theoretical evaluation of a 60 kW PEM electrolysis system for flexible dynamic operation. In: Energy Conversion and Management 277, S. 116622. DOI: 10.1016/j.enconman.2022.116622.
+Fuhrländer-Völker, Daniel; Magin, Jonathan; Weigold, Matthias (2023): Automation architecture for harnessing the demand response potential of aqueous parts cleaning machines. In: Prod. Eng. Res. Devel. 17 (6), S. 785–803. DOI: 10.1007/s11740-023-01201-x.
+Fuhrmann, Florian; Windholz, Bernd; Schirrer, Alexander; Knöttner, Sophie; Schenzel, Karl; Kozek, Martin (2022): Energy management for thermal batch processes with temporarily available energy sources– Laboratory experiments. In: Case Studies in Thermal Engineering 39, S. 102473. DOI: 10.1016/j.csite.2022.102473.
+Gong, Xu; Liu, Ying; Lohse, Niels; Pessemier, Toon de; Martens, Luc; Joseph, Wout (2019): Energy- and Labor-Aware Production Scheduling for Industrial Demand Response Using Adaptive Multiobjective Memetic Algorithm. In: IEEE Trans. Ind. Inf. 15 (2), S. 942–953. DOI: 10.1109/TII.2018.2839645.
+Han, Zhongyang; Zhao, Jun; Wang, Wei; Liu, Ying (2016): A two-stage method for predicting and scheduling energy in an oxygen/nitrogen system of the steel industry. In: Control Engineering Practice 52, S. 35–45. DOI: 10.1016/j.conengprac.2016.03.018.
+Hsu, Chang-Hong; Deng, Qingyuan; Mars, Jason; Tang, Lingjia (2018): SmoothOperator. In: Xipeng Shen, James Tuck, Ricardo Bianchini und Vivek Sarkar (Hg.): Proceedings of the Twenty-Third International Conference on Architectural Support for Programming Languages and Operating Systems. ASPLOS '18: Architectural Support for Programming Languages and Operating Systems. Williamsburg VA USA, 24 03 2018 28 03 2018. New York, NY, USA: ACM, S. 535–548.
+Kasper, Lukas; Schwarzmayr, Paul; Birkelbach, Felix; Javernik, Florian; Schwaiger, Michael; Hofmann, René (2024): A digital twin-based adaptive optimization approach applied to waste heat recovery in green steel production: Development and experimental investigation. In: Applied Energy 353, S. 122192. DOI: 10.1016/j.apenergy.2023.122192.
+Laayati, Oussama; Bouzi, Mostafa; Chebak, Ahmed (2022): Smart Energy Management System: Design of a Monitoring and Peak Load Forecasting System for an Experimental Open-Pit Mine. In: ASI 5 (1), S. 18. DOI: 10.3390/asi5010018.
+Liu, J.; Tylor, M.; Dorreen, M. (2016): DYNAMIC RESPONSE OF CRYOLITIC BATH AND INFLUENCE ON CELL HEAT AND MASS BALANCE WITH LARGE SCALE POTLINE POWER SHIFTS. In: Light Metals 2016. DOI: 10.1007/978-3-319-48251-4.
+Mechs, Sebastian; Grimm, Stephan; Beyer, Dagmar; Lamparter, Steffen (2013): Evaluation of prediction accuracy for energy-efficient switching of automation facilities. In: IECON 2013 - 39th Annual Conference of the IEEE Industrial Electronics Society. IECON 2013 - 39th Annual Conference of the IEEE Industrial Electronics Society. Vienna, Austria, 10.11.2013 - 13.11.2013: IEEE, S. 6928–6933.
+Perroy, Edouard; Lucas, Damien; Debusschere, Vincent (2020): Provision of Frequency Containment Reserve Through Large Industrial End-Users Pooling. In: IEEE Trans. Smart Grid 11 (1), S. 26–36. DOI: 10.1109/TSG.2019.2916623.
+Qiu, Yiwei; Zhou, Buxiang; Zang, Tianlei; Zhou, Yi; Qi, Ruomei; Lin, Jin: Extended Load Flexibility of Industrial P2H Plants: A Process Constraint-Aware Scheduling Approach. In: 2022 IEEE 5th International Electrical and Energy Conference (CIEEC), S. 3344–3349.
+Rahnama, Samira; Green, Torben; Lyhne, Casper Hillerup; Bendtsen, Jan Dimon (2017): Industrial Demand Management Providing Ancillary Services to the Distribution Grid: Experimental Verification. In: IEEE Trans. Contr. Syst. Technol. 25 (2), S. 485–495. DOI: 10.1109/TCST.2016.2563385.
+Reinpold, Lasse Matthias; Wagner, Lukas Peter; Reiche, Leif-Thore; Fay, Alexander (2023): Experimental Setup for the Evaluation of Optimization Strategies for Flexible Energy Resources. In: 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). SC, USA, 08.12.2023 - 10.12.2023: IEEE, S. 1–6.
+Sandro Magnani; Piero Danti; Giovanni Cauchi (2018): Experimental results of the optimized management of an EMS-equipped small-size prosumer. In: 2019 UK/ China Emerging Technologies (UCET).
+Sawczuk, Marcin; Stawowy, Adam; Okrzesik, Olga; Kurek, Damian; Sawczuk, Mariola (2024): Managing Costs of the Capacity Charge through Real-Time Adjustment of the Demand Pattern. In: Energies 17 (8), S. 1911. DOI: 10.3390/en17081911.
+Silletti, Francesco; Orru, Luca; Di Serafino, Marco; Bolla, Laura; Maso, Francesco (2022): H2020 OSMOSE PROJECT: Final results of the experimentation phase of industrial Demand Response (DR). In: 2022 AEIT International Annual Conference (AEIT). 2022 AEIT International Annual Conference (AEIT). Rome, Italy, 03.10.2022 - 05.10.2022: IEEE, S. 1–6.
+Sokolovsky, M. A.; Klimash, V. S. (2019): Power Management of a Continuous Mining Process. In: 2019 International Multi-Conference on Industrial Engineering and Modern Technologies (FarEastCon). 2019 International Multi-Conference on Industrial Engineering and Modern Technologies (FarEastCon). Vladivostok, Russia, 01.10.2019 - 04.10.2019: IEEE, S. 1–3.
+Suwa, Haruhiko; Samukawa, Tetsuo (2016): A New Framework of Energy-efficient Manufacturing Systems Based on Energy Load Profiles. In: Procedia CIRP 41, S. 313–317. DOI: 10.1016/j.procir.2015.10.011.
+Tian, Jun; Liu, Zhengyu; Shu, Jun; Liu, Jingbo; Tang, Jian (2016): Base on the ultra‐short term power prediction and feed‐forward control of energy management for microgrid system applied in industrial park. In: IET Generation, Transmission & Distribution 10 (9), S. 2259–2266. DOI: 10.1049/iet-gtd.2016.0135.
+Vigants, Haralds; Blumberga, Dagnija; Veidenbergs, Ivars (2014): Demand Side Management in Pellet Production: Internal and External Factors. In: Environmental and Climate Technologies 14 (1), S. 30–35. DOI: 10.1515/rtuect-2014-0011.
+Wagner, Lukas Peter; Reinpold, Lasse Matthias; Fay, Alexander (2023): Design Patterns for Optimization Models of Flexible Energy Resources. In: 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). SC, USA, 08.12.2023 - 10.12.2023: IEEE, S. 1–6.
+Wagner, Lukas Peter; Reinpold, Lasse Matthias; Kilthau, Maximilian; Gehlhoff, Felix; Derksen, Christian; Loose, Nils et al. (2024): Nutzung von Massespeichern zur Flexibilisierung des Energieverbrauchs: Kosteneffizienter Anlagenbetrieb durch Anpassung an Marktpreise.
+Wicaksono, Hendro; Trat, Martin; Bashyal, Atit; Boroukhian, Tina; Felder, Mine; Ahrens, Mischa et al. (2024): Artificial-intelligence-enabled dynamic demand response system for maximizing the use of renewable electricity in production processes. In: Int J Adv Manuf Technol. DOI: 10.1007/s00170-024-13372-7.
+Yang, Chunhua; Deconinck, G.; Gui, Weihua; Li, Yonggang (2002): An optimal power-dispatching system using neural networks for the electrochemical process of zinc depending on varying prices of electricity. In: IEEE transactions on neural networks 13 (1), S. 229–236. DOI: 10.1109/72.977311.
+Zhao, Haisen; Wang, Zixu; Wang, Yilong; Zhang, Liancheng; Eldeeb, Hassan H.; Zhan, Yang; Xu, Guorui (2021): Electromechanical Based Energy Saving Control Strategy for Beam Pumping Motor Systems in Oil Production Industry. In: 2021 IEEE Industry Applications Society Annual Meeting (IAS). 2021 IEEE Industry Applications Society Annual Meeting (IAS). Vancouver, BC, Canada, 10.10.2021 - 14.10.2021: IEEE, S. 1–8.
+Ziogou, Chrysovalantou; Ipsakis, Dimitris; Seferlis, Panos; Bezergianni, Stella; Papadopoulou, Simira; Voutetakis, Spyros (2013): Optimal production of renewable hydrogen based on an efficient energy management strategy. In: Energy 55, S. 58–67. DOI: 10.1016/j.energy.2013.03.017.
+

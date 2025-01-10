@@ -1,0 +1,870 @@
+Glossary
+Resource
+•	Definition: A technical element within a CPPS (Cyber-Physical Production System) that is utilized for production, energy storage, energy conversion, or supporting infrastructural operations.
+Infrastructural Resources
+•	Definition: Resources that provide essential services or utilities to support the primary production processes within a CPPS.
+o	Waste: By-products of production processes that require disposal, recycling, or repurposing, often subject to environmental and regulatory constraints.
+o	Production Media: Inputs like compressed air, water, or lubricants necessary for the operation of production machinery.
+Inherent Storage
+•	Definition: Storage capabilities intrinsic to processes or resources, such as the thermal mass of a furnace or the buffering capacity of a pipeline, deliberately utilized to manage energy or material flows flexibly.
+Grid Services
+•	Definition: Ancillary services provided by a CPPS to the power grid, such as frequency regulation, load balancing, or power quality control, to support grid stability and efficiency.
+Component
+•	Definition: A functional unit within a CPPS that contributes to energy-flexible operations, such as sensors, actuators, or IT systems like forecast components, analytics or operational planning modules.
+Operational Planning
+•	Definition: The process of defining and scheduling the operation of CPPS resources to achieve production and energy management goals, considering constraints like energy costs, market participation, and process quality. Operational planning is very similar to production planning, except that operational planning is not only focused on production of goods but also the operation of energy resources.
+Execution
+•	Definition: The implementation and realization of operating plans through resource control, monitoring, and adjustments, ensuring alignment with the planned objectives. Can be performed automatically by a dedicated execution component or manually by operators who set suitable control commands to execute an operating plan. 
+Use Case
+•	Definition: A specific application or scenario in which energy-flexible operations are deployed, defined by the goals (e.g., cost savings, self-generation maximization), the constraints of the system, the preferences of responsible parties, and the existing infrastructure.
+Flexibility Call
+•	Definition: A signal indicating the need to adjust energy consumption, production, or storage to meet operational, market, or grid-related requirements. Generally, a spontaneous signal to reduce or increase energy consumption or generation. A common example of a flexibility call is a signal from a grid operator to provide balancing power to stabilize the grid. Can also be created by aggregators or other actors. 
+o	Internal Flexibility Call: A flexibility signal generated within the CPPS, often as a result of deviations from the operating plan or changing production needs.
+High-Precision Use Case
+•	Definition: A use case where temporary deviations from the operating plan can entail high financial losses. Any use case participating in wholesale energy markets is a high-precision use case. Likewise, use cases with strict, short-term production goals or strong logistic dependencies can be high-precision use cases.
+Logistic Dependencies
+•	Definition: Interdependencies between resources in terms of material flow or energy supply, where the operation of one resource is contingent on the availability or state of another. Examples of logistic dependencies are production machines depending on material supply by another machine, the provision of production media such as pressurized air, or energy supply. Similarly the processing of waste materials can cause logistic dependencies. 
+External Physical Quantities
+•	Definition: Environmental or external factors that impact resource operation, such as ambient temperature, weather conditions, or variable raw material properties. 
+Planning Models
+•	Definition: Computational representations of resource behavior, constraints, and interdependencies used in operational planning to predict and optimize energy consumption, production rates, and process quality. Often formulated as optimization models.
+Proactive Approach
+•	Definition: An energy management strategy that anticipates future conditions and optimizes resource operation in advance, often using planning models and forecasts.
+Reactive Approach
+•	Definition: An energy management strategy that responds dynamically to real-time signals or events, such as flexibility calls from grid operators or unplanned process deviations.
+Process Quality Indicator
+•	Definition: Metrics or state variables that determine the quality or performance of a process, such as temperature, pressure, or product purity, which must be maintained within acceptable limits to ensure operational integrity. Examples are the indoor temperature, the pressure in the pressurized air supply system, or the level of impurities in a product. 
+Responsible Party
+•	Definition: Individuals or teams accountable for the planning, execution, and evaluation of energy-flexible operations, including operators, engineers, or decision-makers within the CPPS framework.
+Operating Strategy
+•	Definition: A comprehensive plan encompassing the technologies, actions, and interactions required to enable energy-flexible operations within a Cyber-Physical Production System (CPPS). It integrates resource management, operational planning, execution, and evaluation processes to align energy consumption, generation, or storage with external and internal objectives, such as cost reduction, renewable energy integration, or grid stability. Operating strategies must account for technical, economic, and regulatory considerations to ensure uninterrupted, efficient, and profitable operation.
+
+Requirements
+Sensors
+•	The state of charge or the filling level of storage resources should be measured
+o	The filling level of material storage resources should be measured
+o	The state of deliberately utilized process inherent storage capacities should be measured
+o	The state of charge of energy storage resources should be measured.
+o	Depends on: 
+	Size of storage - the smaller the storage the more important measurements are
+•	Energy flows into and out of resources should be measured.
+o	Energy flowing into and out of storage resources should be measured, especially if it is otherwise difficult to determine the state of charge of the storage resource.
+o	Various forms of energy generation by resources should be measured.
+o	Various forms of energy consumption by resources should be measured.
+•	The flow of materials and products into and out of resources should be measured in production and infrastructural resources. 
+o	The flow of waste products should be measured if constraints apply regarding the storage, buffering, or further processing of waste products. 
+o	The flow of incoming raw materials or intermediate products into a resource should be measured, if constraints regarding the processing of raw materials and intermediate products apply. 
+o	The flow of products produced by a resource should be measured.
+•	Process and state variables that impact the process quality, safety, or utility of a resource should be measured.
+o	Positions of actuators that impact the process quality, safety or utility of a resource or are relevant for control programs should be tracked.
+o	Process variables that impact the process quality, safety or utility of a resource or are relevant for control programs should be measured.
+o	State variables that impact the process quality, safety or utility of a resource or are relevant for control programs should be measured.
+o	If power grid services are performed, the physical state of the grid, i.e., the voltage and / or grid frequency should be measured. 
+•	Other physical quantities that impact the energy conversion or utility of a resource should be measured.
+o	Qualities of raw materials or intermediate products that impact the energy consumption or productivity of a resource should be measured.
+o	Ambient conditions that impact the energy conversion or productivity of a resource should be measured.
+•	Depends on: 
+o	Predictability - the more random impact factors impact the resources, the more important measurements are. In highly predictable resources, measurements may be replaceable by mathematical models. 
+o	Use Case - high precision use cases require better measurements. 
+o	Measurements are only necessary in resources that have a direct or indirect impact on energy flexible operation. 
+
+Control
+•	The control program must facilitate the reading and processing of sensor readings.
+o	The control program must facilitate access to sensor readings by higher level IT components such as operational planning or forecast.
+•	The control program must facilitate the sending of control signals to actuators.
+o	The control program must facilitate the reception of set points from higher level IT components such as operational planning or execution according to operating plans.
+•	The control program must facilitate the control of resources according to the operating plan. The more precisely resources can be controlled according to the operating plan the better. In cases where conventional feed forward or feedback control is not sufficient to regulate resources according to the operating plan, advanced process control approaches may need to be pursued. The resources to be controlled are production resources, energy conversion resources, energy storage resources and infrastructural resources. 
+Communication
+The required data exchange links depend on which IT/OT components are required for the specific use case, and which external actors are involved.
+•	It must be assured at all times, that data can be exchanged with relevant external actors such as grid operators, aggregators, energy markets, or prediction services. The relevance of actors is determined by the use case. 
+o	In use cases actively participating in energy or balancing markets, it must be possible to place and accept bids at applicable market portals (e.g., Day Ahead, Intraday, Grid Services, Peer-to-peer, etc.). 
+o	If grid operators, aggregators or other external actors require explicit forecasts of load or flexibility potentials, it must be possible to communicate load forecasts and flexibility potentials to grid operators.
+o	If grid services are to be provided, it must be possible to receive flexibility calls from grid operators. 
+o	If an aggregator or similar service provider is involved in the use case, it must be possible to receive flexibility calls from aggregators or similar service providers. 
+•	It must be assured at all times, that data can be exchanged between internal IT/OT components such as planning components, execution components, control programs, databases, analytics, and HMIs. 
+Actuators
+•	Actuators must execute control signals received from control devices, thereby manipulating resources to adjust the production rate, energy conversion, and other process and state variables to conform to the operating plan.
+•	Actuators must be suited to the respective use case. High precision use cases requiring a precise realization of operating plans, such as power grid services or intraday market trading, impose stricter requirements on actuators. In such use cases, continuously controllable actuators might be required instead of discretely controlled actuators. 
+Forecast
+Typically, forecasts are only required or beneficial in proactive approaches. The required precision of forecasts depends on the use case. In some use cases, very simple forecasts can be utilized. High precision use cases might require precise forecasts. The need for forecasts can be partly alleviated by integrating reactive elements into the operational strategy. 
+•	The energy load (electrical, heating, cooling, etc.) should be forecast in the following use cases: 
+o	Use cases actively participating in energy or balancing markets
+o	Use cases maximizing the self-generated energy
+o	Load management use cases
+o	Use cases with external actors who request load forecasts. 
+•	In self-generating use cases, the energy generation from variable renewable energy resources (electrical, heating, cooling, etc.) should be forecast. 
+•	In use cases actively participating in energy markets, balancing markets, or leveraging variable energy rates from energy suppliers, energy prices (electricity, heat) and other market prices (grid services, materials) should be forecast.
+•	In use cases with logistic dependencies to downstream resources, the required production volume of final and/or intermediate products should be forecast.
+•	In use cases with logistic dependencies to upstream resources, the incoming flow of materials should be forecast.
+o	The incoming flow of raw materials should be forecast in use cases that benefit from or require incoming raw material flow forecasts.
+o	The incoming flow of intermediate products should be forecast in use cases that benefit from or require incoming intermediate product flow forecasts.
+o	The incoming flow of waste materials should be forecast in use cases that require or benefit from waste material flow forecasts
+•	External physical quantities impacting the operation of resources should be forecast.
+o	In temperature dependent use cases, ambient and weather conditions impacting the operation of resources should be forecast. 
+o	In use cases impacted by variable qualities of incoming material flows, physical qualities of incoming materials impacting the operation of resources should be estimated. 
+Simulation
+•	Simulations should be used to evaluate different paths of action. This is relevant if the feasibility of operating plans needs to be evaluated before deployment, e.g., if the behavior of resources is not accurately considered by the operational planning or if different paths of action are available. 
+•	Simulation models of resources should be used during the development of flexible operation strategies, to test planning models and execution components. 
+•	Simulations should be used to improve the understanding of processes and resource behavior, e.g., if the main causes of energy losses are not fully understood. This supports the development of, e.g., planning models. 
+Analytics
+•	In proactive approaches, the analytics must analyze how accurately operating plans can be executed by resources by comparing operating plans to actual measurements. 
+o	In high-precision use cases, the analytics must be conducted in real time. 
+o	The planned operation of resources must be compared to the measured operation to assess how accurately operating plans can be executed. 
+	The planned energy consumption of resources must be compared to the measured energy consumption to assess how accurately operating plans can be executed. 
+	In use cases with self-generation, the planned energy generation of resources must be compared to the measured energy generation to assess how accurately generation can be predicted and how accurately operating plans can be executed. 
+o	The planned production volume of resources must be compared to the measured production volume to assess how accurately operating plans can be executed. 
+o	The planned process quality indicators of resources must be compared to the measured process quality indicators to assess how accurately operating plans can be executed. 
+o	Deviations between operating plans and actual measurements must be detected, to potentially trigger a reaction during operation and to identify deficiencies in the operating strategy and enable long-term performance tracking.
+o	If deviations between the operating plan and actual measurements are detected by analytics, a notification must be sent to the operator. 
+•	The analytics must quantify the benefits and drawbacks of energy flexible operation to communicate them to the responsible parties. 
+o	The analytics must quantify the financial benefits of energy-flexible operation in comparison to conventional operation. Suitable metrics for this are the cost per unit produced or the cost per time, depending on the analyzed resources. 
+	The analytics must quantify the cost of energy incurred during energy-flexible operation. This includes both energy rate and capacity charge as well as any other financial implications of energy-flexible operations. 
+	The analytics must quantify the production volume achieved in energy flexible operation, to assure that energy flexible operation does not negatively impact productivity and to be able to calculate production volume specific energy cost and consumption.
+	The analytics should quantify all other cost factors affected by energy-flexible operation, e.g., maintenance cost or salaries. These cost factors must be considered in the quantification of the benefits of energy-flexible operations.
+o	The analytics should quantify the ecological benefits of energy-flexible operation in comparison to conventional operation. Suitable metrics for this may be the greenhouse gas emissions per unit produced per time or the energy consumed per unit produced or per time depending on the analyzed resources. 
+o	If several alternative operating plans are created, the analytics must compare alternative operating plans regarding the relevant KPIs to provide a solid decision basis for plant operators. 
+Execution
+•	It must be possible to react appropriately to unforeseen events such as deviations between an operating plan and measurements or flexibility calls from external or internal actors. 
+o	If relevant deviations between the operating plan and measured values are detected by analytics, a replanning should be triggered that takes into account the latest measurements and predictions. Alternatively, an internal flexibility call can be created, that must be distributed across various resources by the execution component. It must be determined which resource alters its energy consumption by what amount and for how long to fulfill the flexibility call. This requirement is applicable to proactive approaches. 
+o	In reactive approaches, flexibility calls from internal sources or from external actors such as grid operators or aggregators must be distributed across various resources by the execution component. It must be determined which resource alters its energy consumption by what amount and for how long to fulfill the flexibility call. 
+•	Control commands must be generated, that execute operating plans and flexibility calls in real resources. The control commands must be generated such that the energy consumption and production volume defined in the operating plan are realized as accurately as practically possible. 
+o	If operating plans and flexibility calls are to be executed automatically, the generation of control commands should be automated instead of being triggered manually by resource operators.
+•	Control commands must be sent to the corresponding control systems of resources. 
+o	Control commands must be sent at appropriate times to accurately realize operating plans. 
+Data- und Information Management
+•	Data and information must be exchanged between various system components. E.g., forecast energy prices must be accessible by operational planning components. This data and information exchange must be managed by a suitable management component to assure that data is available when and where it is needed. 
+o	Interoperability of data must be ensured. This means that data and information exchanged internally and externally must semantically unambiguous. 
+o	It must be assured that data and information is correctly distributed among various IT components. This means that data and information must be sent to the correct IT components at the correct time.  
+o	It must be possible for the data and information management to access data and information in all energy flexibility related IT components. 
+Operational Planning
+•	In proactive approaches, an operating plan must be created. This means that it must be defined which resources operate, how different resources operate (at what set point or operational state), and when different resources operate. 
+o	The mechanisms of applicable markets must be respected. Mechanisms such as opening and closing time of a market, minimum size of bids, market interval, etc. are market specific and must be reflected in the operational planning. 
+o	The operating plan must ensure that production targets are reached. A trade-off between production volume and production cost may need to be made. 
+o	The operating plan must ensure that applicable energy conversion targets (energy consumption targets or energy generation targets, maximum permissible load, etc.) are reached, if such targets exist.
+o	The operating plan must ensure that process quality indicators and other process- and state variables including the state of charge of storage systems remain within the permissible range throughout the planning horizon. 
+o	Suitable algorithms should be used to maximize or minimize the target quantity of the responsible party. Common targets are the minimization of costs or greenhouse gas emissions. 
+	It may be necessary to weigh two or more targets against each other. Different weights of different targets must be considered. 
+	A suitable planning logic is required to create operating plans
+o	In the case of unforeseen events or deviations from the operating plan, it must be possible to adjust or re-plan the operating plan under consideration of the new circumstances. 
+o	Several alternative operating plans can be created, if the operator prefers to choose between different options. 
+Planungsmodell
+•	A planning model considers the relationship between the utility and the energy consumption rate of a resource. Utility can be energy generation, production of goods, or the control of process quality indicators. Depending on the kind of utility of the modelled resources, different relationships must be considered, e.g., only a model of a resource producing actual goods needs to consider the relationship between energy consumption and production rate.
+o	A planning model considers the relationship between the process quality indicators and the energy consumption rate of a resource.
+o	A planning model considers the relationship between the production rate and the energy consumption rate of a resource.
+o	A planning model considers the relationship between the energy generation rate and the energy consumption rate of a resource
+•	Planning logic considers the impact of external factors, such as the temperature or raw-material properties, on the utility of resources, if the respective resources are significantly impacted by external factors. 
+•	A planning model considers discrete operational states of resources, e.g., 'pause', 'operation', 'start-up', 'idle', etc. Typically, operational states only need to be considered if different operational states exert distinct behavior that cannot be expressed by linear equations. 
+o	A planning model considers permissible sequences of operational states.
+o	A planning model considers logical or physical conditions for transitions between operational states 
+o	A planning model considers permissible maximum and minimum durations of operational states
+•	If the utility of a resource significantly depends on the operating temperature, a planning model may need to consider the thermal dynamics of resources, e.g., the trajectory of the operational temperature in electrolyzers.
+•	A planning model considers the state of charge or filling level of energy and material storage resources.
+•	If logistic dependencies exist between resources, a planning model considers dependencies between resources, e.g., if the operation of a resource depends on other resources for energy or material supply.
+•	If it is an explicit goal of the use case to reduce greenhouse gas emissions, a planning model may need to consider the greenhouse gas emissions throughout the planning horizon.
+•	If the purpose of the operated resources is to produce goods, a planning model must consider the production volume throughout the planning horizon. 
+•	A planning model considers operational boundaries of resources such as maximum and minimum operating points or maximum and minimum charge of storage resources. 
+•	A planning model considers all relevant cost factors that determine the overall cost of energy flexible operation. Typically, only those costs need to be considered that are variable during operation, and that differ compared to conventional operational planning. 
+o	A planning model may need to consider capital costs. However, these costs typically do not need to be considered for operational planning. Instead, they should be considered in case studies investigating the potential benefits of energy flexible operation. 
+o	A planning model may need to consider costs for logistics services such as waste disposal.
+o	A planning model may need to consider revenue from providing flexibility related services such as grid services.
+o	A planning model may need to consider costs for capacity charge. Especially varying capacity charges depending on the operating plan need to be considered.
+o	A planning model may need to consider costs for salaries of employees, especially if additional shifts are added or varying number of employees are required to execute energy flexible operating plans.
+o	A planning model may need to consider costs for emissions
+o	A planning model may need to consider costs for various production media such as pressurized air. 
+o	A planning model may need to consider costs for various raw materials and intermediate products. 
+o	A planning model may need to consider costs for various energy carriers
+o	A planning model may need to consider costs for maintenance of resources. Increased costs for maintenance may occur due to higher frequency in ramping up and ramping down resources.
+Human Machine Interface
+•	The HMI accepts user input regarding energy flexible operation. 
+o	The HMI accepts control commands from users. Control commands are, e.g., adjustments of the set points or operating states of resources. 
+o	The HMI enables users to configure the operational planning. Configuration includes setting planning horizon, setting goals, and adjusting parameters of planning models. This requirement is applicable in proactive approaches. 
+	The HMI enables users to adjust operational goals such as production targets, energy related targets, or weights of different goals against each other. 
+	The HMI enables users to adjust planning model parameters, such as estimations of external information, operational boundaries, material properties, availability of resources or other factors. 
+	The HMI enables users to trigger the operational planning. This must be possible during operation as a re-planning or proactively. 
+o	The HMI enables users to save relevant information in the desired format. 
+•	The HMI displays relevant information regarding energy flexible operation. Displaying relevant information is crucial in order to provide responsible parties with the necessary decision base. 
+o	The HMI displays measurements of relevant quantities. Relevant quantities depend on the use case and can be the state of storage resource, the energy consumption over time, or other factors. 
+o	The HMI displays relevant external information, such as ambient conditions, flexibility calls from other parties, energy prices, or other factors, if the use case depends on such external information. 
+o	The HMI displays the current and potentially the forecast energy flexibility. This is important to enable responsible parties to react appropriately to flexibility calls, which is relevant in reactive approaches. 
+o	The HMI displays the current operating plan and possibly its alternatives. This is applicable in proactive approaches.  
+o	If forecasts are applied in the use case, the HMI displays the forecast information. All forecast information is potentially relevant to be displayed in the HMI, depending on the needs and preferences of the responsible party.
+o	The HMI displays KPIs of energy flexible operation. KPIs depend on the use case and can be energy related, production volume related, or other factors. 
+	The HMI displays the benefits and drawbacks of energy flexible operation. Important benefits to display are financial and ecological benefits. Drawbacks are important to display to obtain a realistic evaluation of energy flexible operation. It should be shown objectively to the responsible party, if energy flexible operation provides the desired benefits. 
+Data Storage
+•	Data relevant for the engineering and evaluation of energy flexible operating strategies must be stored.
+o	In proactive approaches, data relevant for the development and evaluation of planning models must be stored. Since planning models need to be evaluated and might need to be updated, data relevant for the engineering of planning models must be stored. Relevant data for planning models primarily refers to data characterizing the relationship between the energy consumption and the utility of a resource. 
+o	In proactive approaches, data relevant for the execution of operational planning must be stored. This includes planning model parameters as well as external information such as energy prices, ambient conditions, production demand and time-varying raw material properties. 
+o	Data relevant for the engineering and execution of control programs must be stored. This includes process values, manipulated variables, set points, disturbances, switching conditions, and other user commands for control programs. 
+o	Data relevant for the evaluation of energy-flexible operating strategies must be stored. This includes energy consumption, storage, and generation data, as well as production volume, process quality indicators energy expenditures and other production cost and emissions. 
+General Requirements
+•	High precision Use cases should not be purely proactive. Instead, High precision Use cases should combine proactive and reactive elements. 
+•	The energy-flexible operating strategy should be built in a scalable way. 
+
+
+Functionalities within Energy Flexible CPPS
+Sensorik 
+Sensorik misst Einflussgrößen auf den Prozess. Als Einflussgrößen werden etwa Umwelteinflüsse wie die Umgebungstemperatur verstanden, die den Prozess beeinflussen. Ebenso können Materialeigenschaften von Ausgangsstoffen als Einflussgrößen interpretiert werden. Sensorik zur Messung von Einflussgrößen ist nötig, wenn der Steuerungs- / Regelungs- oder der Planungsalgorithmus diese Informationen benötigt, wobei physikalische Größen, deren Einfluss auf die Ressourcen gering ist, nicht zwangsläufig gemessen werden müssen. 
+Beispiele: 
+-	Beim Betrieb eines Kompressionskühlers wird die Umgebungstemperatur gemessen, um die benötigte Kompressorleistung berechnen zu können (Cirera et al. 2020). 
+-	Messung der Netzfrequenz zur Bestimmung eines Sollwertes bei der Erbringung von Primärregelleistung (Perroy et al. 2020).
+-	Messung von Wetterbedingungen, um deren Einfluss auf thermische Energieressourcen (Adsorptionskältemaschine, Kompressionskältemaschine) bei der Modellbildung und der Betriebsplanung zu berücksichtigen (Sandro Magnani et al. 2018).
+-	Messung der Umgebungstemperatur einer Destillationskolonne, um Optimierungs- und Simulationsmodelle parametrieren zu können, um den Einfluss der Temperatur auf das Produktionsvolumen zu erfassen (Reinpold et al. 2023). 
+-	Messung der Sonneneinstrahlung, um Potenzial für PV-erzeugung zu erfassen (Tian et al. 2016).
+-	Messung des Feststoffgehalts von Abwasser vor der Aufbereitung durch eine Abwasseraufbereitungsanlage, um den Energiebedarf für die Aufbereitung abschätzen zu können (Wagner et al. 2024). 
+Alternativen: 
+-	Statt eine Einflussgröße zu messen, kann deren Einfluss ggf. durch geeignete Regelungstechnik ausgeglichen werden. So kann etwa ein Regler mit Integralanteil verwendet werden, um den Einfluss der Umgebungstemperatur auf die Kompressorleistung automatisch auszuregeln, was jedoch zu einer Varianz des Energieverbrauches führt. 
+
+Sensorik misst den Speicherzustand. Dabei kann es sich um einen dedizierten Energiespeicher (Batterie), einen inhärenten Energiespeicher (Kühlhaus) oder einen Materialspeicher (Zementsilo) handeln. Der Speicherzustand sollte dann messtechnisch erfasst werden, wenn die Speichergröße über den betrachteten Planungszeitraum eine limitierende Größe darstellt, und wenn die Einhaltung von Speicherkapazitäten wichtig für die störungsfreie Funktion der Produktionsprozesse ist. Der Speicherzustand von Ressourcen sollte mindestens zu Beginn eines Planungshorizonts besser aber während des gesamten Betriebes bekannt sein. 
+Beispiele:
+-	Messung der Temperatur in einem Kühlhaus, das als inhärenter Energiespeicher fungiert (Cirera et al. 2020), um eine Kältemaschine zu regeln/steuern. 
+-	Messung des Füllstandes in einem Eisspeicher, um über die Dichte auf Eisanteil schließen zu können, und somit den ‚Beladungszustand‘ des Eisspeichers zu ermitteln (Sokolovsky und Klimash 2019). 
+-	Messung der Spannung an einem Kondensator, um deren Beladungszustand zu bestimmen (Abdel-Baqi et al. 2015 - 2015).
+-	Mehrfache Messung der Temperatur entlang der Höhe eines Heißwasserspeichers, um den Beladungszustand des Speichers zu erfassen (Fuhrmann et al. 2022). 
+-	Messung des Drucks in Wasserstoffdruckbehältern, um Füllstand zu erfassen, um Betrieb eines Elektrolyseurs planen zu können.  (Ziogou et al. 2013).
+-	Messung des Speicherzustandes in einem Packed-bed thermal energy Storage mithilfe mehrerer Thermometer, um Planungsmodelle laufend anpassen und evaluieren zu können (Kasper et al. 2024).
+-	Messung des Füllstandes des Produktbehälters einer Destillationskolonne, um Optimierungs- und Simulationsmodelle parametrieren zu können, und den Energie-flexiblen Betrieb der Kolonne evaluieren zu können (Reinpold et al. 2023). 
+-	
+Alternativen: 
+-	Eine Messung des Speicherzustandes kann durch die Messung der Zu- und Abströme aus dem Speicher ersetzt oder ergänzt werden (Abdel-Baqi et al. 2015 - 2015). 
+
+Sensorik misst aktuellen Zustand der Ressourcen und Prozesse. Dies schließt den Zustand des Stromnetzes ein, wenn die Netzfrequenz oder Spannungsqualität relevant für den betrachteten Anwendungsfall ist. Es werden jene Größen erfasst, die die Qualität des Prozesses bestimmen und die bei der Ausführung von Steuerungs- und Regelungsprogrammen benötigt werden (Ziogou et al. 2013). Beim Energie-flexiblen Betrieb von Anlagen wird vor allem dann neue Sensorik zur Erfassung von Prozessgrößen benötigt, wenn sich durch den Energie-flexiblen Betrieb neue Herausforderungen ergeben, die beim konventionellen Betrieb ausgeschlossen werden können. So kann es beim Betrieb von Elektrolyseuren im niedrigen Lastbereich dazu kommen, dass sich Wasserstoff im Sauerstoffstoffstrom anreichert, was zu explosiven Gemischen führen kann (Qiu et al.). Der Betrieb in niedrigen Lastbereichen kann jedoch dazu beitragen, zu Zeiten hoher Strompreise Strom zu sparen. Im konventionellen Betrieb können solch niedrige Lastbereiche durch die Regelung verboten werden, sodass zusätzliche Sensorik vermieden werden kann. Ähnliche Beispiele finden sich bei Energie-flexiblen Produktion von Aluminium durch Elektrolyse, wo niedrige Lastbereiche zu einem starken Abfallen der Prozesstemperatur führen können (Liu et al. 2016), sodass hier zusätzliche Sensorik zum Erfassen der Temperatur benötigt wird. 
+Beispiele: 
+-	Messung des Drucks in Kühlmittelleitungen, um den Kompressor einer Kältemaschine regeln zu können (Cirera et al. 2020). 
+-	Bestimmung der Ventilstellung in Kühlmittelleitungen, um derzeitigen Betriebszustand einer Kältemaschine zu erfassen (Cirera et al. 2020). 
+-	Messung der Temperatur in Kühlwasserströmen (Rahnama et al. 2017).
+-	Messung der Drehzahl eines Verbrennungsmotors, um dessen derzeitigen Betriebspunkt zu ermitteln (Abdel-Baqi et al. 2015 - 2015). Der Betriebspunkt wird ermittelt, um unterstützende elektrische Komponenten (E-Motor, Kondensator) steuern zu können. 
+-	Messung des Stromverbrauches eines Elektrolyseurs zur Ermittlung des Betriebspunktes (Qiu et al.).
+-	Messung der Temperatur eines Elektrolyseurs zur Regelung der Kühlung (Qiu et al.).
+-	Messung der Wasserstoffkonzentration im Sauerstoffstrom eines Elektrolyseurs, um die Bildung explosiver Gasgemische zu vermeiden (Qiu et al.).
+-	Messung des Netzzustandes (Frequenz, Spannung, Strom), um Auswirkungen Energie-flexibler Betriebsstrategien auf Stromnetz zu erfassen (Laayati et al. 2022). 
+-	Erfassung von Ventilstellungen in Heißwasserleitungsnetzen, um Steuerungseingriffe planen und ausführen zu können (Fuhrmann et al. 2022). 
+-	Messung der Leitfähigkeit in der VE Wasserversorgung eines Elektrolyseurs, um Beschädigungen des Elektrolyseurs zu verhindern (Ziogou et al. 2013). 
+-	Messung der Betriebstemperatur eines Elektrolyseurs, um Einfluss der Temperatur auf Wasserstoffproduktion zu ermitteln (Ziogou et al. 2013). 
+-	Messung der Spannung und Stromstärke in einem Wasserstoff-Elektrolysestack, um den Betriebspunkt zu ermitteln und Modelle parametrieren zu können (Ziogou et al. 2013). 
+-	Messung der Stromnetzfrequenz, um als Sollwert für die Erbringung von Primärregelleistung zu fungieren (Perroy et al. 2020). 
+-	Messung des Füllstandes in kleinen Produktbehältern mittels Ultraschallsensoren, um korrekte Befüllung zu verifizieren (Mechs et al. 2013).  
+-	Messung der Position von Produktbehältern, um Förderbänder korrekt für die Befüllung und die Messung des Füllstandes zu positionieren (Mechs et al. 2013). 
+-	Messung der Auslastung von Servern, um Betriebsstrategien für die Verteilung von Rechenressourcen zum Spitzenlastmanagement zu erarbeiten und zu evaluieren (Hsu et al. 2018).
+-	Messung von Temperaturen in einer Elektrolyseanlage: VE-Wassertank, VE-Wasserstrom in den Stack, im O2-H2O Separator, nach dem Wasserstoffkühler, um Simulationsmodelle zu parametrieren, die Steuerungskonzepte evaluieren können (Crespi et al. 2023).
+-	Messung von Kühlmittelströmen in einer Elektrolyseanlage, um Simulationsmodelle zu parametrieren, die Steuerungskonzepte evaluieren können (Crespi et al. 2023). 
+-	Messung der Temperatur entlang einer Destillationskolonne, um Optimierungs- und Simulationsmodelle parametrieren zu können, und den Energie-flexiblen Betrieb der Kolonne evaluieren zu können (Reinpold et al. 2023). 
+-	Messung der Leistung eines Antriebsmotors einer Erdölförderpumpe, um Konzepte für das Spitzenlastmanagement zu entwickeln und zu evaluieren (Zhao et al. 2021).
+-	Messung des Rotationswinkels, der Drehgeschwindigkeit und des Drehmomentes eines Antriebsmotors einer Erdölförderpumpe, um hochaufgelöst Lastverläufe zu ermitteln, um Konzepte für das Spitzenlastmanagement zu entwickeln und zu evaluieren (Zhao et al. 2021).
+Alternativen:
+-	
+Sensorik misst Materialströme wie Produktionsströme und zu verarbeitende Ströme eingehender Ressourcen. Um die Einhaltung von Produktionszielen sicherzustellen, muss erfasst werden, wie groß das Produktionsvolumen über den Optimierungszeitraum ist. Hier kommt Sensorik zum Einsatz, um Produktströme zu erfassen (Vigants et al. 2014). Die Messung von Produktströmen wird ebenfalls benötigt, um die Mehrwerte, die sich aus einer Energie-flexiblen Betriebsweise ergeben, zuverlässig quantifizieren zu können. So lassen sich die Energiekosten bezogen auf die Produktionsmenge nur dann bestimmen, wenn beide Größen messtechnisch erfasst werden. Weiterhin sind Messungen von Produktströmen notwendig, um numerische Modelle von Ressourcen zu parametrieren.
+Beispiel: 
+-	Messung der produzierten Menge von Holzspänen bei der Produktion von Holzpellets (Vigants et al. 2014). 
+-	Messung von Wasserstoffströmen in einem Elektrolyseur, um Simulationsmodelle zu parametrieren, die Steuerungskonzepte evaluieren können (Crespi et al. 2023). 
+-	Messung des Produktionsvolumens einer Zink-Elektrolyseanlage, um ML-Betriebsplanungsmodelle zu parametrieren, und den Energie-flexiblen Betrieb zu evaluieren (Yang et al. 2002). 
+-	Messung des Flusses von Sauerstoff und Stickstoff als Produktionsmedien für die Stahlproduktion, um Bedarfsprognosen zu erstellen und Betriebsplanungsmodelle von Luftzerlegungsanlagen zu parametrieren (Han et al. 2016). 
+-	Messung des Flusses von Abwasser in eine Abwasseraufbereitungsanlage, um Prognosemodelle für anfallende Abwassermengen erstellen zu können (XXX Wagner et al). 
+Alternativen:
+-	
+Sensorik misst Energieströme. Energieströme können erzeugte Energie oder verbrauchte Energie sein. Beim energieflexiblen Betrieb von Energie- und Produktionsressourcen wird praktisch immer der Energieverbrauch der betrachteten Ressourcen gemessen. Es wird jedoch mit unterschiedlichen Detailgraden gemessen. Zum Teil wird hochaufgelöst an mehreren Komponenten einer Ressource gemessen (Tian et al. 2016; Gong et al. 2019). Zum anderen wird nur der Verbrauch ganzer Ressourcen oder Ressourcenverbünde gemessen. Aus ökonomischer Sicht muss der Stromverbrauch nur bilanziell, also für einen gesamten Anlagenverbund, gemessen werden. Das Energiemanagement nach ISO50001 schreibt jedoch vor, für alle größeren Energieverbraucher die Leistung individuell zu messen, sodass sogenannte Leistungskennzahlen gebildet werden können. Für die Entwicklung von Modellen für die Simulation, Planung oder Prognose wird meist eine höhere Messauflösung auf Komponentenebene verwendet (Gong et al. 2019). In Anwendungen, bei denen eine präzise Einstellung des Energieverbrauchs notwendig ist, können an einer bestimmten Stelle gemessene Energieströme als Sollwerte für eine andere Stelle fungieren. So kann die gemessene Gesamtlast einer Fabrik als Sollwert für die Energieerzeugungsanlagen der Fabrik fungieren, wenn der Strombezug oder -Export vom oder an das Stromnetz vermieden werden soll (Tian et al. 2016). 
+Die Messung von Energieströmen wird ebenfalls benötigt, um die Mehrwerte, die sich aus einer Energie-flexiblen Betriebsweise ergeben, zuverlässig quantifizieren zu können. So lassen sich die Energiekosten bezogen auf die Produktionsmenge nur dann bestimmen, wenn beide Größen messtechnisch erfasst werden.
+Die Messung von Energieströmen kann zielführend sein, um den Betriebspunkt von Ressourcen zu erfassen.
+Die Messung von Energieströmen kann notwendig sein, wenn der Beladungszustand eines Energiespeichers bestimmt werden muss, aber die direkte Messung des Beladungszustandes unpraktikabel ist. 
+Beispiel: 
+-	Leistungsbezug oder Einspeisung wird am Netzanschlusspunkt gemessen, um Stromverbrauch / -Erzeugung bilanzieren zu können.
+-	Leistungsbezug wird am Netzanschlusspunkt gemessen, um als Sollwert für Energieerzeugungsanlagen zu fungieren, wenn der Leistungsbezug vom Stromnetz vermieden werden soll (Tian et al. 2016). 
+-	Messung des Stromverbrauchs einer Kalkzerkleinerungsanlage (lime and lime stone crushing) (Sokolovsky und Klimash 2019).
+-	Messung des Stromverbrauches eines Kompressors in einer Kältemaschine (Rahnama et al. 2017). 
+-	Messung des Stromverbrauches eines elektrischen Heizelementes in einer Raffinerie (Silletti et al. 2022).
+-	Messung des Stromverbrauches in einem Electric Arc Furnace eines Stahlwerkes (Silletti et al. 2022).
+-	Messung des Strombezugs einer Fabrik fungiert als Sollwert für die Stromerzeugung lokaler Erzeugungsanlagen wie PV, Wind und CHP (Tian et al. 2016). 
+-	Messung des Stromes und der Spannung an einem Kondensator, um dessen Be- und Entladung zu bestimmen (Abdel-Baqi et al. 2015 - 2015).
+-	Messung der Leistung eines Verbrennungsmotors, um dessen derzeitigen Betriebspunkt zu ermitteln (Abdel-Baqi et al. 2015 - 2015). Der Betriebspunkt wird ermittelt, um unterstützende elektrische Komponenten (E-Motor, Kondensator) steuern zu können. 
+-	Messung des Stromverbrauches eines Elektrolyseurs für die Bilanzierung (Qiu et al.).
+-	Messung des Stromverbrauches einer CNC-Fräse, um den Einfluss von Drehzahl und Vorschub auf den Stromverbrauch zu ermitteln (Suwa und Samukawa 2016). 
+-	Messung des Stromverbrauches einer Extrusion Blow Mould Maschine. Messung des Stromverbrauches des Extruders, der Hydraulik und des Hauptsystems, um den Verbrauch jeder dieser Komponenten pro Betriebszustand zu erfassen, damit ML-Modelle anhand der Daten ermittelt werden können (Gong et al. 2019). 
+-	Messung der Stromerzeugung von PV und Windenergieanlagen, um Prognosemodelle zu erstellen (Wicaksono et al. 2024). 
+-	Messung des Stromverbrauchs einer 5-achsigen Fräse, um Lastprognosemodelle zu erstellen (Wicaksono et al. 2024). 
+-	Messung des Stromverbrauchs einer Injection Modling und Annealing Maschine um Lastprognosemodelle zu erstellen (Wicaksono et al. 2024). 
+-	Messung des Stromverbrauchs einer Fabrik, um Prognosemodelle für Spitzenlastverhalten zu erstellen (Sawczuk et al. 2024).
+-	Messung des Stromverbrauches einer Holz-Pellet Produktionsanlage, um Mehrwert energiesparender Betriebsstrategien zu bewerten. 
+-	Messung des Energieverbrauches verschiedener Ressourcen in einem Lime und Lime-Stone Crusher, um Defekte zu erfassen und Lastprognosen zu erstellen. 
+-	Messung der Temperatur und des Durchflussvolumenstroms in Heißwasserleitungen um Energieströme zu ermitteln, Optimierungsmodelle zu parametrieren und Energie-flexible Energiestrategien zu evaluieren (Fuhrmann et al. 2022; Sandro Magnani et al. 2018). 
+-	Messung des Stromverbrauches von Heißwasserpumpen und Wärmepumpen, um Energieströme zu ermitteln, Optimierungsmodelle zu parametrieren und Energie-flexible Energiestrategien zu evaluieren (Fuhrmann et al. 2022). 
+-	Messung der Spannung und Stromstärke in einem Wasserstoff-Elektrolysestack, um Stromverbrauch zu ermitteln, um Modelle parametrieren und Evaluationen von Betriebsstrategien vornehmen zu können (Ziogou et al. 2013). 
+-	Messung des Stromverbrauches eines Verbundes von Elektrolyse und Electric Arc Furnaces zur Erbringung von Regelleistung, um Planungsmodell zu parametrieren und  dynamisches Verbundverhalten zu evaluieren (Perroy et al. 2020). Messung erfolgt bei jedem Teilstandort des Verbundes individuell und wird dann aggregiert. 
+-	Messung des Erdgasstromes, um Verbrauch eines CHP und eines Gasboilers zu ermitteln, um Modelle zu parametrieren und Betriebsstrategien zu evaluieren (Sandro Magnani et al. 2018). 
+-	Messung Stromverbrauchs einer Kompressionskältemaschine, um Modelle zu parametrieren und Betriebsstrategien zu evaluieren (Sandro Magnani et al. 2018). 
+-	Messung der Stromerzeugung eines CHP, einer PV-Anlage und einer Windturbine, um Modelle zu parametrieren und Betriebsstrategien zu evaluieren (Sandro Magnani et al. 2018). 
+-	Messung des Stromaustausches mit dem Stromnetz um Betriebsplanungsstrategien zu evaluieren (Sandro Magnani et al. 2018).
+-	Messung des Stromverbrauches eines elektrischen Antriebsmotors eines Förderbandes, einer elektrischen Steuerungseinheit und eines IPC, um Betriebsplanungsmodelle zu parametrieren und zu Betriebsstrategien zu evaluieren (Mechs et al. 2013). 
+-	Messung des Stromverbrauches von Servern, um Strategien für das Spitzenlastmanagement zu implementieren und zu evaluieren (Hsu et al. 2018).
+-	Messung des Stromverbrauchs in Elektrolyseanlagen im Stack und der gesamten Anlage, um Simulationsmodelle zu parametrieren, die Steuerungskonzepte evaluieren können (Crespi et al. 2023).
+-	Messung des Stromverbrauchs einer Distillationskollonne, um Optimierungs- und Simulationsmodelle parametrieren zu können, und den Energie-flexiblen Betrieb der Kolonne evaluieren zu können (Reinpold et al. 2023). 
+-	Messung der Spannung und des Stroms in einem Zink-Elektrolysebad, um den Stromverbrauch zu erfassen, um ML-Betriebsplanungsmodelle zu parametrieren und den Energie-flexiblen Betrieb zu evaluieren (Yang et al. 2002). 
+-	Messung der Leistung eines Antriebsmotors einer Erdölförderpumpe, um Konzepte für das Spitzenlastmanagement zu entwickeln und zu evaluieren (Zhao et al. 2021).
+-	Messung des Kältestroms an einem Kältespeicher und an einem Kälteverbraucher (Bürogebäude), um Energieflexibilitätspotenzial zu bestimmen und an Aggregator kommunizieren zu können (Rahnama et al. 2017).
+-	Messung des Stromverbrauchs einzelner Komponenten einer industriellen Reinigungsmaschine, um vielversprechende Komponenten für Energie-flexiblen Betrieb zu identifizieren, und um Energie-flexible Betriebsstrategien zu erarbeiten, anzuwenden und zu evaluieren. (Fuhrländer-Völker et al. 2023)
+Alternativen:
+-	Energieströme können durch physikalische oder statistische Modelle geschätzt werden (Cirera et al. 2020). 
+
+Steuerung und Regelung
+Die Steuerung führt das Steuerungsprogramm aus, mithilfe dessen Sensorwerte und Benutzereingaben in Steuerungssignale für Aktoren überführt werden. Steuerungsprogramme realisieren gleichzeitig die Produktionsziele als auch den Nutzen der Energieflexibilität. Je nach Anwendungsfall ist es unterschiedlich schwierig, den Energieverbrauch von Ressourcen präzise einzustellen. Anwendungsfälle, bei denen der Energieverbrauch direkt als Soll- oder Stellgröße eingestellt werden kann, sind tendenziell einfacher Energie-flexibel zu betreiben, als Anwendungsfälle, bei denen der Energieverbrauch sich implizit durch die Einstellung anderer Größen als Soll- oder Stellwert ergibt (Silletti et al. 2022). Bei Steuerungsprogrammen kann es sich um Feed-Forward Steuerungen, Feedback Regelungen oder eine Kombination aus diesen handeln. Die Funktionsweise von Steuerungsprogrammen ist damit weitestgehend analog zum konventionellen Betrieb, wobei Steuerungsprogramme, die eine hohe Flexibilität bei der Einstellung von Steuerungssignalen anbieten, meist auch den Energie-flexiblen Betrieb begünstigen. Teil von Steuerungsprogrammen kann es sein, Signale auf einen erlaubten Bereich einzugrenzen, um keine unerlaubten Steuerungsbefehle zu erzeugen. Ein Steuerungsprogramm kann für die selbstständige Steuerung der Be- und Entladung von Speichern ohne übergeordnete Planungsfunktionen ausgelegt sein. Dies ist besonders in Fällen der Fall, in denen Lastprofile gut prognostizierbar sind und kurze Lastzyklen vorliegen, werden häufig keine separaten Planungsalgorithmen verwendet, sondern die Berechnung von Be- und Entladung von Speichern erfolgt über das Steuerungsprogramm alleine (Abdel-Baqi et al. 2015 - 2015; Zhao et al. 2021). 
+
+Beispiele 
+-	Verwendung eines PID-Reglers, um die Kühlleistung eines Kompressionskühlers auf den geforderten Sollwert einzustellen (Cirera et al. 2020). 
+-	Betrieb von Werkzeugmaschinen (Bohren, Fräsen, Mahlen) in Teillast und/oder zeitliche verschoben gegenüber konventionellen Betriebsplänen (Emec et al. 2013).
+-	Verwendung eines Reglers, um die Drehzahl eines Kompressionskühlers auf die geforderte Soll-Drehzahl einzustellen, wobei die Drehzahl zwischen 50% und 100% der Nenndrehzahl betragen kann. Unterhalb von 50% wird eine An-/Aus Steuerung verwendet.  (Rahnama et al. 2017).
+-	Einstellen der Temperatur des Kühlmediums einer Produktionslinie für Antriebsstränge, wobei der Energieverbrauch indirekt durch die Regelung der Temperatur eingestellt wird, was die präzise Vorhersage des Energieverbrauches erschwert (Silletti et al. 2022). 
+-	Verwendung eines Zustandsautomaten für die Steuerung von Wasserstoffelektrolyseuren und Batterien, wobei der Zustandsautomat die gleichzeitige Berücksichtigung diskreter Zustandswechsel (Start / Stop eines Wasserstoffkompressors) und kontinuierlicher Systemdynamik (Beladung der Batterie) ermöglicht (Ziogou et al. 2013). Zustandswechsel werden hier, durch das Erreichen von Grenzwerten (Elektrolyseur pausiert, wenn der Wasserstoffspeicher voll ist) eingeleitet.
+-	Nutzung mehrerer Hysterese-Schleifen, um den Leistungsbezug eines Electric Arc Furnace durch das Schalten von Relais diskret zu variieren. Grenzen der einzelnen Hysterese-Schleifen können dabei hardgecodet werden oder dynamisch anpassbar gestaltet werden (Perroy et al. 2020). Einzelne Relais werden im Steuerungscode durch binäre variablen abgebildet, die separat an und ausgeschaltet werden können. 
+-	Laden und Entladen eines Kondensators, um den Verbrennungsmotor für den Antrieb einer Baggerschaufel zu unterstützen, indem der Verbrennungsmotor primär im Nennlastbereich betrieben werden kann (Abdel-Baqi et al. 2015 - 2015). 
+-	Überprüfen, ob die Änderung der Leistungsanforderung sowie die angeforderte Leistung eines Motors eines Minenbaggers im erlaubten Bereich liegen (Abdel-Baqi et al. 2015 - 2015). 
+-	Aufteilen von erforderlicher Lastmodulation für die Erbringung von Regelleistung auf mehrere diskret steuerbare (Electric Arc Furnace) oder kontinuierlich steuerbare (Zink Elektrolyseanlage) Lasten (Perroy et al. 2020). Hier werden diskret steuerbare Ressourcen verwendet, um größere Lastmodulationen zu bewerkstelligen, während diskret steuerbare Ressourcen verwendet werden, um auf kleinere Abweichungen von der geforderten Lastmodulation zu reagieren. 
+-	Verwendung einer Hysterese-Schaltung in einer Wasserstoff Elektrolyseanlage, um Wasserstände in Separatoren und im VE-Wasserbehälter zu kontrollieren (Crespi et al. 2023).
+-	Betrieb von Druckwechseladsorptionskolonnen in Teillast, um Teillastbetrieb eines Wasserstoffelektrolyseurs zu ermöglichen. Wasserstoffstrom durch die Kolonnen wird in Teillast reduziert. Zwei Kolonnen arbeiten im Wechsel, wobei eine stets im Regenerationsmodus ist und die andere im Trocknungsmodus arbeitet. Die Dauer der Betriebsmodi ist im Teillastbetrieb ebenfalls variabel gestaltet, indem in Teillast nach einem definierten Wasserstoffvolumen der Betriebsmodus gewechselt wird, während in Volllast immer nach einer fest definierten Zeit der Betriebsmodus gewechselt werden kann (Crespi et al. 2023). 
+-	Regelung des Betriebs von Wasserstoffelektrolyseuren: Regelung des Kathoden- und Anodengegendrucks mittels PI-Regler durch die Anpassung des Wasserstoff- und Sauerstoffstroms aus den Separatoren mithilfe regelbarer Ventile (Crespi et al. 2023). 
+-	Regelung der Temperatur in einem Wasserstoff Elektrolysestack mithilfe eines PI-Reglers durch die Anpassung des Kühlmediumstroms (Crespi et al. 2023).
+-	Anpassung des Steuerungssignals des VE-Wasserstroms in einen Wasserstoff Elektrolysestack, um im Teillastbetrieb den Stromverbrauch des VE-Wasserpumpe zu reduzieren (Crespi et al. 2023). 
+-	Verwendung eines PID-Reglers, um den Wärmestrom aus einem Thermischen Energiespeicher im Schüttbett auf einen benötigten Sollwert einzustellen (Kasper et al. 2024). 
+-	Regelung eines Kompressionskühlers, um die Temperatur des Kühlmediums ‚Sole‘ auf den benötigten Sollwert einzustellen. Einstellen der Temperatur auf einen festgelegten Grenzwert von -10 °C ist das Signal zur Erbringung der maximalen Kühlleistung (Rahnama et al. 2017). Das Kühlmedium kühlt zunächst ein Bürogebäude. Überschüssige Kälte wird in einem Eisspeicher gespeichert. 
+-	Kaskadenregelung der eines Kompressors für die Kühlung von Kühlregalen in einem Supermarkt: Ein ausreichender Temperaturunterschied des Kühlmittels über die Verdampfer muss aufrecht erhalten werden, was durch Regelung der Drehzahl des Kompressors zur Einstellung des benötigten Saugdruckes erfolgt (Rahnama et al. 2017). 
+-	Nutzung einer Hysterese, um die Temperatur eines Heißwasserpuffers einer industriellen Reinigungsmaschine einzustellen (Fuhrländer-Völker et al. 2023).
+-	An- /Aus-Steuerung eines Trocknungsgebläses einer industriellen Reinigungsmaschine (Fuhrländer-Völker et al. 2023).
+-	Implementierung von eines Zustandsautomaten für die Umsetzung Energie-flexibler Betriebspläne einer industriellen Reinigungsmaschine (Fuhrländer-Völker et al. 2023). 
+Challenges
+-	Es ist schwierig, extern eine Leistungsreduktion um einen fixen Betrag vorzugeben, wenn die Leistung kein Soll- oder Stellwert im Steuerungsprogramm ist. Dies ist etwa der Fall, wenn mithilfe von Kühlleistung die Temperatur eines Kühlmediums eingestellt werden soll, wobei die Temperatur der Sollwert ist und nicht die Kühlleistung. In solchen Fällen bedarf es Lösungen, die zuverlässig eine Anpassung des Sollwertes in eine damit verbundene Änderung der Leistung übertragen.  
+
+Die Steuerung empfängt Daten von Sensoren. Um Energie-flexible Betriebsstrategien zu entwickeln, umzusetzen, zu evaluieren und zu bilanzieren, müssen ggf. mehr Daten verarbeitet werden als im konventionellen Betrieb. Empfangene Daten, die für die Entwicklung, Evaluation und Bilanzierung benötigt werden, werden IT-Komponenten wie Datenbanken oder Betriebsplanungsalgorithmen bereitgestellt. 
+Beispiele 
+-	Lesen von Betriebsdaten einer Klimaanlage für Bakterienkulturen und Umsetzen von Lastreduktionsbefehlen (Lu 2022).
+-	Erfassen des Flexibilitätspotenzials von Kältemaschinen durch Abgleich von Messwerten des Betriebspunktes oder des Speicherzustandes von Kältespeichern mit den zugehörigen Betriebsgrenzen. So kann vorhandenes Flexibilitätspotenzial an einen Betriebsplanungsalgorithmus übermittelt werden (Rahnama et al. 2017).
+-	Erfassen des elektrischen Leistungsbezugs einer Fabrik, um Sollwerte für Stromerzeugungskomponenten (Wind, PV) und Stromspeicher (Batterie) zu generieren (Tian et al. 2016). 
+-	Empfangen von Messungen des Strombedarfs einer Blow-Mould Maschine, um den Energiebedarf für jeden Betriebszustand zu bestimmen (Gong et al. 2019).
+-	Empfangen von Messwerten eines Kühlraumes und einer Kältemaschine und Bereitstellung der Messwerte für die Verarbeitung durch eine übergeordnete Planungsfunktion (Hayn et al. 2023). 
+-	Empfangen von Messwerten des Energieverbrauches von Maschinen einer Mine (Schürfkübelbagger, Backenbrecher, Förderbänder, Schaufelradrückgewinner und Stapler) und Bereitstellung der Daten an eine Datenbank, um Lastprognosen für die Mine durchzuführen, ohne dabei etablierte Steuerungskonzepte, die auf den SPSen laufen, negativ zu beeinflussen (Laayati et al. 2022).
+-	Empfangen von Messwerten von Wärmeversorgungsressourcen einer Fabrik inkl. Wärmespeicher (Ventilpositionen, Temperaturen, Volumenströme des Kühlmediums, Stromverbrauch von Pumpen und Wärmepumpen), und Bereitstellung der Messwerte an einen übergeordneten MILP Planungsalgorithmus (Fuhrmann et al. 2022).
+-	Empfangen von Messwerten der Netzfrequenz und Leistungsbezug am Netzanschlusspunkt, um daraus die erforderliche Lastmodulation für die Erbringung von Primärregelleistung zu berechnen. Hierbei wird die Lastmodulation auf mehrere diskret steuerbare (Electric Arc Furnace) oder kontinuierlich steuerbare (Zink Elektrolyseanlage) Lasten aufgeteilt (Perroy et al. 2020). 
+-	Empfangen von Messwerten von Wärme-, Kälte-, und Stromversorgungsanlagen inkl. Wärme- und Kältespeicher einer Fabrik und Bereitstellung der Messwerte an ein übergeordnetes EMS, um den Betrieb der Versorgungsressourcen zu planen. 
+-	Empfangen von Messdaten für den Betrieb eines experimentellen Förderbandes und Bereitstellen der Messdaten des Energieverbrauches an übergeordnete Energiekontrollsysteme (Mechs et al. 2013).
+-	Empfangen von Sensorwerten von einem Wärmespeicher und Bereitstellung der Daten für einen Digitalen Zwilling zur Verbesserung der Abwärmenutzung von Elektrolichtbogenöfen (Kasper et al. 2024).
+-	Empfangen von Sensorwerten einer experimentellen Destillationskolonne und Bereitstellen dieser für übergeordneten MILP-Planungsalgorithmus (Reinpold et al. 2023).
+-	Empfangen von Sensorwerten und Bereitstellung dieser für eine online-Optimierung von Betriebsparametern zur Steuerung eines Gegengewichts an einer Erdölförderpumpe in Abhängigkeit des Drehwinkels, um Spitzenlastmanagement des Antriebsmotors der Pumpe auszuführen (Zhao et al. 2021). 
+-	Empfangen von Temperaturmesswerten eines Heißwasserpuffers einer Industriellen Reinigungsmaschine (Fuhrländer-Völker et al. 2023). 
+-	Empfangen von Betriebszuständen von Modulen einer industriellen Reinigungsmaschine (Fuhrländer-Völker et al. 2023).
+-	
+Challenges
+-	Erheben von Messdaten mithilfe einer SPS, ohne etablierte Steuerungsalgorithmen negativ zu beeinflussen, kann eine Herausforderung sein. Daten werden erfasst und unmittelbar von einer Datenbank ausgelesen (Laayati et al. 2022).
+Die Steuerung empfängt Signale von übergeordneten Funktionen wie Planungsfunktionen oder HMI. Bei den Signalen kann es sich um Steuerbefehle oder andere Signale wie dynamische Betriebsgrenzen handeln. 
+Beispiele
+-	Ein Elektrolyseur empfängt einen Sollwert von einem TSO für die zu beziehende elektrische Leistung, um Regelleistung zu erbringen (Qiu et al.). 
+-	Lesen von Betriebsdaten einer Klimaanlage für Bakterienkulturen und Umsetzen von Lastreduktionsbefehlen (Lu 2022).
+-	Empfangen von Steuerungssignalen eines Planungsalgorithmus‘ für den Betrieb eines Kühlraumes und einer Kompressionskältemaschine und senden der Steuersignale an die Aktorik der Kompressionskältemaschine (Hayn et al. 2023).
+-	Empfangen von optimierten Steuerungsbefehlen für den Betrieb einer Wärmeversorgungsanlage einer Fabrik inkl. Wärmespeicher. Steuerungsbefehle werden von einem übergeordneten MILP-Betriebsplanungsalgorithmus empfangen (Fuhrmann et al. 2022). 
+-	Empfangen von Signalen zur Lastreduktion für die Erbringung von primärer Regelleistung durch Zink-Elektrolyseanlagen, wobei die geforderte Lastreduktion auf mehrere Elektrolysezellen aufgeteilt wird, um Verfügbarkeiten von Anlagen berücksichtigen zu können (Perroy et al. 2020).
+-	Empfangen von Signalen zur Versetzung eines experimentellen Förderbandes in verschiedene Standby-Stadien, wobei der ausgeprägteste Standby-Status die meisten Ressourcen abschaltet und somit die meiste Energie spart aber dafür auch am aufwendigsten einzustellen ist (Mechs et al. 2013). 
+-	Empfangen von Signalen von einem Digitalen Zwilling zur Steuerung eines Wärmespeichers zur Verbesserung der Abwärmenutzung von Elektrolichtbogenöfen (Kasper et al. 2024).
+-	Empfangen von optimierten Steuerungsbefehlen von einem MILP-Planungsalgorithmus für den Energie-flexiblen Betrieb einer experimentellen Destillationskolonne (Reinpold et al. 2023). 
+-	Empfangen von optimierten Steuerungssignalen zur Steuerung eines Gegengewichts an einer Erdölförderpumpe in Abhängigkeit des Drehwinkels, um Spitzenlastmanagement des Antriebsmotors der Pumpe auszuführen (Zhao et al. 2021). 
+-	Empfangen von Steuerungsbefehlen eines übergeordneten Aggregators für die Erbringung von Regelleistung durch eine Klimaanlage eines Bürogebäudes und eine Kältemaschine eines Supermarktes (Rahnama et al. 2017).
+-	Empfangen von An-/Aus-Steuerungsbefehlen für drei Kompressoren einer Kältemaschine eines Supermarktes von einem übergeordneten Aggregator (Rahnama et al. 2017).
+-	Empfangen von dynamischen Grenzwerten für eine Hysteresteuerung der Temperatur in Kühlregalen eines Supermarktes: Die Grenzwerte der Hysterese werden dynamisch angepasst, um Öffnen und Schließen von Ventilen vorzunehmen, die den Strom von Kühlmittel in die Kühlregale steuern (Rahnama et al. 2017).
+-	Empfangen von Steuerungsbefehlen eines übergeordneten SCADA Systems zur Steuerung von Energieversorgungsanlagen einer Fabrik (Ferrari et al. 2017).
+-	Empfangen von Befehlen zur Erbringung von Lastreduktionsmaßnahmen (Fuhrländer-Völker et al. 2023).
+Die Steuerung sendet Steuerbefehle an die Aktorik von Ressourcen und stellt so Betriebspunkte von Ressourcen ein. Verglichen mit dem konventionellen Betrieb, werden hierbei ggf. häufiger Wechsel des Betriebspunktes vorgenommen, und es werden ggf. häufiger Betriebspunkte im Teillastbereich eingestellt. Auch das Pausieren von Produktionsressourcen kann, wenn prozesstechnisch sinnvoll, bei der Umsetzung von Energie-flexiblen Betriebsstrategien häufiger erfolgen, als es im konventionellen Betrieb der Fall ist.  
+Beispiele 
+-	Einstellen von Drehgeschwindigkeit und Vorschub einer CNC-Fräse, um so den Energiebedarf variabel zu gestalten (Suwa und Samukawa 2016). 
+-	Einstellen der Drehgeschwindigkeit eines Kompressionskühlers, um variablen Kältebedarf zu decken (Hayn et al. 2023).
+-	Empfangen von Steuerungssignalen eines Planungsalgorithmus‘ für den Betrieb eines Kühlraumes und einer Kompressionskältemaschine und senden der Steuersignale an die Aktorik der Kompressionskältemaschine (Hayn et al. 2023).
+-	Senden von Steuerungsbefehlen für den Betrieb einer Wärmeversorgungsanlage einer Fabrik inkl. Wärmespeicher. Steuerungsbefehle werden von einem übergeordneten MILP-Betriebsplanungsalgorithmus empfangen (Fuhrmann et al. 2022). 
+-	Senden von Steuersignalen an Gleichrichter zur kontinuierlichen Lastmodulation von Zink Elektrolyseanlagen für die Erbringung von Primärregelleistung (Perroy et al. 2020).
+-	Senden von Steuersignalen an Laststufenschalter zur diskreten Lastmodulation von Elektrolichtbogenöfen für die Erbringung von Primärregelleistung (Perroy et al. 2020).
+-	Senden von Signalen zur Abschaltung eines verteilten IO-Moduls und verbundener Sensoren via PROFIEnergy, um Energie zu sparen (Mechs et al. 2013).
+-	Senden von Signalen zur Versetzung eines elektrischen Antriebs eines experimentellen Förderbandes in den Standy Modus, um Energie zu sparen (Mechs et al. 2013).
+-	Senden von Signalen zur Abschaltung eines elektrischen Antriebs eines experimentellen Förderbandes mithilfe eines Relais, um Energie zu sparen (Mechs et al. 2013).
+-	Senden von Steuerungsbefehlen zur partiellen Öffnung von Druckregelventilen für den Betrieb von Druckwechseladsorptionskolonnen (Crespi et al. 2023).
+-	Steuerung eines Wärmespeichers zur Verbesserung der Abwärmenutzung von Elektrolichtbogenöfen (Kasper et al. 2024).
+-	An-/Aus-Steuerung des Heizstroms einer experimentellen Distillationskolonne, um Energie-flexible Betriebspläne umzusetzen (Reinpold et al. 2023).
+-	Senden von Steuerungssignalen zur Steuerung eines Gegengewichts an einer Erdölförderpumpe in Abhängigkeit des Drehwinkels, um Spitzenlastmanagement des Antriebsmotors der Pumpe auszuführen (Zhao et al. 2021). 
+-	
+
+Steuerung stellt Daten für übergeordnete Funktionen bereit.  Bei der Nutzung von Energieflexibilität müssen häufig mehrere verteilte Ressourcen gemeinsam optimiert und betrieben werden. Dies erfordert die Existenz übergeordneter Planungs- und/oder Ausführungsfunktionen, denen die für die gesamtheitliche Betriebsplanung benötigten Daten der Steuerungen bereitgestellt werden müssen. 
+Beispiele: 
+-	Bereitstellung von Betriebsdaten an eine Datenbank, um Daten des Betriebs einer Kältemaschine eines Kühlhauses für die Entwicklung von datengetriebenen Betriebsstrategien nutzen zu können (Cirera et al. 2020).
+
+Kommunikation
+Die Kommunikation mit relevanten externen Stakeholdern muss sichergestellt werden. Dies ist etwa dann relevant, wenn aktuelle Marktpreise der Intraday Strombörse für die Betriebsplanung benötigt werden, Messwerte und Steuersignale mit einem Aggregator ausgetauscht werden oder externe Prognose-Services genutzt werden. Ebenso müssen Steuersignale von Netzbetreibern empfangen werden, wenn automatisiert Regelleistung erbracht werden soll. Wenn Betriebspläne von externen Stakeholdern optimiert werden, müssen ggf. auch regelmäßig Modellparameter von Optimierungsmodellen kommuniziert werden. 
+Beispiele
+-	Senden des aktuellen Betriebszustandes ein Klimaanlage und empfangen von Befehlen zur Lastreduktion von einem Aggregator via OpenADR (Lu 2022). 
+-	Kosten für die Bereitstellung von Flexibilität werden einem Netzbetreiber zur Verfügung gestellt, damit dieser den Abruf von Flexibilität koordinieren kann (Rahnama et al. 2017).
+-	Austausch von einzustellenden und gemessenen Werten des elektrischen Leistungsbezugs zwischen verteilten Energieressourcen und einem Aggregatoren (Rahnama et al. 2017). Einzustellende Werte sollten wenn möglich mit ausreichend Vorlauf kommuniziert werden, sodass Betriebsplanung darauf ausgerichtet werden kann.
+-	Kommunikation von Modellparametern von Optimierungsmodellen an Aggregatoren (Rahnama et al. 2017). 
+-	Kommunikation von Flexibilitätsgrenzen und aktuellen Speicherzuständen an Aggregatoren (Rahnama et al. 2017). 
+-	Empfangen von dynamischen Energiepreisen von einem Energieversorger, um Fertigungsmaschinen Energie-flexibel betreiben zu können (Sun et al. 2014).
+-	Industrielle Betriebe versenden Flexibilitätsangebote (Regelleistung) an einen Netzbetreiber.  Flexibilitätsangebote enthalten: Zeitraum der Verfügbarkeit, maximale und minimale Abrufdauer, benötigte Vorlaufzeit, Baseline Energieverbrauchsprognose, verfügbare Regelleistung. (Silletti et al. 2022)
+-	Industrielle Betriebe empfangen Laständerungsbefehle (Regelleistung) von einem Netzbetreiber. Laständerungsbefehle enthalten das zu erbringende Flexibilitätsangebot, Startzeitpunkt, Endzeitpunkt und zu erbringende Regelleistung. (Silletti et al. 2022)
+
+Die Kommunikation zwischen allen unternehmensinternen Komponenten, die an der Energie-flexiblen Betriebsplanung und -Steuerung beteiligt sind, muss sichergestellt sein. Daten können semantisch aufbereitet werden, sodass eine strukturierte Abfrage von Daten ermöglicht wird. 
+
+Aktorik
+Die Aktorik setzt Steuerbefehle um und beeinflusst dadurch Prozesse, sodass Energieverbrauch, Energieerzeugung, Energiespeicherung und Produktionsraten im Sinne der Energie-flexiblen Produktionsplanung angepasst werden. 
+Beispiel: 
+-	Anpassung der Kühlleistung von Kältemaschinen für die Kühlung von Kühlregalen in Supermärkten und für die Klimatisierung von Bürogebäuden durch teils kontinuierliche, teils diskrete Anpassung des Betriebspunktes von Kompressoren. (Rahnama et al. 2017)
+-	Individuelle Kühlung einzelner Abteile von Kühlregalen in Supermärkten durch Variation des Kühlmittelstroms in verschiedenen Abteilen. Individuelle Einstellung der Kühlmittelströme wird durch individuelle Ventile für jedes Abteil realisiert. (Rahnama et al. 2017)
+-	Anpassung der Heizleistung eines elektrischen Heizelements beim Betrieb einer Raffinerie. (Silletti et al. 2022)
+-	Anpassung der Leistungen von PV-Anlagen und Batterien durch Steuerbefehle an Wechselrichter. (Tian et al. 2016)
+-	Anpassung der Kühlleistung einer Klimaanlage für industrielle Produktionsumgebungen durch Variation der Drehzahl eines Kompressors (Hayn et al. 2023).
+-	Örtliche Variation von Kühlmittelströmen einer Klimaanlage für industrielle Produktionsumgebungen durch Ansteuerung von Pumpen und Ventilen (Hayn et al. 2023).
+-	An- und Abschalten eines experimentellen Förderbandes durch Ansteuern eines Umrichters (Hayn et al. 2023). 
+-	Betrieb einer Druckwechseladsorptionskolonne in Teillast durch kontinuierlich regelbares Ventil am Kolonnenausgang (Crespi et al. 2023).
+-	Betrieb eines Elektrolyse-Stacks in Teillast durch Anpassen der elektrischen Leistung mithilfe eines Gleichrichters (Crespi et al. 2023). 
+-	Betrieb einer experimentellen Destillationskolonne im An-/Aus-Betrieb durch An- und Ausschalten eines elektrischen Heizelements (Reinpold et al. 2023).
+-	Diskrete Steuerung eines Kompressors einer Kältemaschine für die Kühlung von Bürogebäuden (Rahnama et al. 2017).
+
+Alternativen:
+-	Diskret Steuerbare Aktorik kann mit kontinuierlich steuerbarer Aktorik kombiniert werden, um das insgesamt zu realisierende Flexibilitätsintervall zu vergrößern (Perroy et al. 2020). 
+Challenges: 
+-	Stromverbrauch eines Electric Arc Furnace kann nicht präzise eingestellt werden, wenn Leistungselektronik unzureichend ist (Silletti et al. 2022). Oszillationen der Leistung wurden beobachtet.
+-	Präzise Einstellung der Heizleistung elektrischer Heizelemente sollte kritisch überprüft werden. Es wurden langsame Reaktionen und Überschüsse bei der Heizleistung beobachtet. (Silletti et al. 2022)
+-	Manuelle Ausführung von Flexibilitätsabrufen in einem Stahlwerk ist eine große Herausforderung (Silletti et al. 2022).
+-	Aktorik muss für gegebenen Anwendungsfall geeignet sein. Anwendungsfälle, bei denen eine Präzise Einstellung des Energiebedarfs notwendig ist, sind ggf. nicht mit diskret steuerbarer Aktorik umzusetzen (Perroy et al. 2020). 
+Prognosen
+Notiz: Prognosen beziehen sich auf Einflussgrößen, auf die im Scope der Anwendung kein Einfluss genommen werden kann. Größen, die selbst beeinflusst werden können, werden nicht als prognostiziert, sondern als geplant bezeichnet. 
+Der Energiebedarf der zu steuernden Ressourcen wird prognostiziert. Prognosen des Energiebedarfs werden benötigt, um Lastverläufe für Energieversorger, Netzbetreiber oder Bilanzkreisverantwortliche zur Verfügung zu stellen. Prognosen des Energiebedarfs sind ebenfalls wichtig, um Spitzenlastmanagement zu betreiben, etwa indem der Zeitraum der Spitzen- und Minimallast vorhergesagt wird, sodass die Betriebsplanung dies berücksichtigen kann.  Je präziser Prognosen sind, desto großer ist tendenziell der Mehrwert, den diese ermöglichen. Prognosen müssen jedoch nicht zwangsläufig hoch präzise sein. Bereits einfache Prognosemodelle oder intuitive Schätzungen können signifikante Mehrwerte Leisten.
+Beispiel: 
+-	Prognose des Zeitraumes der Spitzenlast und der Minimallast einer Mine, um Spitzenlastmanagement durch die Betriebsplanung von Brechern zu betreiben. (Sokolovsky und Klimash 2019)
+-	Prognostizieren des Verlaufs des Energieverbrauchs, um diesen an einen Netzbetreiber übermitteln zu können. Netzbetreiber kann auf Basis der Prognosen den Einsatz von Regelleistung planen. (Silletti et al. 2022)
+-	Prognose des Energieverbrauchsprofils für die Herstellung von Teilen in CNC-Fräsen und Gummispritzgießmaschinen, um basierend auf Energieverbrauchsprognosen einzelner Teile Energie-optimierte Betriebsplanung durchführen zu können. (Wicaksono et al. 2024)
+-	Prognose der Spitzenlast einer Mine. (Laayati et al. 2022)
+-	Wärmebedarf einer Fabrik wird prognostiziert, um den Betrieb von Wärmepumpen und Wärmespeichern planen zu können. Online-Messungen des realen Wärmebedarfs werden genutzt, um Prognosen zu ergänzen und somit robuster gegenüber unerwartetem Verhalten von Anlagenbetreibern zu sein. (Fuhrmann et al. 2022)
+-	Prognose des Bedarfs einer Produktionsanlage an Kälte, Wärme und Strom, um Betrieb von Energieversorgungsressourcen planen zu können. (Sandro Magnani et al. 2018)
+-	Prognose des Stromverbrauchs von Servern in einem Rechenzentrum, um Stromlast einheitlich auf Servercluster zu verteilen. (Hsu et al. 2018)
+-	Prognose von Spitzenlastzeiten, um Lastreduktionen für das Spitzenlastmanagement von Kältemaschinen in Supermärken planen zu können. (Rahnama et al. 2017)
+-	Prognose des Energiebedarfs einer Produktionsanlage, um Betrieb von Kälte-, Wärme- und Stromversorgungsressourcen einer Produktionsanlage kostenminimal planen zu können. (Ferrari et al. 2017)
+-	Prognose des Energiebedarfs einer Fabrik sowohl bei konventionellen als auch bei optimierten Betriebsplänen (Sawczuk et al. 2024). 
+Alternativen:
+-	Anstatt den Energiebedarf der zu steuernden Ressourcen vorherzusagen, können reaktive, deterministische Regelungs- und Steuerungsalgorithmen verwendet werden. (Abdel-Baqi et al. 2015 - 2015)
+Die Energieerzeugung von fluktuierenden, lokalen Energieerzeugungsressourcen wird prognostiziert. Prognosen der lokalen Energieerzeugung werden benötigt, um die Energiebilanz eines Standorts und somit den Energieaustausch über die Standortgrenzen hinweg zu prognostizieren. Dies begünstigt das Lastmanagement.
+Beispiele: 
+-	Prognostizieren der lokalen Stromerzeugung durch Windturbinen, um sicherzustellen, dass die lokale Erzeugung nicht den eigenen Strombedarf übersteigt. (Tian et al. 2016)
+-	Prognostizieren der lokalen Stromerzeugung durch PV-Anlagen, um den Betrieb von Elektrolyseuren kostenminimal zu planen. (Qiu et al.)
+-	Stromerzeugung durch lokale Ressourcen wie PV und Dieselgeneratoren in einer Mine wird vorhergesagt, um Stromaustausch mit den Stromnetz zu prognostizieren. (Laayati et al. 2022)
+Alternativen: 
+-	Anstatt die Erzeugung durch lokale Erzeugungsressourcen vorherzusagen, können reaktive, deterministische Regelungs- und Steuerungsalgorithmen verwendet werden. (Ziogou et al. 2013)
+Energiepreise werden prognostiziert, um den Betrieb kostenminimal zu planen. In vielen Fällen sind zum Zeitpunkt der Betriebsplanung Energiepreise für einen gewissen Zeitraum im Voraus bekannt. In solchen Fällen werden Prognosen der Energiepreise nur benötigt, um den Planungshorizont zu erweitern. Wenn variable Energiepreise genutzt werden, können diese ggf. vom Energieversorger prognostiziert werden. 
+Beispiele:
+-	Strompreisprognose über 24-Stunden Zeitraum hinaus, um den Planungshorizont für den Energie-flexiblen Betrieb einer Maschine für das Extrusionsblasformen zu erweitern. (Gong et al. 2019)
+-	Prognose der Strompreise durch Energieversorger für die Planung den Betriebes von CNC-Fräsen und Gummispritzgießmaschinen. (Wicaksono et al. 2024)
+-	Prognose von Strom- und Gaspreisen, um den Betrieb von Energieversorgungsressourcen einer Produktionsanlage planen zu können. (Sandro Magnani et al. 2018)
+-	Zugriff auf Energiepreisprognosen, um Betrieb von Kälte-, Wärme- und Stromversorgungsressourcen einer Produktionsanlage kostenminimal planen zu können. (Ferrari et al. 2017)
+-	Prognose der Netzanschlusskosten einer Fabrik auf Basis optimierter und konventioneller Betriebspläne (Sawczuk et al. 2024). 
+Alternativen:
+-	Energiepreise müssen nicht vorhergesagt werden, wenn Energiepreise dauerhaft durch Energieversorger vorgegeben werden. Dies ist etwa bei Time-Of-Use Schemata der Fall.  (Yang et al. 2002) 
+Der Bedarf an Produktionsmedien nachgelagerter Prozessschritte wird prognostiziert, um sicherzustellen, dass nachgelagerte Prozessschritte immer mit ausreichend Produktionsmedien versorgt werden. 
+Beispiele: 
+-	Prognose des Sauerstoff- und Stickstoffbedarfs der Stahlproduktion in einer vorgelagerten Luftzerlegungsanlage, um den Betrieb der Luftzerlegungsanlage planen zu können. (Han et al. 2016)
+
+Die Produktion vorgelagerter Zwischenprodukte oder Abfallprodukte wird prognostiziert, um bei der Betriebsplanung sicherzustellen, dass vorgelagerte Prozessschritte störungsfrei laufen können.  Dies ist etwa relevant, wenn die Weiterverarbeitung vorgelagerter Zwischenprodukte oder Abfallprodukte sichergestellt werden muss.
+Beispiele: 
+-	Prognose des Abwasserstroms, der in einer Abwasseraufbereitungsanlage anfällt und in einem großen Becken zwischengelagert wird. Die Prognose wird für die Betriebsplanung der Abwasseraufbereitungsanlage benötigt. (Wagner et al. XXX)
+
+Externe, physikalische Einflussgrößen auf Energieressourcen werden prognostiziert, um diese Einflussgrößen bei der Betriebsplanung berücksichtigen zu können. Einflussgrößen sind etwa die Umgebungstemperatur, Sonneneinstrahlung oder die Windgeschwindigkeit. 
+Beispiele: 
+-	Prognose der Umgebungstemperatur eines Kühlhauses, um Kühlbedarf prognostizieren zu können. (Hayn et al. 2023)
+-	Zugriff auf Prognosen von Wetterbedingungen, um die Stromerzeugung lokaler Ressourcen vorhersagen zu können und die Prognose von Energiepreisen zu verbessern. (Sandro Magnani et al. 2018)
+-	Zugriff auf Prognosen von Wetterbedingungen, um die Stromerzeugung lokaler Ressourcen vorhersagen zu können. (Ferrari et al. 2017)
+-	Zugriff auf Prognosen von Wetterbedingungen, um deren Einfluss auf Wärme- und Kälteversorgungsressourcen einer Produktionsanlage bei der Betriebsplanung berücksichtigen zu können. (Ferrari et al. 2017)
+-	Prognose der Beschaffenheit von Abwasser (bspw. Feststoffgehalt des Abwassers), um Energiebedarf für die Abwasseraufbereitung bei der Betriebsplanung berücksichtigen zu können. (Wagner et al. 2024)
+
+Simulation
+Simulationen werden genutzt, um Handlungsoptionen zu evaluieren. Wenn ein Anlagenbetreiber etwa verschiedene Optionen hat, wie eine Anlage zu betreiben ist, können Simulationen dabei helfen, Handlungsoptionen bezüglich verschiedener Betriebsziele zu vergleichen. Dies setzt die Existenz eines Simulationsmodells der Anlage voraus. 
+Beispiele: 
+-	Simulation des Betriebs von Fabriken, um den Einfluss von Betriebsplänen auf Netzentgelte zu simulieren (Sawczuk et al. 2024). 
+Herausforderungen: 
+-	Simulationsmodelle sollten regelmäßig aktualisiert werden, um Veränderungen an realen Ressourcen abzubilden (Kasper et al. 2024).  
+Simulationen helfen bei der Entwicklung Energie-flexibler Betriebsstrategien. Bei der Entwicklung von Betriebsstrategien, kann es notwendig sein, das physikalische Verhalten von Ressourcen präzise abzubilden, um bewerten zu können, ob Betriebspläne realistisch sind und zuverlässig ausgeführt werden können (Hayn et al. 2023). Hier können Simulationen eingesetzt werden, um bei der Entwicklung von Betriebsstrategien zu unterstützen. 
+Beispiele: 
+-	Physikalische Modellierung eines Kühlraumes einer Fabrik, um Betriebsstrategien zu entwickeln und zu testen (Hayn et al. 2023). 
+-	Nutzung von Simulationsmodellen, um Betriebsstrategien für Wasserstoffelektrolyseure und deren Versorgungsressourcen zu entwickeln (Ziogou et al. 2013). 
+-	Nutzung von physikalischen Simulationsmodellen von Wasserstoffelektrolyseuren inklusive verschiedener Teilsysteme wie der Wasserstofftrocknung, um dynamische Betriebs- und Steuerungsstrategien zu entwickeln (Crespi et al. 2023).
+-	Nutzung von physikalischen Simulationsmodellen, um Optimierungsmodelle für den Energie-flexiblen Betrieb einer Destillationskolonne zu verbessern, indem ein Abgleich zwischen Optimierungs- und Simulationsmodellen stattfindet (Reinpold et al. 2023). 
+Herausforderungen: 
+-	Simulationsmodelle sollten regelmäßig aktualisiert werden, um Veränderungen an realen Ressourcen abzubilden (Kasper et al. 2024).  
+
+Simulationen fördern das Anlagen- und Prozessverständnis und können damit dazu beitragen Optimierungspotenziale oder Herausforderungen zu erkennen. 
+Beispiele: 
+-	Erstellung und Parametrierung eines Simulationsmodells eines Hochtemperaturwärmespeichers für die Abwärmenutzung in der Stahlindustrie, um dynamisches Verhalten und Degradation des Systems zu verstehen (Kasper et al. 2024). 
+-	Nutzung eines Simulationsmodells, um Energieverluste in einer experimentellen Destillationskolonne zu ermitteln und das thermische Verhalten der Kolonne zu verstehen (Reinpold et al. 2023).
+Herausforderungen: 
+-	Simulationsmodelle sollten regelmäßig aktualisiert werden, um Veränderungen an realen Ressourcen abzubilden (Kasper et al. 2024).  
+-	
+
+Analyse
+Analysefunktion wertet Produktionsvolumen bei Energie-flexiblem Betrieb aus, sodass sichergestellt ist, dass der Energie-flexible Betrieb keine Einbußen des Produktionsvolumens verursacht. Für die Bewertung Energie-flexibler Betriebsstrategien wird dabei häufig das real gemessene Produktionsvolumen mit dem geplanten Produktionsvolumen verglichen. So kann bewertet werden, wie präzise ein Betriebsplan umgesetzt werden kann. 
+Beispiele: 
+-	Erfassen des Produktionsvolumens eines Elektro-Lichtbogenofens und einer Elektrolyseanlage, um zu analysieren, ob Produktionsvolumen durch Energie-flexible Produktion abnimmt. (Perroy et al. 2020)
+-	Erfassen des Produktionsvolumens einer Destillationskolonne, um zu analysieren, ob das durch ein MILP-Optimierungsmodell geplante Produktionsvolumen mit dem realisierten Produktionsvolumen übereinstimmt. (Reinpold et al. 2023)
+-	Erfassen des realisierten Produktionsvolumens einer Zinkelektrolyseanlage und vergleich mit dem geplanten Produktionsvolumen, wobei Energie-flexibel geplant wurde, um Energiekosten zu minimieren. (Yang et al. 2002)
+-	Vergleich des geplanten und des realisierten Produktionsvolumens einer Luftzerlegungsanlage einer Stahlfabrik. (Han et al. 2016)
+-	Analyse des Energieverbrauchs und der Produktionsvolumina verschiedener Maschinen in einer Mine, um Wartungsentscheidungen zu treffen, Maschinendefekte zu analysieren und Betriebsstrategien zu verbessern. (Laayati et al. 2022)
+-	
+
+Analysefunktion wertet verbrauchte und erzeugte Energie aus, und errechnet KPIs für die Bewertung des Nutzens des Energie-flexiblen Betriebs. Für die Bewertung Energie-flexibler Betriebsstrategien wird dabei häufig der real gemessene Energieverbrauch mit dem geplanten Energieverbrauch verglichen. So kann bewertet werden, wie präzise ein Betriebsplan umgesetzt werden kann. 
+Beispiele: 
+-	Erfassen des erzeugten Stroms und der erzeugten Wärme durch PV, Wind und CHP zur Versorgung eines Industriestandorts, um die energetische Effizienz der Ressourcen zu bewerten. (Sandro Magnani et al. 2018)
+-	Erfassen des verbrauchten Stroms eines experimentellen Förderbandes und Vergleich des verbrauchten Stroms mit dem geplanten Stromverbrauch, um die Zuverlässigkeit der Betriebsstrategie zu untersuchen. (Mechs et al. 2013)
+-	Erfassen des verbrauchten Stroms eines experimentellen Förderbandes um Energieeinsparungen des Energie-flexiblen Betriebs verglichen mit dem konventionellen Betrieb zu ermitteln. (Mechs et al. 2013)
+-	Erfassen des verbrauchten Stroms in Rechenzentren auf ebene einzelner Server, um die Spitzenlast von Clustern von Servern zu erfassen, um Betriebsstrategien zur Spitzenlastreduktion bewerten zu können. (Hsu et al. 2018)
+-	Erfassen des Stromverbrauchs einer Druckwechseladsorptionskolonne, um die Stromeinsparungen durch Energie-flexible Betriebsstrategien zu quantifizieren. (Crespi et al. 2023)
+-	Erfassen des Stromverbrauchs einer Destillationskolonne, um zu analysieren, ob der durch ein MILP-Optimierungsmodell geplante Stromverbrauch mit dem realisierten Stromverbrauch übereinstimmt. (Reinpold et al. 2023)
+-	Zeitlich aufgelöste Erfassung der Leistung eines Antriebsmotors einer Ölförderpumpe, um die Effektivität von Spitzenlastreduktionsstrategien zu analysieren. (Zhao et al. 2021)
+-	Analyse des Energieverbrauchs und der Produktionsvolumina verschiedener Maschinen in einer Mine, um Wartungsentscheidungen zu treffen, Maschinendefekte zu analysieren und Betriebsstrategien zu verbessern. (Laayati et al. 2022)
+-	
+Analysefunktion erfasst Abweichungen zwischen dem Betriebsplan und real gemessenen Betriebsdaten, um Rückschlüsse auf die Qualität der Betriebsplanungsstrategie ziehen zu können. 
+Beispiele
+-	Erfassung der Abweichung zwischen einem Betriebsplan eines Wärmespeichers für die Abwärmerückgewinnung der Stahlproduktion und real gemessenen Werten, um festzustellen ob die Abweichung mit der Zeit größer wird, was auf eine Degradation des Speichers hindeuten kann (Kasper et al. 2024). 
+Herausforderungen
+-	Wenn Modelle angepasst werden sollen, weil das Verhalten von Ressourcen sich verändert hat (etwa aufgrund von Degradation) werden ausreichend Daten benötigt, um zuverlässig neue Modelle parametrieren zu können. Dies ist unmittelbar nach der Detektion einer Veränderung oftmals schwierig. Eine solche laufende Modelladaption erweist sich insgesamt oft als schwierig (Kasper et al. 2024).
+Die Bedeutung von Analysefunktionen für die Bewertung Energie-flexibler Betriebsstrategien wird, ohne konkrete Umsetzungen aufzuführen, von weiteren Autoren betont: (Ferrari et al. 2017)
+Analysefunktion ermittelt die Kosten eines Betriebsplans und die Mehrwerte, die sich aus der Energie-flexiblen Produktion ergeben. Mehrwerte sollten für den aktuellen Planungshorizont ermittelt werden, um alternative Betriebspläne miteinander vergleichen zu können. Mehrwerte sollten ebenfalls über längere Zeiträume kumuliert ermittelt werden, um die Mehrwerte und Mehraufwände in einen angemessenen Kontext setzen zu können. 
+-	Vergleich der Kosten alternativer Betriebspläne für die Minimierung von Netzanschlusskosten beim Betrieb einer Fabrik (Sawczuk et al. 2024). 
+Analysefunktion ermittelt die ökologischen Auswirkungen eines Betriebsplans und die ökologischen Mehrwerte, die sich aus der Energie-flexiblen Produktion ergeben. Auswirkungen sollten für den aktuellen Planungshorizont ermittelt werden, um alternative Betriebspläne miteinander vergleichen zu können. Auswirkungen sollten ebenfalls über längere Zeiträume kumuliert ermittelt werden, um die Auswirkungen und Mehraufwände in einen angemessenen Kontext setzen zu können. 
+Ausführung
+Im Gegensatz zur Betriebsplanung findet die Ausführung oft innerhalb deutlich kürzerer Zeiträume und als Reaktion auf Ereignisse statt. Die Betriebsplanung hingegen findet meist proaktiv mit deutlich mehr zeitlichem Vorlauf statt.
+Bei der Ausführung werden Flexibilitätsabrufe auf verschiedene Ressourcen aufgeteilt, sodass die geforderte Leistung erbracht wird. Flexibilitätsabrufe können etwa von einem Netzbetreiber kommen, wenn ein Verbraucher seine momentan bezogene Leistung verringern muss, um einen Netzengpass zu beheben. Ein anderer Fall, in dem Flexibilitätsabrufe erfolgen, ist die Erbringung von Regelleistung und Regelarbeit. Ebenso ist es denkbar, dass ein Aggregator Flexibilität abruft. Oftmals wird ein Flexibilitätsabruf von mehreren Ressourcen erbracht, sodass die geforderte Leistungsänderung auf mehrere Ressourcen aufgeteilt werden muss. Für die Aufteilung der Leistungsänderung auf mehrere Ressourcen können fallspezifische Entscheidungslogiken oder auch Optimierungsalgorithmen verwendet werden. Wichtig ist in diesem Fall oft eine schnelle Umsetzung in nahezu Echtzeit. 
+Beispiel: 
+-	Bei der Erbringung von Regelleistung aus einem Verbund von Stahlfabriken und Elektrolyseanlagen werden Regelleistungsabrufe auf mehrere Anlagen aufgeteilt, wobei Stahlfabriken, die in diesem Fall Elektro-Lichbogenöfen nutzen, ihre Leistung nur in diskreten Schritten anpassen können. Um Regelleistungsabrufe präzise erbringen zu können, wird eine spezifische Ausführungslogik verwendet, die diskrete Leistungsabrufe an die Stahlfabriken und kontinuierliche Abrufe an die Elektrolyseanlagen schickt. (Perroy et al. 2020)
+-	Beim Netzengpassmanagement werden Leistungsreduktionsbefehle auf Kältemaschinen von Supermärkten und Kältemaschinen für die Klimatisierung von Bürogebäuden aufgeteilt. Hierfür wird eine Ausführungslogik basierend auf einem Optimierungsalgorithmus verwendet. (Rahnama et al. 2017)
+Ausführung übersetzt Betriebspläne in Steuerbefehle. Betriebspläne sind nicht immer unmittelbar in Steuerbefehle überführbar. So kann es etwa sein, dass ein Betriebsplan den Energieverbrauch in kW definiert, die Steuerung aber Arbeitspunkte in Prozentangaben benötigt. In einigen Fällen können Steuerungsbefehle direkt in Planungsmodellen integriert werden, sodass keine Übersetzung notwendig ist. In anderen Fällen mit geringer Komplexität genügt eine lineare Umrechnung, um Betriebspläne in Steuerungsbefehle zu überführen. Wenn es keinen einfachen Zusammenhang zwischen den im Betriebsplan vorgegebenen Werten und Steuerungsbefehlen gibt, wie es etwa der Fall ist, wenn ein Prozess auf eine bestimmte Temperatur eingeregelt wird, der Betriebsplan jedoch nur einen Wert für den Energieverbrauch vorsieht, können Methoden aus dem Bereich des ‚Advanced Process Control‘ angewendet werden. Wenn solche Methoden nicht angewendet werden können oder sollen, müssen Betriebspläne von Anlagenbetreibern in Steuerungsbefehle überführt werden. Ein wichtiger Aspekt bei der Übersetzung von Betriebsplänen in Steuerbefehle ist die die zeitlich exakte Versendung von Steuerbefehlen entsprechend des Betriebsplans. 
+Beispiele: 
+-	Übersetzen Betriebsplänen für den Betrieb von Wärmeversorgungsressourcen einer Fabrik in Steuersignale für einzelne Aktoren wie Pumpen, Ventile oder Boiler. Zeitlich grob aufgelöste Betriebspläne (15-minütig) werden durch einen MPC-Ansatz in zeitlich höher aufgelöste (1-minütig) Steuersignale überführt. (Fuhrmann et al. 2022)
+-	Übersetzen von Betriebsplänen für Wärmespeicher für die Stahlherstellung in Steuersignale für die Be- und Entladung des Wärmespeichers, wobei die im Betriebsplan vorgesehene Be- und Entladungsleistung in dafür benötigte Volumenströme im Speicher umgerechnet werden. (Kasper et al. 2024)
+-	Übersetzen von Sollwerten für den Stromverbrauch einer experimentellen Destillationskolonne in Steuersignale und Übermitteln der Steuersignale an eine SPS zu durch die Betriebsplanung vorgesehenen Zeitpunkten (Reinpold et al. 2023). 
+Alternativen:
+-	Es besteht oft auch die Möglichkeit Betriebspläne manuell von den Operatoren von Ressourcen umsetzen zu lassen, indem die entsprechenden Steuerbefehle von den Operatoren in einem Prozessleitsystem eingetragen werden (Han et al. 2016; Wagner et al. 2024)
+Challenges: 
+Ausführung sendet Steuerbefehle an verteilte Ressourcen, wobei verteilte Ressourcen Steuerungen, einzelne Aktoren, untergeordnete Steuerungen oder Prozessleitsysteme sein können. Wichtig hierbei ist die Übereinstimmung der Zeitpunkte der Versendung von Steuerbefehlen mit dem Betriebsplan. 
+Beispiele: 
+-	Versenden von Steuerbefehlen an verteilte Wärmeversorgungsressourcen einer Fabrik (Pumpen, Ventile oder Boiler). (Fuhrmann et al. 2022)
+-	Versenden von Steuerbefehlen an verteilte Energieressourcen für die Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Koordinierende Steuerung örtlich verteilter Energieressourcen (Stahlproduktion, Elektrolyse) zur Erbringung von Regelleistung: Versenden von Steuersignalen: Sollstrom der Elektrolyse-Einheiten, Stufen von Stufenschaltern in der Stahlproduktion (Elektro-Lichtbogenofen). (Perroy et al. 2020)
+-	Senden von Befehlen zur Aktivierung von Standby Zuständen in Rechenressourcen und Feldgeräten für die Steuerung eines experimentellen Förderbandes, wobei Standby Zustände als Mittel zur Lastregulierung eingesetzt werden. (Mechs et al. 2013)
+-	Senden von Steuerbefehlen an die Aktorik eines Wärmespeichers für die Stahlproduktion. (Kasper et al. 2024)
+Daten- und Informationsmanagement
+Das Daten- und Informationsmanagement stellt die semantische und syntaktische Interoperabilität der Daten sicher. 
+Beispiele:
+-	Verwendung einer semantischen Middleware, um die Interoperabilität von Daten aus verschiedenen Quellen sicherzustellen (Wicaksono et al. 2024). 
+Bereitstellen von Daten und Informationen für andere Funktionen bereit. 
+Beispiele:
+-	Bereitstellen von Betriebsdaten einer Mine für ein Energieflexibilitätsmanagement HMI. (Laayati et al. 2022)
+-	Bereitstellen von Betriebsdaten einer Mine für eine Datenbank. (Laayati et al. 2022)
+-	Bereitstellen von Betriebsdaten von Wärmeversorgungsressourcen einer Fabrik für ein Energiemanagementsystem (Fuhrmann et al. 2022).
+-	Bereitstellen von Betriebsdaten einer Luftzerlegungsanlage zur Versorgung einer Stahlfabrik für eine Datenbank. (Han et al. 2016)
+-	Bereitstellen von Daten (Betriebsdaten, Energiepreise, Lastprofile, Prognosen etc.) für eine Planungsfunktion für die Optimierung des Betriebs von Energieversorgungsressourcen einer Fabrik. (Ferrari et al. 2017)
+-	Übermitteln von Betriebsplänen von Energieversorgungsanlagen einer Fabrik, die den voraussichtlichen Energieaustausch mit dem Stromnetz beschreiben, an Netzbetreiber (Ferrari et al. 2017).
+-	Bereitstellen von Daten des Betriebs einer Fabrik für Prognosefunktionen und HMI (Wicaksono et al. 2024).
+-	Bereitstellen von semantisch annotierten Daten als Reaktion auf Nutzeranfragen in natürlicher Sprache (Wicaksono et al. 2024). 
+-	Bereitstellen von Daten aus einer Datenbank für das HMI, Simulationsumgebungen und Planungsfunktionen via SQL Anfrage (Sawczuk et al. 2024).
+-	Bereitstellen von Betriebsplänen einer Dampfturbine für die Abwärmerückgewinnung bei der Stahlproduktion (Kasper et al. 2024).
+-	Kommunizieren von vorhandener Energieflexibilität und derzeitiger Leistung in Kältemaschinen. Flexibilität und Leistung werden an Aggregatoren in Form von geeigneten Kennzahlen kommuniziert (Rahnama et al. 2017).
+-	Bereitstellen von mathematischen Planungsmodellen von Kältemaschinen für einen Aggregator (Rahnama et al. 2017). 
+Challenges:
+-	Eine Störung von etablierten Prozessen wie der Steuerung von Ressourcen muss ausgeschlossen werden. Bei der Nachrüstung von Energie-Flexibilitätsfunktionalitäten können hierfür parallele Programme und Datenbanken etabliert werden, sodass bestehende, funktionierende Steuerungsprogramme nicht beeinträchtigt werden. (Laayati et al. 2022)
+-	
+
+Zusammenführen von Daten und Informationen aus verteilten Ressourcen und IT-Komponenten, wobei IT-Komponenten etwa Prognosen, Datenbanken oder Schnittstellen zu externen Stakeholdern wie Marktbetreibern und Aggregatoren oder Wetterdiensten sein können. Das Daten- und Informationsmanagement ist somit die zentrale Komponente, um sicherzustellen, dass Daten und Informationen zur richtigen Zeit an der richtigen Stelle verfügbar sind. 
+Beispiele: 
+-	Zusammenführen von Daten aus verschiedenen Maschinen in einer Mine, um Operatoren notwendige Informationen bereitzustellen und gesamtheitliche Planung durchzuführen (Sawczuk et al. 2024). 
+-	Empfangen von Messwerten von Wärmeversorgungsressourcen einer Fabrik (Fuhrmann et al. 2022).
+-	Zusammenführen von Messwerten und Informationen zu Betriebszuständen aus verteilten Energieressourcen (PV, Batterie, Elektrolyseur) für die Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Zusammenführen von Messwerten des derzeitigen Strombezugs verteilter Energieressourcen für die Stahlproduktion, der Stromnetzfrequenz, und der Betriebszustände verteilter Energieressourcen, wobei auch Fehler und die nicht-Verfügbarkeit von Ressourcen erfasst werden. (Perroy et al. 2020)
+-	Zusammenführen von Wetterberichtsdaten, Lastprofielen und Energiepreisen, die für die Energie-flexible Planung des Betriebs von Energieversorgungsressourcen einer Fabrik benötigt werden (Ferrari et al. 2017).
+-	Einholen von Wetterprognosen, Daten zu Energieerzeugung, Energieverbrauch, Energiepreisen und Produktionsressourcen via REST API (Wicaksono et al. 2024). 
+-	Einlesen von Prozessdaten aus Speicherprogrammierbaren Steuerungen von Wärmeversorgungsressourcen einer Fabrik via OPC-UA (Fuhrmann et al. 2022). 
+-	Empfangen von Lastreduktionsbefehlen in Form einer maximal zulässigen Last für flexible Kältemaschinen von einem Aggregator (Rahnama et al. 2017). 
+Challenges:  
+-	Eine Störung von etablierten Prozessen wie der Steuerung von Ressourcen muss ausgeschlossen werden. Bei der Nachrüstung von Energie-Flexibilitätsfunktionalitäten können hierfür parallele Programme und Datenbanken etabliert werden, sodass bestehende, funktionierende Steuerungsprogramme nicht beeinträchtigt werden. (Laayati et al. 2022)
+
+Betriebsplanung
+Bei der Betriebsplanung werden Energieumsätze, Produktionsvolumina und relevante Prozessparameter für den Planungshorizont festgelegt. Das Ergebnis der Betriebsplanung ist der zeitliche Verlauf von Leistungen und Produktionsdurchsätzen und ggf. Speicher- und Betriebszuständen aller an der Planung beteiligten Ressourcen. 
+Beispiele: 
+-	Planen der Be- und Entladungsleistung eines Wärmespeichers zur Nutzung von Abwärme der Stahlproduktion. Die Abwärme wird genutzt, um in einem Dampfkreislauf Strom zu erzeugen. Der Dampfkreislauf wird unterstützend mit Erdgas geheizt, wobei die Heizleistung durch Erdgas ebenfalls bei der Planung bestimmt wird. Die geplante Stromerzeugung wird an einen Netzbetreiber übermittelt. (Kasper et al. 2024)
+-	Planen der Produktionsvolumina von Sauerstoff und Stickstoff in einer Luftzerlegungsanlage für die Versorgung einer Stahlfabrik (Han et al. 2016).
+-	Planen der zu erzeugenden Wärme, Kälte und des zu erzeugenden Stroms in Energieversorgungsressourcen einer Fabrik. (Ferrari et al. 2017)
+-	Planen von Schaltaktionen für den Betrieb eines experimentellen Förderbandes, wobei Standby-Zustände verwendet werden, um in Zeiten des Stillstandes den Energieverbrauch zu senken (Mechs et al. 2013).
+-	Planung des Produktionsvolumens und des Energieverbrauchs einer experimentellen Destillationskolonne (Reinpold et al. 2023). 
+-	Planung des Betriebs eines Elektrolyseurs mit dem Ziel selbst erzeugten Solarstrom zu verbrauchen, wobei das Planungsmodell die Akkumulation von Wasserstoff im Sauerstoffstrom des Elektrolyseurs berücksichtigt und vermeidet (Qiu et al.).
+-	Planung des Produktionsvolumens und des Energieverbrauchs einer Maschine für das Extrusionsblasformen (Gong et al. 2019). 
+-	Planung des Betriebs von Kältemaschinen für industrielle Produktionsumgebungen, sodass Kühlleistung vor allem dann erzeugt wird, wenn Strompreise niedrig sind (Hayn et al. 2023). 
+-	Planung der zu beziehenden elektrischen Leistung eines Elektrolyseurs und der Be- und Entladung einer Batterie, um selbst erzeugten Solarstrom zu nutzen (Ziogou et al. 2013). 
+-	Planung des Betriebs einer Fabrik um Netzanschlusskosten zu minimieren (Sawczuk et al. 2024). 
+
+Bei der Betriebsplanung werden Produktionsziele in Form von Produktionsvolumina berücksichtigt, um sicherzustellen, dass der Energie-flexible Betrieb keinen unerwarteten, negativen Einfluss auf Erlöse durch den Verkauf von Produkten hat. Dies ist dann relevant, wenn physische Produkte produziert werden sollen und es ein fest definiertes Produktionsziel gibt, das weder über- noch untererfüllt werden sollte. 
+Beispiele:
+-	 Vorgeben von Produktionszielen, die trotz der Erbringung von Primärregelleistung beim Betrieb eine Elektro-Lichtbogenofens und Elektrolyseuren eingehalten werden müssen (Perroy et al. 2020). 
+-	Vorgabe der für die Stahlproduktion benötigten Mengen an Sauerstoff und Stickstoff bei der Betriebsplanung einer Luftzerlegungseinheit. (Han et al. 2016)
+
+Bei der Betriebsplanung werden einzuhaltende Randbedingungen der zu betreibenden Ressourcen berücksichtigt, wobei Randbedingungen als physikalische Prozessgrößen zu verstehen sind. Dadurch wird sichergestellt, dass Ressourcen nicht außerhalb der zulässigen Betriebspunkte betrieben werden, und dass der Energie-flexible Betrieb keinen negativen Einfluss auf die Produktqualität hat. 
+Beispiele:
+-	 Vorgeben eines zulässigen Temperaturintervalls in Kühlregalen eines Supermarktes. (Crespi et al. 2023)
+
+Bei der Betriebsplanung werden zu verbrauchende und zu erzeugende Energiemengen berücksichtigt. Der Verbrauch und die Erzeugung können dabei sowohl zeitlich aufgelöst als auch über den Optimierungszeitraum aufsummiert vorgegeben werden. Dies stellt sicher, dass der Verbrauch bzw. die Erzeugung, die gegenüber externen Stakeholdern wie Netzbetreibern, Aggregatoren oder Märkten kommuniziert wurden, eingehalten wird, was notwendig ist, um Strafzahlungen zu vermeiden. 
+Beispiele:
+-	 Vorgeben einer Lastkurve für Supermärkte und Kältemaschinen für die Klimatisierung von Bürogebäuden, wobei die Lastkurve über- aber nicht unterschritten werden darf, um eine Überlastung des Stromnetzes zu vermeiden. (Rahnama et al. 2017)
+-	Vorgeben einer maximalen Leistung einer maximal zu verbrauchenden Energiemenge zur Erfüllung eines Produktionsauftrages einer CNC-Fräse. (Suwa und Samukawa 2016)
+-	Vorgeben der zu erzeugenden Strommenge eines Generators pro 15-minütigen Intervallen (Sandro Magnani et al. 2018).
+-	Vorgeben von Produktionszielen einer experimentellen Destillationskolonne für einen bestimmten Optimierungshorizont (Reinpold et al. 2023).
+-	Vorgabe des Leistungsbezugs am Netzanschlusspunkt von Energieversorgungsressourcen einer Fabrik (Ferrari et al. 2017). 
+
+Bei der Betriebsplanung werden ein oder mehrere Ziele verfolgt, die durch die Betriebsplanung möglichst optimal erreicht werden sollen. Ziele können etwa die Minimierung von Kosten oder die Maximierung des Produktionsvolumens sein. Wenn gleichzeitig mehrere Ziele verfolgt werden, müssen diese bei der Betriebsplanung gegeneinander gewichtet werden, da es für gewöhnlich nicht möglich ist, ein Optimum für mehrere Ziele gleichzeitig zu realisieren. 
+Beispiele:
+-	 Minimieren der Abweichung des Stromverbrauchs von Supermärkten und Kältemaschinen für die Klimatisierung von Bürogebäuden von einer Baseline, um die regulären Prozesse der genannten Ressourcen so wenig wie möglich zu stören. Während die Abweichung von der Baseline so klein wie möglich sein soll, darf eine maximale Lastkurve der Ressourcen nicht überschritten werden.  (Rahnama et al. 2017)
+-	Minimieren der Stromkosten bei gleichzeitiger Maximierung eines empirisch definierten Nutzes, der sich aus dem Betrieb von Produktionsmaschinen (CNC-Fräsen) ergibt. (Sun et al. 2014)
+-	Maximieren des Profits aus dem Verkauf von Wasserstoff bei gleichzeitiger Minimierung der Stromkosten für den Betrieb von Elektrolyseuren und den Kosten, die sich aus häufigen Start- und Stopvorgängen ergeben. (Qiu et al.)
+-	Minimierung der Produktionszeit für einen Produktionsauftrag einer CNC-Fräse bei gleichzeitiger Einhaltung einer maximal zulässigen elektrischen Leistung. (Suwa und Samukawa 2016)
+-	Minimierung der Energiekosten und Personalkosten für die Erfüllung eines Produktionsauftrages einer Maschine für das Extrusionsblasformen unter Einhaltung einer maximal zulässigen Produktionszeit. (Gong et al. 2019)
+-	Vermeiden von Preisspitzen durch Planung des Betriebs von Kältemaschinen und der Beladung von Kältespeichern zu Zeiten niedriger Strompreise. (Hayn et al. 2023)
+-	Minimierung der Energiekosten und des Kohlendioxidausstoßes bei der Betriebsplanung von Wärmeversorgungsressourcen einer Fabrik, wobei Energiekosten und Kohlendioxidausstoß variabel gegeneinander gewichtet werden können (Fuhrmann et al. 2022).
+-	Minimierung der nicht genutzten Erzeugung von PV-Strom und Minimierung der Degradation eines Elektrolyseurs bei gleichzeitiger Maximierung der Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Minimierung der Lastschwankungen eines Verbunds von Produktionsrobotern (Wan et al. 2018).
+-	Minimieren der Energiekosten beim Betrieb von Energieversorgungsressourcen einer Fabrik (Sandro Magnani et al. 2018) .
+-	Maximieren der Profitabilität des Betriebs einer Dampfturbine zur Nutzung von Abwärme aus der Stahlproduktion. Die Profitabilität berechnet sich hier durch die Einkünfte aus Strom- und Fernwärme Verkäufen abzüglich der Kosten für Gas zum Betrieb der Dampfturbine. (Kasper et al. 2024)
+-	Minimieren der Stromkosten für den Betrieb einer experimentellen Destillationskolonne (Reinpold et al. 2023). 
+-	Minimieren der Stromkosten für die Zinkelektrolyse (Yang et al. 2002). 
+-	Maximieren der Profitabilität des Betriebs von Energieversorgungsressourcen einer Fabrik, wobei das Abregeln erneuerbarer Eigenproduktion vom Betriebsplanungsalgorithmus bestraft wird (Ferrari et al. 2017). 
+
+Wenn Energieflexibilität direkt an Märkten vermarktet werden soll, muss die Planung das Platzieren von Angeboten an Märkten berücksichtigen. So müssen an der Day-Ahead Strombörse etwa Gebote, die den Preis und die Menge sowie das Zeitintervall des gehandelten Stroms festlegen, platziert werden. Ebenso muss an Regelleistungsmärkten die angebotene Regelleistung für einen bestimmten Zeitraum mit einem Preis versehen werden. 
+Es sollte möglich sein, die Betriebsplanung flexibel bei unvorhergesehenen Ereignissen anzupassen. In der Produktion kommt es häufig dazu, dass eine bestehende Planung aufgrund unvorhergesehener Ereignisse, wie dem Ausfall von Maschinen oder Personal, angepasst werden muss. Das Personal, das die Betriebsplanung durchführt, sollte also zu jeder Zeit eine erneute Planung veranlassen können, die störende Ereignisse berücksichtigt (Sawczuk et al. 2024). Ebenso kann es notwendig sein, dass eine erneute Betriebsplanung automatisch veranlasst werden muss, wenn ein Trend erkennbar ist, dass Vorgaben zu Produktionszielen oder Energieverbräuchen nicht erfüllt werden. 
+Beispiele: 
+-	Veranlassen einer erneuten Betriebsplanung, wenn festgestellt wird, dass der Energieverbrauch eines Verbundes von Elektro-Lichtbogenöfen und Elektrolyseanlagen bei der Erbringung von Regelleistung deutlich von den geplanten Werten abweicht, oder wenn Ressourcen unerwartet nicht zur Verfügung stehen. (Perroy et al. 2020)
+-	Regelmäßiges Aktualisieren eines Betriebsplans von Energieversorgungsressourcen einer Fabrik, um auf aktualisierte Erzeugungsprognosen für Windturbinen und PV-Anlagen und aktualisierte Lastprognosen einer Fabrik zu reagieren (Ferrari et al. 2017). 
+
+Bei der Betriebsplanung können relevante Faktoren wie die Wartung von Maschinen oder Pausenzeiten berücksichtigt werden. 
+Beispiele: 
+-	Berücksichtigen von Wartungsentscheidungen bei der Betriebsplanung einer Mine (Laayati et al. 2022).
+
+Es sollte die Möglichkeit geben, Betriebspläne automatisch umzusetzen, indem Steuerbefehle oder Sollwertvorgaben automatisch zu den vorgesehenen Zeitpunkten an die Ressourcen übermittelt werden. 
+Beispiele: 
+-	Übermitteln von Aktivierungssignalen für Standby-Modi zu durch die Betriebsplanung vorgesehenen Zeitpunkten an ein experimentelles Förderband, um Energieeinsparungen zu realisieren. (Mechs et al. 2013)
+-	Übermitteln von Betriebsplänen in Form von Sollwerten für Leistungen bei der Nutzung von Abwärme aus der Stahlproduktion. Sollwerte werden an einen Modelprädiktiven Regler übermittelt, der die Sollwertvorgaben in Steuerbefehle umwandelt. (Kasper et al. 2024)
+-	Übersetzen von Sollwerten für den Stromverbrauch einer experimentellen Destillationskolonne in Steuersignale und Übermitteln der Steuersignale an eine SPS zu durch die Betriebsplanung vorgesehenen Zeitpunkten (Reinpold et al. 2023). 
+Alternativen:
+-	Es besteht oft auch die Möglichkeit Betriebspläne manuell von den Operatoren von Ressourcen umsetzen zu lassen, indem die entsprechenden Steuerbefehle von den Operatoren in einem Prozessleitsystem eingetragen werden (Han et al. 2016)(XXX Wagner et al. 2024)
+Challenges: 
+Planungsmodell
+Das Planungsmodell repräsentiert die relevanten Eigenschaften der Energie-flexibel betriebenen Ressourcen mathematisch, um den Energieverbrauch und das Produktionsvolumen der betrachteten Ressourcen in Abhängigkeit des Betriebsplans zu berechnen. Alle relevanten Eigenschaften der Ressourcen müssen bei der Betriebsplanung berücksichtigt werden, wobei eine Herausforderung darin besteht, die relevanten Eigenschaften der Ressourcen zu erkennen. Eine relevante Eigenschaft einer Ressource kann etwa der mathematische Zusammenhang zwischen dem Betriebspunkt einer Anlage und dessen Energieverbrauch sein. Ebenso bilden Planungsmodelle das dynamische Verhalten von Ressourcen ab, wenn das dynamische Verhalten bei der Betriebsplanung einen limitierenden Faktor darstellt. Ein langsames Anfahren einer Luftzerlegungsanlage ist eher relevant für die Betriebsplanung als ein schnelles Hoch- und Herunterfahren eines PEM-Elektrolyseurs. Eine weitere relevante Eigenschaft sind die Abhängigkeiten zwischen verschiedenen Ressourcen, etwa wenn das Produkt einer Ressource direkt von einer weiteren Ressource weiterverarbeitet wird. Eine systematische Analyse der relevanten Eigenschaften von Planungsmodellen wird von (Wagner et al. 2023) XXX vorgenommen, weshalb hier lediglich Beispiele relevanter Eigenschaften aufgeführt werden. Einige der hier aufgeführten Beispiele wurden bereits auf vergleichbare weise unter ‚Betriebsplanung‘ aufgeführt. Der Unterschied in diesem Abschnitt ist, dass sich alle Beispiele auf die mathematische Repräsentation der Ressourceneigenschaften fokussieren, während der Abschnitt ‚Betriebsplanung‘ sich auf generell zu berücksichtigende Aspekte bei der Betriebsplanung bezieht.
+Beispiele: 
+-	Abbildung der Dauer und Abfolge von Bearbeitungsschritten in einer Automobilfertigungslinie als MILP-Modell (Emec et al. 2013).
+-	Maximale Produktionsrate von Produktionsmaschinen in einer Automobilfertigungslinie als MILP-Modell (Emec et al. 2013).
+-	Abbildung des angestrebten Produktionsvolumens für den Betriebsplanungshorizont einer Automobilfertigungslinie als MILP-Modell (Emec et al. 2013).
+-	Berechnung des Treibhausgasausstoßes und des Stromverbrauchs einer Automobilfertigungslinie als MILP-Modell (Emec et al. 2013). 
+-	Berechnung des Stromverbrauchs von Produktionsmaschinen einer automobilen Fertigungslinie in verschiedenen Betriebszuständen: Leerlauf, Pause, Betrieb (Emec et al. 2013). 
+-	Berechnung des Produktionsvolumens und des Stromverbrauchs von Produktionsressourcen einer Mine (Sokolovsky und Klimash 2019).   
+-	Berücksichtigen von Abhängigkeiten des Produktionsdurchsatzes von Produktionsressourcen einer Mine: Bspw. die gesamte Produktion einer Ressource muss unmittelbar von der darauffolgenden Ressource verarbeitet werden (Sokolovsky und Klimash 2019).
+-	Berechnung der Temperatur in einem Kühlregal eines Supermarktes und der Klimaanlage eines Bürogebäudes unter Berücksichtigung von Kälteverlusten und Kompressoreffizienz (Rahnama et al. 2017). 
+-	Abbildung der zulässigen Abfolge und der zulässigen Dauer von Betriebszuständen einer Kältemaschine (Rahnama et al. 2017).
+-	Berücksichtigung der maximalen Kühlleistung von Kältemaschinen für Kühlregale in Supermärken und für die Klimaanlage von Bürogebäuden (Rahnama et al. 2017). 
+-	Abbilden des Kühl- und Aufwärmverhaltens von Kühlregalen eines Supermarktes durch ein Verzögerungsglied erster Ordnung (Rahnama et al. 2017). 
+-	Nutzung nicht-linearer strömungsmechanischer und thermodynamischer Gleichungen, um die benötigte Kühlleistung von Kühlregalen eines Supermarktes zu ermitteln (Rahnama et al. 2017).
+-	Berücksichtigung von Betriebszuständen eines Elektrolyseurs (Qiu et al.). 
+-	Stückweise Linearisierte Abbildung des Zusammenhangs zwischen elektrischer Leistung, Wasserstoffproduktionsrate und Betriebstemperatur eines Elektrolyseurs als MILP-Modell (Qiu et al.). 
+-	Formulierung der Wasserstoff-Crossover Dynamik, um den Wasserstoffgehalt im Sauerstoffstrom eines Elektrolyseurs bei der Betriebsplanung zu berücksichtigen (Qiu et al.). 
+-	Vorgabe der maximalen Leistung eines Elektrolyseurs in Abhängigkeit der Verfügbarkeit erneuerbarer Energie (Qiu et al.).
+-	Berücksichtigung der Temperaturdynamik eines Elektrolyseurs bei der Betriebsplanung (Qiu et al.). 
+-	Berücksichtigung von Personalkosten, Energiekosten, Energieverbrauch, Produktionsdauer von Aufträgen, Umrüstzeiten und Betriebszuständen bei der Betriebsplanung einer Maschine für das Extrusionsblasformen (Gong et al. 2019).
+-	Nutzung von zwei Planungsmodellen für die Betriebsplanung von Wärmeversorgungsressourcen einer Fabrik. Ein zeitlich grobes Modell optimiert den Betrieb aus wirtschaftlicher und energetischer Sicht. Ein zeitlich feineres Modell optimiert die Einhaltung des groben Betriebsplans. (Fuhrländer-Völker et al. 2023)
+-	Abbildung des nicht-linearen Zusammenhangs zwischen Spannung und Stromstärke in einer PV-Anlage (Ziogou et al. 2013).
+-	Berechnung des Speicherzustandes einer Batterie in Abhängigkeit des Ladestroms (Ziogou et al. 2013).
+-	Abbildung des nicht-linearen Zusammenhangs zwischen Spannung, Stromstärke und Betriebstemperatur eines Elektrolyseurs (Ziogou et al. 2013).
+-	Abbildung des Zusammenhangs zwischen Arbeitspunkt und Energieverbrauch von Produktionsressourcen eines experimentellen Produktionssystems (Wan et al. 2018).
+-	Berechnen des gesamten Leistungsbezugs eines experimentellen Produktionssystems als Summe des Leistungsbezugs aller Ressourcen (Wan et al. 2018). 
+-	Abbilden des Verhaltens von Energieversorgungsressourcen einer Fabrik als Kennfelder (Sandro Magnani et al. 2018).
+-	Abbilden der Betriebszustände, Zustandsdauern, Zustandsfolgen und Zustandskosten eines experimentellen Förderbandes als price-timed-automat (Mechs et al. 2013).
+-	Berücksichtigung der maximalen Leistung und der Ramp-Raten eines Wärmespeichers für die Abwärmerückgewinnung der Stahlproduktion (Kasper et al. 2024). 
+-	Berücksichtigung der Maximalen und minimalen Beladung sowie der Energiebilanz eines Wärmespeichers für die Abwärmerückgewinnung der Stahlproduktion (Kasper et al. 2024). 
+-	Berücksichtigung der Betriebszustände und Zustandsdauern ‚Beladung‘ und ‚Entladung‘ eines Wärmespeichers für die Abwärmerückgewinnung der Stahlproduktion (Kasper et al. 2024). 
+-	Abbilden der maximalen Lade- und Entladeleistung eines Wärmespeichers für die Abwärmerückgewinnung der Stahlproduktion als stückweise linearisierte Funktion (Kasper et al. 2024).  
+-	Verwendung eines gemischt ganzzahligen, linearen, thermischen Massenmodells einer experimentellen Destillationskolonne, das Wärmeverluste entlang der Kolonne und Stoffströme innerhalb der Kolonne sowie Wärmekapazitäten der Kolonne abbildet (Reinpold et al. 2023). 
+-	Unterscheidung zwischen zwei Zuständen bei der Modellierung einer experimentellen Destillationskolonne: ‚In Betrieb‘ und ‚Aufheizen/Abkühlen/Pause‘
+-	Abbilden des Zusammenhangs zwischen elektrischer Heizleistung, Temperatur und Produktionsrate einer experimentellen Destillationskolonne als MILP-Modell (Reinpold et al. 2023).
+-	Abbilden einer Zinkelektrolyseanlage als Neuronales Netz (Backpropagating Neural Network), wobei die Spannung und die Effizienz der Elektrolysezelle in Abhängigkeit der Zinkkonzentration, der Schwefelsäurekonzentration und der Stromdichte abgebildet werden (Yang et al. 2002). Die Parameter des Neuronalen Netzes werden nach vorgegebenen Zeitintervallen automatisch anhand aktueller Daten aktualisiert.
+-	Berechnen der Stromkosten und Abbilden der Produktionsziele einer Zinkelektrolyseanlage (Yang et al. 2002). 
+-	Berücksichtigung der maximalen und minimalen Stromdichte in einer Zinkelektrolyseanlage (Yang et al. 2002) .
+-	Definieren der maximalen und minimalen Produktionsrate einer Luftzerlegungsanlage sowie der nachgelagerten Verflüssigungsanlage und der Speicherkapazitäten von Flüssigsauerstoff- und Flüssigstickstoffspeichern (Han et al. 2016). 
+-	Abbildung des Zusammenhangs zwischen Stromerzeugung und Wärmeerzeugung eines Blockheizkraftwerks als statistisch ermitteltes Polynom dritter Ordnung (Ferrari et al. 2017). 
+-	Abbildung des Zusammenhangs zwischen Kühlleistung und Heizleistung einer Adsorptionskältemaschine als statistisch ermitteltes Polynom dritter Ordnung (Ferrari et al. 2017).
+-	Berücksichtigen der Wartungs-, Betriebs-, und Energiekosten von Energieversorgungressourcen einer Fabrik (Ferrari et al. 2017). 
+-	Berücksichtigen der maximalen und minimalen Temperaturen von thermischen Speichern, die bei der Energieversorgung einer Fabrik genutzt werden (Ferrari et al. 2017).  
+-	Modellieren der Betriebszustände inkl. Zustandsübergänge und Übergangsbedingungen eines Wasserstoffelektrolyseurs (Ziogou et al. 2013). 
+-	Abbilden der Hysterese, die den Druck in einem der Elektrolyse nachgelagerten Wasserstoffpuffer steuert. Die Hysterese wird abgebildet, um deren Grenzen so zu optimieren, dass eine Planung des Energiebedarfs eingehalten wird (Ziogou et al. 2013). 
+-	Berechnung der benötigten Kühlleistung einzelner Abteile von Kühlregalen eines Supermarktes (Cirera et al. 2020). 
+Herausforderungen: 
+-	Bei der Modellierung von Ressourcen werden oft gemischt-ganzzahlige lineare Modelle verwendet. Da viele Ressourcen in der Realität nicht-lineares Verhalten aufweisen, müssen nicht-Linearitäten linearisiert werden. Bei starker nicht-Linearität können hierbei stückweise Linearisierungen verwendet werden. Die stückweise Linearisierung ist oft herausfordernd (Kasper et al. 2024). 
+-	Die Modellierung von Ressourcen, die eine variable Totzeit aufweisen, ist häufig besonders schwierig (Rahnama et al. 2017). 
+Alternativen: 
+-	In Fällen, in denen eine besonders schnelle Reaktion von Ressourcen erforderlich ist, werden häufig keine Planungsmodelle verwendet. Stattdessen werden Ressourcen ausschließlich über ein geeignetes Steuerungsprogramm gesteuert, das einige Aspekte von Planungsmodellen beinhalten kann (Abdel-Baqi et al. 2015 - 2015).
+Ein Planungsmodell berücksichtigt alle relevanten Kostenfaktoren, die durch den Energie-flexiblen Betrieb entstehen. Beispiele für Kostenfaktoren sind Kosten für Energie, Rohmaterialien, Personal, Wartung, Kapital, Emissionen oder andere Betriebsmedien wie etwa Druckluft. Da Kostenfaktoren oftmals nicht präzise beziffert werden können, kann es auch ausreichen, Kostenfaktoren durch Anlagenbetreiber schätzen zu lassen, oder Kostenfaktoren iterativ anzupassen, sodass die resultierenden Betriebspläne plausibel sind. Es ist wichtig zu betrachten, dass nicht alle Kostenfaktoren, in Planungsmodellen aufgeführt werden müssen, etwa wenn es sich um fixe Kosten handelt, die nicht vom Produktionsplan abhängen. Dies ist oftmals etwa bei Personalkosten und Kapitalkosten der Fall. Ebenso müssen keine Kosten aufgeführt werden, deren Betrag entsprechend der Einschätzung der Verantwortlichen vernachlässigbar ist. 
+HMI
+Ein HMI stellt die für den Energie-flexiblen Betrieb relevanten Messwerte und Kennzahlen dar, wobei relevante Messwerte die Messwerte des Energieverbrauchs, des Produktionsvolumens, der Speicherzustände, oder anderer physikalischer Größen, die einen Einfluss auf den Energieverbrauch oder die Energieerzeugung haben, sind. Kennzahlen sind in diesem Kontext etwa Energiepreise oder KPIs des Energie-flexiblen Betriebs. So sollten etwa die Mehrwerte, z.B. finanzielle Mehrwerte, die sich aus dem Energie-flexiblen Betrieb ergeben, den Verantwortlichen in einem HMI angezeigt werden. Die Möglichkeit, die beschriebenen relevanten Werte in einem zentralen Interface anzuzeigen, ist maßgeblich, damit Anlagenbetreiber situationsabhängig korrekte Entscheidungen treffen können (Laayati et al. 2022).
+Beispiele: 
+-	Anzeigen des zeitlichen Verlaufes des Stromverbrauchs einer Klimaanlage eines Raumes für die Zucht von Bakterien, wobei Zeitintervalle, während denen Flexibilität abgerufen wird, farblich hervorgehoben werden. (Lu 2022)
+-	Anzeigen zeitlich variabler Netzentgelte, um die Betriebsplanung und die Evaluation von Handlungsalternativen zu unterstützen. (Sawczuk et al. 2024)
+-	Anzeigen verbleibenden Potenzials zur Erhöhung des Leistungsbezugs einer Fabrik bevor eine neue Spitzenlast erreicht wird. (Sawczuk et al. 2024)
+-	Anzeigen von Energiepreisen, Energieverbrauchsprognosen und realen Energieverbrauchskurven bei der Betriebsplanung einer Mine (Laayati et al. 2022).
+-	Individuelles anzeigen der Spannung, Stromstärke, Leistung und Netzfrequenz aller Maschinen für den Betrieb einer Mine (Laayati et al. 2022).
+-	Anzeigen von Preis- und Wetterprognosen sowie des Energieverbrauchs von Energieversorgungsressourcen einer Fabrik (Sandro Magnani et al. 2018).
+-	Anzeige von Betriebsdaten für die Überwachung einer Energie-flexibel betriebenen Anlage für die Zinkelektrolyse (Yang et al. 2002).
+-	Anzeigen des Lastverlaufs eines Antriebsmotors einer Erdölförderpumpe vor Ort oder Remote (Zhao et al. 2021).
+-	Anzeigen von Warnungen über abnormale Betriebszustände und Bauteilstörungen beim Betrieb einer Erdölförderpumpe (Zhao et al. 2021). 
+
+Ein HMI zeigt die Energieflexibilität, also den Spielraum für die Anpassung des Energieverbrauchs oder der Energieerzeugung, an. Dies ist vor allem dann notwendig, wenn während des laufenden Betriebs auf nicht planbare Ereignisse reagiert werden muss, sodass in diesem Fall der Anlagenbetreiber zu jedem Zeitpunkt die Handlungsoptionen kennt. 
+Beispiele: 
+-	Anzeigen der Flexibilitätsangebote für die Behebung von Netzengpässen und für die Spannungsregelung bei einem Netzbetreiber, damit der Netzbetreiber die besten Angebote auswählen kann. (Silletti et al. 2022)
+-	Aufzeigen von Handlungsalternativen, um Netzentgelte beim Betrieb von Produktionsanlagen zu reduzieren, wobei die Entscheidung, welche Handlungsalternativen umgesetzt werden, beim Anlagenbetreiber liegt. Simulationen der Handlungsalternativen zeigen an, wie groß der Einfluss der verschiedenen Handlungsalternativen auf die Netzentgelte sind. (Sawczuk et al. 2024)
+-	Anzeigen von Handlungsalternativen und deren Profitabilität bei der Betriebsplanung einer Mine (Laayati et al. 2022). 
+Das HMI ermöglicht Nutzereingaben. So nimmt das HMI etwa Nutzerbefehle für die Steuerung von Ressourcen an. Weiterhin bietet das HMI die Möglichkeit, Nutzerpräferenzen einzustellen. Dies ist etwa dann wichtig, wenn mehrere Ziele, wie das Produktionsvolumen und die Energiekosten gleichzeitig optimiert werden sollen, da in diesem Fall eine Gewichtung der Ziele erfolgen muss.
+Beispiele:
+-	Empfangen von Nutzereingaben für die Aktivierung von Standby-Modi in einem experimentellen Förderband. (Mechs et al. 2013)
+-	Anbieten von Mikro-Services für die Nutzung von Funktionalitäten eines Digitalen Zwillings eines Wärmespeichers für die Abwärmenutzung der Stahlproduktion (Kasper et al. 2024). 
+-	Eingeben von Eigenschaften von Rohmaterialien, die einen Einfluss auf die Energieeffizienz der Zinkelektrolyse haben, sodass die Eigenschaften der Rohmaterialien bei der Betriebsplanung berücksichtigt werden können (Yang et al. 2002).
+-	Empfangen von Nutzereingaben für den Betrieb von Erdölförderpumpen vor Ort oder Remote (Zhao et al. 2021). 
+-	Manuelle Umsetzung von optimierten Betriebsplänen für Luftzerlegungsanlagen für die Stahlproduktion (Han et al. 2016).
+-	Gewichten der Optimierungsziele ‚Stromkosten Minimierung‘ und ‚Produktionsdauer‘ beim Betrieb von CNC-Fräsen. (Wicaksono et al. 2024)
+Das HMI zeigt Betriebspläne an. Wenn mehrere alternative Betriebspläne zur Verfügung stehen, können auch mehrere Betriebspläne angezeigt werden. 
+Beispiele: 
+-	Anzeige von optimierten Betriebsplänen für die Zinkelektrolyse (Yang et al. 2002).
+-	Anzeige optimierter Betriebspläne für den Energie-flexiblen Betrieb einer Luftzerlegungsanlage für die Versorgung einer Stahlfabrik. Betriebspläne werden als Leistungs- und Arbeitspunktänderung zu bestimmten Zeitpunkten angezeigt. Die Kosten eines Betriebsplans werden ebenso angezeigt. Die Umsetzung von Betriebsplänen erfolgt dann manuell durch Operatoren. (Han et al. 2016)   
+-	Anzeigen von optimierten Betriebsplänen für den Betrieb einer Anlage für die Zinkelektrolyse, wobei Betriebspläne automatisch oder nach Bestätigung durch einen Operatoren ausgeführt werden können. (Yang et al. 2002)
+Datenspeicher
+Im Datenspeicher werden insbesondere die für die Energie-flexible Betriebsplanung und -Ausführung benötigten Daten als Zeitreihen gespeichert. Dies umfasst Daten, die für die Erarbeitung von Planungsfunktionen (Optimierungsmodelle, ML-Modelle) benötigt werden, als auch Randbedingungen für Planungsfunktionen (Marktpreise, Lastprognosen, Wetterbedingungen) und Daten für die Ausführung von Steuerungsprogrammen (bspw. Störgrößen). 
+Beispiele:
+-	Speichern von Betriebsdaten wie der elektrischen Leistung, der Betriebstemperatur und Wasserstoffgehalt im Sauerstoffstrom eines Elektrolyseurs. (Qiu et al.)
+-	Speichern von Betriebsdaten wie dem Ladestrom und der Spannung eines Kondensators, der als Energiespeicher eines Radladers fungiert. Weiterhin werden die Drehzahl des Antriebsmotors der Baggerschaufel, die Bus-Spannung und Motorleistung des Motors als Zeitreihen gespeichert.  (Qiu et al.)
+-	Separates Speichern der Stromverbrauchsdaten von drei Komponenten einer Maschine für das Extrusionsblasformen. (Gong et al. 2019)
+BACKUP
+Die Kommunikation zwischen der Steuerung und internen Datenbanken oder SCADA Systemen muss sichergestellt sein, um eine Auswertung des Energieflexiblen Betriebes vornehmen zu können. 
+Beispiele
+-	Minütliches Aktualisieren von Betriebsdaten auf einer Datenbank, um Betriebsdaten in einem HMI anzeigen zu können (Lu 2022).   
+Alternativen
+-	
+Challenges
+-	
+Die Kommunikation zwischen der OT und internen Betriebsplanungskomponenten muss sichergestellt sein. 
+Beispiele
+-	Kommunizieren von Betriebsdaten aus der Feldebene an ein Optimierungsmodell für die Planung des Betriebs von Fertigungsmaschinen (Sun et al. 2014; Tian et al. 2016). 
+-	Kommunizieren von optimierten Betriebsplänen aus einem Optimierungsmodell an die Feldebene für die Ausführung von Betriebsplänen auf Fertigungsmaschinen (Sun et al. 2014; Tian et al. 2016). Optimierte Betriebspläne sind in diesem Fall der Zeitpunkt und die Dauer geplanter Lastreduktionen. 
+-	
+Alternativen
+-	
+Challenges
+
+-	
+Prozessleitsystem
+Prozessleitsystem stellt Daten und Informationen für andere Prozesse bereit. 
+Beispiele:
+-	Bereitstellen von Betriebsdaten einer Mine für ein Energieflexibilitätsmanagement HMI. (Laayati et al. 2022)
+-	Bereitstellen von Betriebsdaten einer Mine für eine Datenbank. (Laayati et al. 2022)
+-	Bereitstellen von Betriebsdaten von Wärmeversorgungsressourcen einer Fabrik für ein Energiemanagementsystem (Fuhrmann et al. 2022).
+-	Bereitstellen von Betriebsdaten einer Luftzerlegungsanlage zur Versorgung einer Stahlfabrik für eine Datenbank. (Han et al. 2016)
+-	Bereitstellen von Daten (Betriebsdaten, Energiepreise, Lastprofile, Prognosen etc.) für eine Planungsfunktion für die Optimierung des Betriebs von Energieversorgungsressourcen einer Fabrik. (Ferrari et al. 2017)
+Alternativen:
+Challenges:
+-	Eine Störung von etablierten Prozessen wie der Steuerung von Ressourcen muss ausgeschlossen werden. Bei der Nachrüstung von Energie-Flexibilitätsfunktionalitäten können hierfür parallele Programme und Datenbanken etabliert werden, sodass bestehende, funktionierende Steuerungsprogramme nicht beeinträchtigt werden. (Laayati et al. 2022)
+-	
+
+Prozessleitsystem führt Daten und Informationen aus verteilten Energieressourcen und IT-Komponenten zusammen, wobei IT-Komponenten etwa Prognosen, Datenbanken oder Schnittstellen zu externen Stakeholdern wie Marktbetreibern und Aggregatoren oder Wetterdiensten sein können. Das Prozessleitsystem fungiert somit als zentrales Element der Energie-flexiblen Betriebsplanung. 
+Beispiele: 
+-	Zusammenführen von Daten aus verschiedenen Maschinen in einer Mine, um Operatoren notwendige Informationen bereitzustellen und gesamtheitliche Planung durchzuführen. 
+-	Empfangen von Messwerten von Wärmeversorgungsressourcen einer Fabrik (Fuhrmann et al. 2022).
+-	Zusammenführen von Messwerten und Informationen zu Betriebszuständen aus verteilten Energieressourcen (PV, Batterie, Elektrolyseur) für die Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Zusammenführen von Messwerten des derzeitigen Strombezugs verteilter Energieressourcen für die Stahlproduktion, der Stromnetzfrequenz, und der Betriebszustände verteilter Energieressourcen, wobei auch Fehler und die nicht-Verfügbarkeit von Ressourcen erfasst werden. (Perroy et al. 2020)
+-	Zusammenführen von Wetterberichtsdaten, Lastprofielen und Energiepreisen, die für die Energie-flexible Planung des Betriebs von Energieversorgungsressourcen einer Fabrik benötigt werden. (Ferrari et al. 2017)
+Alternativen: 
+Challenges:  
+-	Eine Störung von etablierten Prozessen wie der Steuerung von Ressourcen muss ausgeschlossen werden. Bei der Nachrüstung von Energie-Flexibilitätsfunktionalitäten können hierfür parallele Programme und Datenbanken etabliert werden, sodass bestehende, funktionierende Steuerungsprogramme nicht beeinträchtigt werden. (Laayati et al. 2022)
+-	
+Prozessleitsystem empfängt Betriebspläne oder Steuersignale von Planungskomponenten oder externen Stakeholdern. 
+Beispiele: 
+-	Empfangen von optimierten Betriebsplänen für den Betrieb von Wärmeversorgungsressourcen einer Fabrik mit Speicher. (Fuhrmann et al. 2022)
+-	Empfangen von Signalen zur Lastreduktion von Aggregatoren beim Betrieb von Kältemaschinen (Rahnama et al. 2017).
+Alternativen: 
+-	
+Challenges: 
+-	
+
+Prozessleitsystem übersetzt Betriebspläne in Steuerbefehle. Betriebspläne sind nicht immer unmittelbar in Steuerbefehle überführbar. So kann es etwa sein, dass ein Betriebsplan den Energieverbrauch in kW definiert, die Steuerung aber Arbeitspunkte in Prozentangaben benötigt. In einigen Fällen können Steuerungsbefehle direkt in Planungsmodellen integriert werden, sodass keine Übersetzung notwendig ist. In anderen Fällen mit geringer Komplexität genügt eine lineare Umrechnung, um Betriebspläne in Steuerungsbefehle zu überführen. Wenn es keinen einfachen Zusammenhang zwischen den im Betriebsplan vorgegebenen Werten und Steuerungsbefehlen gibt, wie es etwa der Fall ist, wenn ein Prozess auf eine bestimmte Temperatur eingeregelt wird, der Betriebsplan jedoch nur einen Wert für den Energieverbrauch vorsieht, können Methoden aus dem Bereich des ‚Advanced Process Control‘ angewendet werden. Wenn solche Methoden nicht angewendet werden können oder sollen, müssen Betriebspläne von Anlagenbetreibern in Steuerungsbefehle überführt werden. Ein wichtiger Aspekt bei der Übersetzung von Betriebsplänen in Steuerbefehle ist die die zeitlich exakte Versendung von Steuerbefehlen entsprechend des Betriebsplans. 
+Beispiele: 
+-	Übersetzen Betriebsplänen für den Betrieb von Wärmeversorgungsressourcen einer Fabrik in Steuersignale für einzelne Aktoren wie Pumpen, Ventile oder Boiler. Zeitlich grob aufgelöste Betriebspläne (15-minütig) werden durch einen MPC-Ansatz in zeitlich höher aufgelöste (1-minütig) Steuersignale überführt. (Fuhrmann et al. 2022)
+-	Übersetzen von Betriebsplänen für Wärmespeicher für die Stahlherstellung in Steuersignale für die Be- und Entladung des Wärmespeichers, wobei die im Betriebsplan vorgesehene Be- und Entladungsleistung in dafür benötigte Volumenströme im Speicher umgerechnet werden. (Kasper et al. 2024)
+-	Übersetzen von Sollwerten für den Stromverbrauch einer experimentellen Destillationskolonne in Steuersignale und Übermitteln der Steuersignale an eine SPS zu durch die Betriebsplanung vorgesehenen Zeitpunkten (Reinpold et al. 2023). 
+Alternativen:
+-	Es besteht oft auch die Möglichkeit Betriebspläne manuell von den Operatoren von Ressourcen umsetzen zu lassen, indem die entsprechenden Steuerbefehle von den Operatoren in einem Prozessleitsystem eingetragen werden (Han et al. 2016)(XXX Wagner et al. 2024)
+Challenges: 
+
+Prozessleitsystem sendet Steuerbefehle an verteilte Ressourcen, wobei verteilte Ressourcen Steuerungen, einzelne Aktoren oder untergeordnete Prozessleitsysteme sein können. 
+Beispiele: 
+-	Versenden von Steuerbefehlen an verteilte Wärmeversorgungsressourcen einer Fabrik (Pumpen, Ventile oder Boiler). (Fuhrmann et al. 2022)
+-	Versenden von Steuerbefehlen an verteilte Energieressourcen für die Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Koordinierende Steuerung örtlich verteilter Energieressourcen (Stahlproduktion, Elektrolyse) zur Erbringung von Regelleistung: Versenden von Steuersignalen: Sollstrom der Elektrolyse-Einheiten, Stufen von Stufenschaltern in der Stahlproktion (Elektro-Lichtbogenofen). (Perroy et al. 2020)
+-	Senden von Befehlen zur Aktivierung von Standby Zuständen in Rechenressourcen und Feldgeräten für die Steuerung eines experimentellen Förderbandes, wobei Standby Zustände als mittel zur Lastregulierung eingesetzt werden. (Mechs et al. 2013)
+-	Senden von Steuerbefehlen an die Aktorik eines Wärmespeichers für die Stahlproduktion. (Kasper et al. 2024)
+Alternativen: 
+Challenges: 
+
+Datenspeicher
+Die erfassten Messwerte werden meist mit einer Frequenz von 1/s bis 1/min geloggt (Emec et al. 2013; Gong et al. 2019; Cirera et al. 2020). Die Frequenz der Aufzeichnung von Messwerten sollte dabei der Vermarktungsstrategie und der Prozessdynamik der Ressourcen angemessen sein.  Vermarktungsstrategien, die zeitlich höherfrequente Änderungen erfordern, wie etwa das Erbringen von Regelleistung, erfordern ebenso wie dynamische Prozesse mit schnellen Änderungsraten, die häufig in der diskreten Fertigung vorkommen, eine höhere Messfrequenz. Prozesse mit kleineren zeitlichen Änderungsraten erfordern eine geringere Messfrequenz ebenso wie Vermarktungsstrategien, die einem klaren zeitlichen Rhythmus folgen, wie die Teilnahme an der Day-Ahead oder Intraday-Strombörse. 
+Short Notes: 
+Speicherzustand von Eisspeichern kann mittels Ultraschallsensoren erfasst werden. Ultraschallsensoren erfassen in diesem Fall den Abstand zur Eisdecke, der sich aufgrund der Dichteunterschiede zwischen Wasser und Eis mit zunehmendem Eisgehalt verringert. 
+Speicherzustand von Heißwasserspeichern muss ggf. mithilfe mehrerer Thermometer erfasst werden. 
+Für die Messung von Enthalpieströmen werden sowohl Temperatur- als auch Flussmessungen benötigt. 
+Füllstände von Druckbehältern können über Drucksensoren gemessen werden. 
+Daten und Informationsmanagement
+Daten- und Informationsmanagement sendet Befehle an Steuerungen. 
+Beispiele: 
+-	Weiterleiten von Lastreduktionsbefehlen von einem Aggregator in Form einer maximal zulässigen Last für Kältemaschinen an Steuerungseinheiten (Rahnama et al. 2017). 
+-	Versenden von Steuerbefehlen an verteilte Wärmeversorgungsressourcen einer Fabrik (Pumpen, Ventile oder Boiler). (Fuhrmann et al. 2022)
+-	Versenden von Steuerbefehlen an verteilte Energieressourcen für die Wasserstoffproduktion. (Ziogou et al. 2013)
+-	Koordinierende Steuerung örtlich verteilter Energieressourcen (Stahlproduktion, Elektrolyse) zur Erbringung von Regelleistung: Versenden von Steuersignalen: Sollstrom der Elektrolyse-Einheiten, Stufen von Stufen schaltern in der Stahlproktion (Elektro-Lichtbogenofen). (Perroy et al. 2020)
+-	Senden von Befehlen zur Aktivierung von Standby Zuständen in Rechenressourcen und Feldgeräten für die Steuerung eines experimentellen Förderbandes, wobei Standby Zustände als mittel zur Lastregulierung eingesetzt werden. (Perroy et al. 2020) 
+-	Senden von Steuerbefehlen an die Aktorik eines Wärmespeichers für die Stahlproduktion. (Kasper et al. 2024)
+-	To Do: Wann sind herkömmliche Steuerungsprogramme NICHT für E-Flex Betrieb geeignet
+o	Hysterese?
+o	PID?
+o	Diskret?
+o	 Eigentlich eher Kategorie ‚Lösung‘
+
+Anforderungen
+Auxilliaries müssen auch für den Teillastbetrieb geeignet sein, um Ineffizienzen zu vermeiden (PSA zur Wasserstofftrocknung).
+
+Literaturverzeichnis
+Abdel-Baqi, O.; Miller, P.; Nasiri, A. (2015 - 2015): Energy management for an 8000HP hybrid hydraulic mining shovel. In: 2015 IEEE Transportation Electrification Conference and Expo (ITEC). 2015 IEEE Transportation Electrification Conference and Expo (ITEC). Dearborn, MI, USA, 14.06.2015 - 17.06.2015: IEEE, S. 1–8.
+Cirera, Josep; Carino, Jesus A.; Zurita, Daniel; Ortega, Juan A. (2020): Improving the Energy Efficiency of Industrial Refrigeration Systems by Means of Data-Driven Load Management. In: Processes 8 (9), S. 1106. DOI: 10.3390/pr8091106.
+Crespi, Elena; Guandalini, Giulio; Mastropasqua, Luca; Campanari, Stefano; Brouwer, Jacob (2023): Experimental and theoretical evaluation of a 60 kW PEM electrolysis system for flexible dynamic operation. In: Energy Conversion and Management 277, S. 116622. DOI: 10.1016/j.enconman.2022.116622.
+Emec, Soner; Kuschke, Maren; Chemnitz, Moritz; Strunz, Kai (2013): Potential for demand side management in automotive manufacturing. In: IEEE PES ISGT Europe 2013. 2013 4th IEEE/PES Innovative Smart Grid Technologies Europe (ISGT EUROPE). Lyngby, Denmark, 06.10.2013 - 09.10.2013: IEEE, S. 1–5.
+Ferrari, Lorenzo; Esposito, Fabio; Becciani, Michele; Ferrara, Giovanni; Magnani, Sandro; Andreini, Mirko et al. (2017): Development of an optimization algorithm for the energy management of an industrial Smart User. In: Applied Energy 208, S. 1468–1486. DOI: 10.1016/j.apenergy.2017.09.005.
+Fuhrländer-Völker, Daniel; Magin, Jonathan; Weigold, Matthias (2023): Automation architecture for harnessing the demand response potential of aqueous parts cleaning machines. In: Prod. Eng. Res. Devel. 17 (6), S. 785–803. DOI: 10.1007/s11740-023-01201-x.
+Fuhrmann, Florian; Windholz, Bernd; Schirrer, Alexander; Knöttner, Sophie; Schenzel, Karl; Kozek, Martin (2022): Energy management for thermal batch processes with temporarily available energy sources– Laboratory experiments. In: Case Studies in Thermal Engineering 39, S. 102473. DOI: 10.1016/j.csite.2022.102473.
+Gong, Xu; Liu, Ying; Lohse, Niels; Pessemier, Toon de; Martens, Luc; Joseph, Wout (2019): Energy- and Labor-Aware Production Scheduling for Industrial Demand Response Using Adaptive Multiobjective Memetic Algorithm. In: IEEE Trans. Ind. Inf. 15 (2), S. 942–953. DOI: 10.1109/TII.2018.2839645.
+Han, Zhongyang; Zhao, Jun; Wang, Wei; Liu, Ying (2016): A two-stage method for predicting and scheduling energy in an oxygen/nitrogen system of the steel industry. In: Control Engineering Practice 52, S. 35–45. DOI: 10.1016/j.conengprac.2016.03.018.
+Hayn, Adrian von; Wendt, Jonas; Lieberth, Nicolas; Weisel, Nicole; Weigold, Matthias (2023): Development of Energy Flexible and Sustainable Operation Strategies of Air Conditioning Systems for Industrial Production Environments. In: Procedia CIRP 116, S. 155–160. DOI: 10.1016/j.procir.2023.02.027.
+Hsu, Chang-Hong; Deng, Qingyuan; Mars, Jason; Tang, Lingjia (2018): SmoothOperator. In: Xipeng Shen, James Tuck, Ricardo Bianchini und Vivek Sarkar (Hg.): Proceedings of the Twenty-Third International Conference on Architectural Support for Programming Languages and Operating Systems. ASPLOS '18: Architectural Support for Programming Languages and Operating Systems. Williamsburg VA USA, 24 03 2018 28 03 2018. New York, NY, USA: ACM, S. 535–548.
+Kasper, Lukas; Schwarzmayr, Paul; Birkelbach, Felix; Javernik, Florian; Schwaiger, Michael; Hofmann, René (2024): A digital twin-based adaptive optimization approach applied to waste heat recovery in green steel production: Development and experimental investigation. In: Applied Energy 353, S. 122192. DOI: 10.1016/j.apenergy.2023.122192.
+Laayati, Oussama; Bouzi, Mostafa; Chebak, Ahmed (2022): Smart Energy Management System: Design of a Monitoring and Peak Load Forecasting System for an Experimental Open-Pit Mine. In: ASI 5 (1), S. 18. DOI: 10.3390/asi5010018.
+Liu, J.; Tylor, M.; Dorreen, M. (2016): DYNAMIC RESPONSE OF CRYOLITIC BATH AND INFLUENCE ON CELL HEAT AND MASS BALANCE WITH LARGE SCALE POTLINE POWER SHIFTS. In: Light Metals 2016. DOI: 10.1007/978-3-319-48251-4.
+Lu, I-Huai (2022): Research on Energy-Saving Efficiency of the Air-Conditioning Host in Agricultural Plant Bacteria Room. In: 2022 IEEE 5th Eurasian Conference on Educational Innovation (ECEI). 2022 IEEE 5th Eurasian Conference on Educational Innovation (ECEI). Taipei, Taiwan, 10.02.2022 - 12.02.2022: IEEE, S. 384–387.
+Mechs, Sebastian; Grimm, Stephan; Beyer, Dagmar; Lamparter, Steffen (2013): Evaluation of prediction accuracy for energy-efficient switching of automation facilities. In: IECON 2013 - 39th Annual Conference of the IEEE Industrial Electronics Society. IECON 2013 - 39th Annual Conference of the IEEE Industrial Electronics Society. Vienna, Austria, 10.11.2013 - 13.11.2013: IEEE, S. 6928–6933.
+Perroy, Edouard; Lucas, Damien; Debusschere, Vincent (2020): Provision of Frequency Containment Reserve Through Large Industrial End-Users Pooling. In: IEEE Trans. Smart Grid 11 (1), S. 26–36. DOI: 10.1109/TSG.2019.2916623.
+Qiu, Yiwei; Zhou, Buxiang; Zang, Tianlei; Zhou, Yi; Qi, Ruomei; Lin, Jin: Extended Load Flexibility of Industrial P2H Plants: A Process Constraint-Aware Scheduling Approach. In: 2022 IEEE 5th International Electrical and Energy Conference (CIEEC), S. 3344–3349.
+Rahnama, Samira; Green, Torben; Lyhne, Casper Hillerup; Bendtsen, Jan Dimon (2017): Industrial Demand Management Providing Ancillary Services to the Distribution Grid: Experimental Verification. In: IEEE Trans. Contr. Syst. Technol. 25 (2), S. 485–495. DOI: 10.1109/TCST.2016.2563385.
+Reinpold, Lasse Matthias; Wagner, Lukas Peter; Reiche, Leif-Thore; Fay, Alexander (2023): Experimental Setup for the Evaluation of Optimization Strategies for Flexible Energy Resources. In: 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). SC, USA, 08.12.2023 - 10.12.2023: IEEE, S. 1–6.
+Sandro Magnani; Piero Danti; Giovanni Cauchi (2018): Experimental results of the optimized management of an EMS-equipped small-size prosumer. In: 2019 UK/ China Emerging Technologies (UCET).
+Sawczuk, Marcin; Stawowy, Adam; Okrzesik, Olga; Kurek, Damian; Sawczuk, Mariola (2024): Managing Costs of the Capacity Charge through Real-Time Adjustment of the Demand Pattern. In: Energies 17 (8), S. 1911. DOI: 10.3390/en17081911.
+Silletti, Francesco; Orru, Luca; Di Serafino, Marco; Bolla, Laura; Maso, Francesco (2022): H2020 OSMOSE PROJECT: Final results of the experimentation phase of industrial Demand Response (DR). In: 2022 AEIT International Annual Conference (AEIT). 2022 AEIT International Annual Conference (AEIT). Rome, Italy, 03.10.2022 - 05.10.2022: IEEE, S. 1–6.
+Sokolovsky, M. A.; Klimash, V. S. (2019): Power Management of a Continuous Mining Process. In: 2019 International Multi-Conference on Industrial Engineering and Modern Technologies (FarEastCon). 2019 International Multi-Conference on Industrial Engineering and Modern Technologies (FarEastCon). Vladivostok, Russia, 01.10.2019 - 04.10.2019: IEEE, S. 1–3.
+Sun, Xinyao; Wang, Xue; Wu, Jiangwei; Liu, Youda (2014): Prediction-based manufacturing center self-adaptive demand side energy optimization in cyber physical systems. In: Chin. J. Mech. Eng. 27 (3), S. 488–495. DOI: 10.3901/CJME.2014.03.488.
+Suwa, Haruhiko; Samukawa, Tetsuo (2016): A New Framework of Energy-efficient Manufacturing Systems Based on Energy Load Profiles. In: Procedia CIRP 41, S. 313–317. DOI: 10.1016/j.procir.2015.10.011.
+Tian, Jun; Liu, Zhengyu; Shu, Jun; Liu, Jingbo; Tang, Jian (2016): Base on the ultra‐short term power prediction and feed‐forward control of energy management for microgrid system applied in industrial park. In: IET Generation, Transmission & Distribution 10 (9), S. 2259–2266. DOI: 10.1049/iet-gtd.2016.0135.
+Vigants, Haralds; Blumberga, Dagnija; Veidenbergs, Ivars (2014): Demand Side Management in Pellet Production: Internal and External Factors. In: Environmental and Climate Technologies 14 (1), S. 30–35. DOI: 10.1515/rtuect-2014-0011.
+Wagner, Lukas Peter; Reinpold, Lasse Matthias; Fay, Alexander (2023): Design Patterns for Optimization Models of Flexible Energy Resources. In: 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). 2023 IEEE 2nd Industrial Electronics Society Annual On-Line Conference (ONCON). SC, USA, 08.12.2023 - 10.12.2023: IEEE, S. 1–6.
+Wagner, Lukas Peter; Reinpold, Lasse Matthias; Kilthau, Maximilian; Gehlhoff, Felix; Derksen, Christian; Loose, Nils et al. (2024): Nutzung von Massespeichern zur Flexibilisierung des Energieverbrauchs: Kosteneffizienter Anlagenbetrieb durch Anpassung an Marktpreise.
+Wan, Jiafu; Chen, Baotong; Wang, Shiyong; Xia, Min; Di Li; Liu, Chengliang (2018): Fog Computing for Energy-Aware Load Balancing and Scheduling in Smart Factory. In: IEEE Trans. Ind. Inf. 14 (10), S. 4548–4556. DOI: 10.1109/TII.2018.2818932.
+Wicaksono, Hendro; Trat, Martin; Bashyal, Atit; Boroukhian, Tina; Felder, Mine; Ahrens, Mischa et al. (2024): Artificial-intelligence-enabled dynamic demand response system for maximizing the use of renewable electricity in production processes. In: Int J Adv Manuf Technol. DOI: 10.1007/s00170-024-13372-7.
+Yang, Chunhua; Deconinck, G.; Gui, Weihua; Li, Yonggang (2002): An optimal power-dispatching system using neural networks for the electrochemical process of zinc depending on varying prices of electricity. In: IEEE transactions on neural networks 13 (1), S. 229–236. DOI: 10.1109/72.977311.
+Zhao, Haisen; Wang, Zixu; Wang, Yilong; Zhang, Liancheng; Eldeeb, Hassan H.; Zhan, Yang; Xu, Guorui (2021): Electromechanical Based Energy Saving Control Strategy for Beam Pumping Motor Systems in Oil Production Industry. In: 2021 IEEE Industry Applications Society Annual Meeting (IAS). 2021 IEEE Industry Applications Society Annual Meeting (IAS). Vancouver, BC, Canada, 10.10.2021 - 14.10.2021: IEEE, S. 1–8.
+Ziogou, Chrysovalantou; Ipsakis, Dimitris; Seferlis, Panos; Bezergianni, Stella; Papadopoulou, Simira; Voutetakis, Spyros (2013): Optimal production of renewable hydrogen based on an efficient energy management strategy. In: Energy 55, S. 58–67. DOI: 10.1016/j.energy.2013.03.017.
+
